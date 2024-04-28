@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retirada de Equipamentos CDT</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Estilos CSS personalizados -->
+  <style>
+    body {
+      background-color: #f2f4f6;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background-color: #183452;
+    }
+
+    .navbar-brand,
+    .navbar-text {
+      color: white;
+    }
+
+    .container {
+      max-width: 1000px; /* Aumentando a largura da tabela */
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: #333;
+      text-align: center;
+    }
+
+    .table-container {
+      width: 100%; /* Alterando para ocupar toda a largura do container */
+      overflow-x: auto;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px; /* Adicionando padding para melhorar a aparência */
+    }
+
+    .table th, .table td {
+      border: none;
+    }
+
+    .table thead th {
+      color: #fff;
+      background-color: #007bff;
+    }
+
+    .table tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Estilos para o botão de exclusão */
+    .btn-excluir {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+    }
+
+    .btn-excluir:hover {
+      background-color: #c82333;
+    }
+
+  </style>
+
+  <!-- Bootstrap JavaScript (opcional) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <!-- Texto do Navbar -->
+      <span class="navbar-text mr-auto" id="userEmail"></span>
+
+      <!-- Botão Voltar -->
+      <a class="btn btn-secondary mr-2" href="index.html">Voltar</a>
+
+      <!-- Botão de Logout -->
+      <button id="logoutButton" class="btn btn-danger">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Título da página -->
+    <div class="mb-4">
+      <h1>Retirada de Equipamentos para colaboradores CDT</h1>
+    </div>
+
+    <!-- Modal de login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="login">Login:</label>
+              <input type="email" class="form-control" id="login" required>
+            </div>
+            <div class="form-group">
+              <label for="senha">Senha:</label>
+              <input type="password" class="form-control" id="senha" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="loginButton">Acessar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabela para exibir os dados cadastrados -->
+    <div class="table-container">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Nome do Colaborador</th>
+            <th>Nome do PC</th>
+            <th>Número do PC</th>
+            <th>Número da Fonte</th>
+            <th>Data de Saída</th>
+            <th>Data de Retorno</th>
+            <th>Observações</th>
+            <th>Excluir</th> <!-- Nova coluna -->
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Conteúdo da tabela será preenchido dinamicamente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Firebase JavaScript -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import { getDatabase, ref, onValue, remove } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+    import { getAuth, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+
+    // Configurações do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC41KIa9wdb3Vevjwno89SNt4U0vsPIaMo",
+      authDomain: "bdkdb-e8ee5.firebaseapp.com",
+      databaseURL: "https://bdkdb-e8ee5-default-rtdb.firebaseio.com",
+      projectId: "bdkdb-e8ee5",
+      storageBucket: "bdkdb-e8ee5.appspot.com",
+      messagingSenderId: "129625246761",
+      appId: "1:129625246761:web:dbcabee42d53da7a422038",
+      measurementId: "G-WG2MJDR4Q9"
+    };
+
+    // Inicialização do Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+
+    // Referência para o nó 'maquinasCdt' no banco de dados
+    const database = getDatabase(firebaseApp);
+    const maquinasCdtRef = ref(database, 'maquinasCdt');
+
+    // Função para exibir os dados na tabela
+    function exibirDados(maquinas) {
+      const tableBody = document.getElementById('tableBody');
+      tableBody.innerHTML = '';
+
+      // Obter chaves de forma reversa
+      const reversedKeys = Object.keys(maquinas).reverse();
+
+      for (const key of reversedKeys) {
+        const maquina = maquinas[key];
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = maquina.nomeColaborador;
+        row.insertCell(1).textContent = maquina.nomePC;
+        row.insertCell(2).textContent = maquina.numeroPC;
+        row.insertCell(3).textContent = maquina.numeroFonte;
+        row.insertCell(4).textContent = maquina.dataSaida;
+        row.insertCell(5).textContent = maquina.dataRetorno;
+        row.insertCell(6).textContent = maquina.observacoes;
+
+        // Adiciona o botão de exclusão
+        const cellExcluir = row.insertCell(); // Cria a célula para o botão
+        const btnExcluir = document.createElement('button'); // Cria o botão
+        btnExcluir.textContent = 'Excluir'; // Texto do botão
+        btnExcluir.className = 'btn btn-excluir'; // Classe para estilização
+        btnExcluir.addEventListener('click', () => excluirRegistro(key)); // Adiciona evento de clique
+        cellExcluir.appendChild(btnExcluir); // Adiciona o botão à célula
+      }
+    }
+
+    // Função para excluir um registro do Firebase
+    function excluirRegistro(key) {
+      if (confirm('Tem certeza que deseja excluir este registro?')) {
+        remove(ref(database, `maquinasCdt/${key}`))
+          .then(() => {
+            console.log('Registro excluído com sucesso!');
+            // Atualiza a tabela após a exclusão
+            atualizarTabela();
+          })
+          .catch((error) => {
+            console.error('Erro ao excluir registro:', error);
+          });
+      }
+    }
+
+    // Função para fazer logout do usuário
+    function fazerLogout() {
+      signOut(auth)
+        .then(() => {
+          // Limpa os dados salvos na sessão
+          sessionStorage.removeItem('loggedIn');
+          sessionStorage.removeItem('userEmail');
+          // Redireciona para a página index.html
+          window.location.href = 'index.html';
+        })
+        .catch((error) => {
+          console.error('Erro ao fazer logout:', error);
+        });
+    }
+
+    // Função para atualizar a tabela com os dados do Firebase
+    function atualizarTabela() {
+      onValue(maquinasCdtRef, (snapshot) => {
+        const maquinas = snapshot.val();
+        if (maquinas) {
+          exibirDados(maquinas);
+        }
+      });
+    }
+
+    // Função para verificar a autenticação do usuário
+    function verificarAutenticacao() {
+      const loggedIn = sessionStorage.getItem('loggedIn');
+      if (loggedIn === 'true') {
+        const email = sessionStorage.getItem('userEmail');
+        document.getElementById('userEmail').textContent = email;
+        $('#loginModal').modal('hide');
+        atualizarTabela();
+      } else {
+        $('#loginModal').modal('show');
+      }
+    }
+
+    // Função para verificar o login e senha
+    function verificarLogin() {
+      const email = document.getElementById('login').value;
+      const senha = document.getElementById('senha').value;
+      signInWithEmailAndPassword(auth, email, senha)
+        .then(() => {
+          $('#loginModal').modal('hide');
+          atualizarTabela();
+          // Exibir o email do usuário no navbar
+          document.getElementById('userEmail').textContent = email;
+          // Armazenar dados de login na sessão
+          sessionStorage.setItem('loggedIn', 'true');
+          sessionStorage.setItem('userEmail', email);
+        })
+        .catch((error) => {
+          alert('Falha ao fazer login: ' + error.message);
+        });
+    }
+
+    // Atualiza a tabela inicialmente ao carregar a página
+    $(document).ready(function() {
+      verificarAutenticacao();
+      $('#loginButton').click(function() {
+        verificarLogin();
+      });
+      $('#logoutButton').click(function() {
+        fazerLogout();
+      });
+    });
+  </script>
+</body>
+</html>
