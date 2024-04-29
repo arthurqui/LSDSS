@@ -45,9 +45,9 @@
 
     /* Estilo para o link "Esqueci minha senha" */
     #forgotPasswordLink {
-  text-align: right; /* Alinhamento à direita */
-  font-size: 12px; /* Tamanho de fonte menor */
-}
+      text-align: right; /* Alinhamento à direita */
+      font-size: 12px; /* Tamanho de fonte menor */
+    }
 
 
   </style>
@@ -85,6 +85,7 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
     import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+    import { getDatabase, ref, orderByChild, equalTo, get, query } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
 
     // Configurações do Firebase
     const firebaseConfig = {
@@ -101,17 +102,35 @@
     // Inicialização do Firebase
     const firebaseApp = initializeApp(firebaseConfig);
     const auth = getAuth(firebaseApp);
+    const database = getDatabase(firebaseApp);
+    const usersRef = ref(database, 'usersLsdss');
+
+    // Limpar os dados de login da sessão ao carregar a página
+    sessionStorage.removeItem('loggedIn');
+    sessionStorage.removeItem('userData');
 
     // Event listener para o formulário de login
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
       event.preventDefault(); // Evita o envio do formulário
       const email = document.getElementById('login').value;
       const senha = document.getElementById('senha').value;
       signInWithEmailAndPassword(auth, email, senha)
-        .then(() => {
+        .then(async () => {
           console.log('Login realizado com sucesso!');
           // Redirecionar para a página principal após o login
-          window.location.href = 'index.html';
+          // Recuperar os dados do usuário com base no email fornecido
+          const userQuery = query(usersRef, orderByChild('email'), equalTo(email));
+          const snapshot = await get(userQuery);
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            // Salvar os dados do usuário na sessão
+            sessionStorage.setItem('loggedIn', 'true');
+            sessionStorage.setItem('userData', JSON.stringify(userData));
+            // Redirecionar para a página principal
+            window.location.href = 'index.html';
+          } else {
+            console.error('Usuário não encontrado.');
+          }
         })
         .catch((error) => {
           alert('Falha ao fazer login: ' + error.message);
