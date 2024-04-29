@@ -81,8 +81,42 @@
   </div>
 
   <!-- Firebase JavaScript -->
+  <<!-- Firebase JavaScript -->
   <script type="module">
-    // Código JavaScript do Firebase aqui...
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+
+    // Configurações do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC41KIa9wdb3Vevjwno89SNt4U0vsPIaMo",
+      authDomain: "bdkdb-e8ee5.firebaseapp.com",
+      databaseURL: "https://bdkdb-e8ee5-default-rtdb.firebaseio.com",
+      projectId: "bdkdb-e8ee5",
+      storageBucket: "bdkdb-e8ee5.appspot.com",
+      messagingSenderId: "129625246761",
+      appId: "1:129625246761:web:dbcabee42d53da7a422038",
+      measurementId: "G-WG2MJDR4Q9"
+    };
+
+    // Inicialização do Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+
+    // Event listener para o formulário de login
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Evita o envio do formulário
+      const email = document.getElementById('login').value;
+      const senha = document.getElementById('senha').value;
+      signInWithEmailAndPassword(auth, email, senha)
+        .then(() => {
+          console.log('Login realizado com sucesso!');
+          // Redirecionar para a página principal após o login
+          window.location.href = 'index.html';
+        })
+        .catch((error) => {
+          alert('Falha ao fazer login: ' + error.message);
+        });
+    });
   </script>
 </body>
 </html>

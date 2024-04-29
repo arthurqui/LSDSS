@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Estilos CSS personalizados -->
+  <style>
+    body {
+      background-color: #f2f4f6;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 400px; /* Ajustando a largura do container */
+      padding: 30px;
+      background-color: #fff; /* Fundo branco */
+      border-radius: 10px; /* Bordas arredondadas */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    }
+
+    h1 {
+      color: #333;
+      font-size: 3rem; /* Tamanho grande */
+      margin-bottom: 30px; /* Espaçamento inferior */
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px; /* Espaçamento inferior */
+    }
+
+    .btn {
+      width: 100%; /* Largura total */
+    }
+
+    /* Estilo para o link "Esqueci minha senha" */
+    #forgotPasswordLink {
+      text-align: right; /* Alinhamento à direita */
+    }
+
+  </style>
+
+  <!-- Bootstrap JavaScript (opcional) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+</head>
+<body>
+  <div class="container">
+    <!-- Título da página -->
+    <h1>Criar Conta</h1>
+
+    <!-- Formulário de registro -->
+    <form id="registerForm">
+      <div class="form-group">
+        <input type="text" class="form-control" id="nome" placeholder="Nome" required>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="cpf" placeholder="CPF" required>
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control" id="email" placeholder="E-mail" required>
+        <small id="emailHelp" class="form-text text-muted">Por favor, insira um endereço de e-mail válido.</small>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" id="senha" placeholder="Senha" required>
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="adminToggle">
+        <label class="form-check-label" for="adminToggle">Administrador</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+  </div>
+
+  <!-- Firebase JavaScript -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import { getDatabase, ref, push } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+    import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+
+    // Configurações do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC41KIa9wdb3Vevjwno89SNt4U0vsPIaMo",
+      authDomain: "bdkdb-e8ee5.firebaseapp.com",
+      databaseURL: "https://bdkdb-e8ee5-default-rtdb.firebaseio.com",
+      projectId: "bdkdb-e8ee5",
+      storageBucket: "bdkdb-e8ee5.appspot.com",
+      messagingSenderId: "129625246761",
+      appId: "1:129625246761:web:dbcabee42d53da7a422038",
+      measurementId: "G-WG2MJDR4Q9"
+    };
+
+    // Inicialização do Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+    const database = getDatabase(firebaseApp);
+    const usersRef = ref(database, 'usersLsdss');
+
+    // Função para cadastrar um novo usuário
+    function cadastrarUsuario(email, senha, nome, cpf, admin) {
+      createUserWithEmailAndPassword(auth, email, senha)
+        .then((userCredential) => {
+          // Criação do usuário bem-sucedida
+          const newUser = {
+            nome: nome,
+            cpf: cpf,
+            email: email,
+            senha: senha,
+            admin: admin
+          };
+          // Salva os dados do novo usuário no banco de dados
+          push(usersRef, newUser)
+            .then(() => {
+              console.log('Novo usuário cadastrado com sucesso:', newUser);
+            })
+            .catch((error) => {
+              console.error('Erro ao salvar os dados do novo usuário:', error);
+            });
+        })
+        .catch((error) => {
+          console.error('Erro ao cadastrar novo usuário:', error);
+        });
+    }
+
+    // Evento de envio do formulário de registro
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Evita o comportamento padrão de envio do formulário
+
+      // Captura dos valores dos campos
+      const nome = document.getElementById('nome').value;
+      const cpf = document.getElementById('cpf').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const admin = document.getElementById('adminToggle').checked;
+
+      // Chamada da função para cadastrar o usuário
+      cadastrarUsuario(email, senha, nome, cpf, admin);
+    });
+  </script>
+</body>
+</html>
