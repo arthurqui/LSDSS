@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LSDSS</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Estilos CSS personalizados -->
+  <style>
+    body {
+      background-color: #f2f4f6;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 400px; /* Ajustando a largura do container */
+      padding: 30px;
+      background-color: #fff; /* Fundo branco */
+      border-radius: 10px; /* Bordas arredondadas */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    }
+
+    h1 {
+      color: #333;
+      font-size: 3rem; /* Tamanho grande */
+      margin-bottom: 30px; /* Espaçamento inferior */
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px; /* Espaçamento inferior */
+    }
+
+    .btn {
+      width: 100%; /* Largura total */
+    }
+
+    /* Estilo para o link "Esqueci minha senha" */
+    #forgotPasswordLink {
+      text-align: right; /* Alinhamento à direita */
+    }
+
+  </style>
+
+  <!-- Bootstrap JavaScript (opcional) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+</head>
+<body>
+  <div class="container">
+    <!-- Título da página -->
+    <h1>LSDSS</h1>
+
+    <!-- Formulário de login -->
+    <form id="loginForm">
+      <div class="form-group">
+        <input type="email" class="form-control" id="login" placeholder="E-mail" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" id="senha" placeholder="Senha" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <!-- Link "Esqueci minha senha" -->
+    <div id="forgotPasswordLink">
+      <a href="forgot.html">Esqueci minha senha</a>
+    </div>
+  </div>
+
+  <!-- Firebase JavaScript -->
+  <script type="module">
+    // Código JavaScript do Firebase aqui...
+  </script>
+</body>
+</html>
