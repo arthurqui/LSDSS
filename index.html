@@ -159,36 +159,38 @@
       max-width: 100%;
       height: auto;
     }
+
+    /* Estilo para centralizar o conteúdo em dispositivos móveis */
+@media (max-width: 767px) {
+  .align-center-mobile {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
   </style>
 
 </head>
 <body>
   <!-- Sidebar -->
-<div class="sidebar">
-  <div class="sidebar-logo">
-    <img src="https://i.imgur.com/x38Il6U.png" alt="Logo">
+  <div class="sidebar d-none d-sm-block"> <!-- Adicionando a classe para tornar o sidebar responsivo -->
+    <div class="sidebar-logo">
+      <img src="https://i.imgur.com/x38Il6U.png" alt="Logo">
+    </div>
+    <div class="sidebar-item" onclick="window.location.href='page1.html'">Página 1</div>
+    <div class="sidebar-item" onclick="window.location.href='page2.html'">Página 2</div>
+    <div class="sidebar-item" onclick="window.location.href='page3.html'">Página 3</div>
+    <button class="logout-btn" onclick="logout()">Logout</button> <!-- Adicionado onclick para chamar a função logout() -->
   </div>
-  <div class="sidebar-item" onclick="window.location.href='page1.html'">Página 1</div>
-  <div class="sidebar-item" onclick="window.location.href='page2.html'">Página 2</div>
-  <div class="sidebar-item" onclick="window.location.href='page3.html'">Página 3</div>
-  <button class="logout-btn" onclick="logout()">Logout</button> <!-- Adicionado onclick para chamar a função logout() -->
-</div>
-
-<script>
-  function logout() {
-    localStorage.removeItem('userData'); // Remove os dados do usuário do localStorage
-    window.location.href = 'login.html'; // Redireciona para a página de login
-  }
-</script>
-
 
   <!-- Topbar -->
   <div class="topbar">
-    <button class="admin-btn ml-auto" onclick="window.location.href='responsavel.html'">Administrador</button>
+    <button class="admin-btn ml-auto d-block d-sm-none" onclick="logout()">Logout</button> <!-- Adicionado o botão de logout para telas pequenas -->
+    <button class="admin-btn ml-auto d-none d-sm-block" onclick="window.location.href='responsavel.html'">Administrador</button> <!-- Botão de administrador para telas maiores que pequenas -->
   </div>
 
   <!-- Conteúdo principal -->
-  <div class="content">
+  <div class="content align-center-mobile">
     <h1>Documentações</h1>
     <div id="documentacoesList" class="documentacoes-row">
       <!-- Lista de documentações aqui -->
@@ -407,6 +409,12 @@
   
     // Chama a função de verificação durante o carregamento da página
     document.addEventListener('DOMContentLoaded', checkUserData);
+    
+    // Função de logout
+    function logout() {
+      localStorage.removeItem('userData'); // Remove os dados do usuário do localStorage
+      window.location.href = 'login.html'; // Redireciona para a página de login
+    }
   </script>
   
 </body>
