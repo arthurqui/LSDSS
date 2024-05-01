@@ -424,7 +424,7 @@ function redirectToDocument(documento) {
   // Constrói a URL com os parâmetros do documento
   const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}`;
   // Redireciona para a página do documento
-  window.location.href = url;
+  window.open(url, '_blank');
 }
   </script>
   
