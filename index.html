@@ -355,39 +355,42 @@
     document.getElementById('btnSalvarModal').addEventListener('click', salvarDocumento);
 
     // Função para carregar as documentações iniciadas
-    function carregarDocumentacoes() {
-      const documentacoesList = document.getElementById('documentacoesList');
-      // Limpa a lista antes de adicionar novos elementos
-      documentacoesList.innerHTML = '';
-      // Realiza uma consulta no banco de dados para obter as documentações com status 'iniciado'
-      get(documentosRef)
-        .then((snapshot) => {
-          snapshot.forEach((childSnapshot) => {
-            const documento = childSnapshot.val();
-            if (documento.status === 'iniciado') {
-              // Cria um novo elemento de lista
-              const listItem = document.createElement('div');
-              listItem.classList.add('documentacoes-item');
-              // Adiciona a capa do documento como uma imagem
-              const capaImg = document.createElement('img');
-              capaImg.src = documento.capaDoc;
-              capaImg.classList.add('img-fluid', 'rounded', 'documentacao-img');
-              // Adiciona o título do documento como texto
-              const titulo = document.createElement('h4');
-              titulo.textContent = documento.nomeDoc;
-              // Adiciona a imagem e o título à lista
-              listItem.appendChild(capaImg);
-              listItem.appendChild(titulo);
-              // Adiciona o item à lista de documentações
-              documentacoesList.appendChild(listItem);
-            }
+function carregarDocumentacoes() {
+  const documentacoesList = document.getElementById('documentacoesList');
+  // Limpa a lista antes de adicionar novos elementos
+  documentacoesList.innerHTML = '';
+  // Realiza uma consulta no banco de dados para obter as documentações com status 'iniciado'
+  get(documentosRef)
+    .then((snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const documento = childSnapshot.val();
+        if (documento.status === 'iniciado') {
+          // Cria um novo elemento de lista
+          const listItem = document.createElement('div');
+          listItem.classList.add('documentacoes-item');
+          // Adiciona a capa do documento como uma imagem
+          const capaImg = document.createElement('img');
+          capaImg.src = documento.capaDoc;
+          capaImg.classList.add('img-fluid', 'rounded', 'documentacao-img');
+          // Adiciona o título do documento como texto
+          const titulo = document.createElement('h4');
+          titulo.textContent = documento.nomeDoc;
+          // Adiciona o evento onclick para redirecionar para a página do documento com os dados como parâmetros
+          listItem.addEventListener('click', function() {
+            redirectToDocument(documento);
           });
-        })
-        .catch((error) => {
-          console.error('Erro ao carregar as documentações:', error);
-        });
-    }
-
+          // Adiciona a imagem e o título à lista
+          listItem.appendChild(capaImg);
+          listItem.appendChild(titulo);
+          // Adiciona o item à lista de documentações
+          documentacoesList.appendChild(listItem);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error('Erro ao carregar as documentações:', error);
+    });
+}
     // Chama a função para carregar as documentações ao carregar a página
     document.addEventListener('DOMContentLoaded', carregarDocumentacoes);
   </script>
@@ -415,6 +418,14 @@
       localStorage.removeItem('userData'); // Remove os dados do usuário do localStorage
       window.location.href = 'login.html'; // Redireciona para a página de login
     }
+
+    // Função para redirecionar para a página do documento com os dados do documento como parâmetros
+function redirectToDocument(documento) {
+  // Constrói a URL com os parâmetros do documento
+  const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}`;
+  // Redireciona para a página do documento
+  window.location.href = url;
+}
   </script>
   
 </body>
