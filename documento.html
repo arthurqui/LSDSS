@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documento</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Estilos CSS personalizados -->
+  <style>
+    body {
+      background-color: #f2f4f6;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .documento-container {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .documento-img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="documento-container">
+    <h2 id="titulo"></h2>
+    <img id="imagem" class="documento-img">
+    <p><strong>Data:</strong> <span id="data"></span></p>
+    <p><strong>Email do Usuário:</strong> <span id="emailUsuario"></span></p>
+    <p><strong>Nome do Usuário:</strong> <span id="nomeUsuario"></span></p>
+    <p><strong>CPF do Usuário:</strong> <span id="cpfUsuario"></span></p>
+    <p><strong>Status:</strong> <span id="status"></span></p>
+    <p><strong>Conteúdo:</strong></p>
+    <p id="conteudo"></p>
+  </div>
+
+  <button class="btn btn-secondary" onclick="closeTab()">Voltar</button>
+
+  <script>
+    // Função para fechar a guia atual
+    function closeTab() {
+      window.close();
+    }
+
+    // Função para obter parâmetros da URL
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // Função para carregar os dados do documento da URL
+    function loadDocumentData() {
+      var titulo = getParameterByName('titulo');
+      var imagem = getParameterByName('imagem');
+      var conteudo = getParameterByName('conteudo');
+      var data = getParameterByName('data');
+      var cpfUsuario = getParameterByName('cpfUsuario');
+      var emailUsuario = getParameterByName('emailUsuario');
+      var nomeUsuario = getParameterByName('nomeUsuario');
+      var status = getParameterByName('status');
+
+      // Exibir os dados no HTML
+      document.getElementById('titulo').innerText = titulo;
+      document.getElementById('imagem').src = imagem;
+      document.getElementById('conteudo').innerText = conteudo;
+      document.getElementById('data').innerText = data;
+      document.getElementById('cpfUsuario').innerText = cpfUsuario;
+      document.getElementById('emailUsuario').innerText = emailUsuario;
+      document.getElementById('nomeUsuario').innerText = nomeUsuario;
+      document.getElementById('status').innerText = status;
+
+      // Definir o título da página
+      document.title = titulo;
+    }
+
+    // Carregar os dados do documento ao carregar a página
+    window.onload = loadDocumentData;
+  </script>
+</body>
+</html>

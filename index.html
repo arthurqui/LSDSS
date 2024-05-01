@@ -419,13 +419,16 @@ function carregarDocumentacoes() {
       window.location.href = 'login.html'; // Redireciona para a página de login
     }
 
-    // Função para redirecionar para a página do documento com os dados do documento como parâmetros
+// Função para redirecionar para a página do documento com os dados do documento como parâmetros
 function redirectToDocument(documento) {
   // Constrói a URL com os parâmetros do documento
-  const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}`;
+  const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}`;
   // Redireciona para a página do documento
   window.open(url, '_blank');
 }
+
+
+
   </script>
   
 </body>
