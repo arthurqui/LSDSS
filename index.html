@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -125,9 +125,9 @@
   <script>
     // Função para verificar sessão
     function verificarSessao() {
-      const userDataString = sessionStorage.getItem('userData');
+      const userDataString = localStorage.getItem('userData');
       if (!userDataString) {
-        // Redirecionar para a página de login se não houver dados salvos na sessão
+        // Redirecionar para a página de login se não houver dados salvos no localStorage
         window.location.href = 'login.html';
       }
     }
@@ -137,8 +137,8 @@
 
     // Função de logout
     function logout() {
-      // Limpar os dados da sessão
-      sessionStorage.removeItem('userData');
+      // Limpar os dados do localStorage
+      localStorage.removeItem('userData');
       // Redirecionar para a página de login
       window.location.href = 'login.html';
     }

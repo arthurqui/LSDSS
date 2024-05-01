@@ -81,7 +81,6 @@
   </div>
 
   <!-- Firebase JavaScript -->
-  <<!-- Firebase JavaScript -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
     import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
@@ -105,9 +104,17 @@
     const database = getDatabase(firebaseApp);
     const usersRef = ref(database, 'usersLsdss');
 
-    // Limpar os dados de login da sessão ao carregar a página
-    sessionStorage.removeItem('loggedIn');
-    sessionStorage.removeItem('userData');
+    // Verificar sessão ao carregar a página
+    verificarSessao();
+
+    // Função para verificar a sessão
+    function verificarSessao() {
+      const userDataString = localStorage.getItem('userData');
+      if (userDataString) {
+        // Redirecionar para a página principal se houver dados salvos na sessão
+        window.location.href = 'index.html';
+      }
+    }
 
     // Event listener para o formulário de login
     document.getElementById('loginForm').addEventListener('submit', async function(event) {
@@ -123,9 +130,8 @@
           const snapshot = await get(userQuery);
           if (snapshot.exists()) {
             const userData = snapshot.val();
-            // Salvar os dados do usuário na sessão
-            sessionStorage.setItem('loggedIn', 'true');
-            sessionStorage.setItem('userData', JSON.stringify(userData));
+            // Salvar os dados do usuário no localStorage
+            localStorage.setItem('userData', JSON.stringify(userData));
             // Redirecionar para a página principal
             window.location.href = 'index.html';
           } else {
@@ -136,6 +142,11 @@
           alert('Falha ao fazer login: ' + error.message);
         });
     });
+
+    // Remover dados do localStorage após uma hora de inatividade
+    setTimeout(() => {
+      localStorage.removeItem('userData');
+    }, 3600000); // 1 hora em milissegundos
   </script>
 </body>
 </html>
