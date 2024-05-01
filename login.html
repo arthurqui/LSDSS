@@ -16,7 +16,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh; /* Garante que o conteúdo ocupa a tela inteira */
       margin: 0;
     }
 
@@ -31,6 +31,13 @@
     h1 {
       color: #333;
       font-size: 3rem; /* Tamanho grande */
+      margin-bottom: 10px; /* Espaçamento inferior */
+      text-align: center;
+    }
+
+    h2 {
+      color: #666;
+      font-size: 1.3rem; /* Tamanho menor */
       margin-bottom: 30px; /* Espaçamento inferior */
       text-align: center;
     }
@@ -49,7 +56,16 @@
       font-size: 12px; /* Tamanho de fonte menor */
     }
 
-
+    /* Estilo para o rodapé */
+    .footer {
+      background-color: #0f243e;
+      color: #fff;
+      padding: 10px;
+      text-align: right;
+      position: fixed; /* Fixa o rodapé na parte inferior */
+      width: 100%; /* Largura total */
+      bottom: 0; /* Alinha ao final da tela */
+    }
   </style>
 
   <!-- Bootstrap JavaScript (opcional) -->
@@ -62,6 +78,8 @@
   <div class="container">
     <!-- Título da página -->
     <h1>LSDSS</h1>
+    <!-- Subtítulo -->
+    <h2>Legacy Software Documentation Storage System</h2>
 
     <!-- Formulário de login -->
     <form id="loginForm">
@@ -78,6 +96,11 @@
     <div id="forgotPasswordLink">
       <a href="forgot.html">Esqueci minha senha</a>
     </div>
+  </div>
+
+  <!-- Rodapé -->
+  <div class="footer">
+    Arthur Quintanilha Neto
   </div>
 
   <!-- Firebase JavaScript -->
