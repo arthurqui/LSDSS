@@ -24,24 +24,54 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .documento-img {
-      max-width: 100%;
-      height: auto;
+    .documento-header {
+      display: flex;
+      align-items: center;
       margin-bottom: 20px;
+    }
+
+    .documento-img {
+      max-width: 50px;
+      height: auto;
+      margin-right: 20px;
+    }
+
+    #titulo {
+      margin: 0;
+      font-size: 24px; /* Tamanho normal da fonte */
+    }
+
+    .info-container {
+      margin-top: 20px;
+    }
+
+    .info-container p {
+      margin: 5px 0;
+    }
+
+    /* Media query para dispositivos móveis */
+    @media (max-width: 767px) {
+      #titulo {
+        font-size: 20px; /* Tamanho menor da fonte para dispositivos móveis */
+      }
     }
   </style>
 </head>
 <body>
   <div class="documento-container">
-    <h2 id="titulo"></h2>
-    <img id="imagem" class="documento-img">
-    <p><strong>Data:</strong> <span id="data"></span></p>
-    <p><strong>Email do Usuário:</strong> <span id="emailUsuario"></span></p>
-    <p><strong>Nome do Usuário:</strong> <span id="nomeUsuario"></span></p>
-    <p><strong>CPF do Usuário:</strong> <span id="cpfUsuario"></span></p>
-    <p><strong>Status:</strong> <span id="status"></span></p>
-    <p><strong>Conteúdo:</strong></p>
-    <p id="conteudo"></p>
+    <div class="documento-header">
+      <img id="imagem" class="documento-img">
+      <h2 id="titulo"></h2>
+    </div>
+    <div class="info-container">
+      <p><strong>Data:</strong> <span id="data"></span></p>
+      <p><strong>Email do Usuário:</strong> <span id="emailUsuario"></span></p>
+      <p><strong>Nome do Usuário:</strong> <span id="nomeUsuario"></span></p>
+      <p><strong>CPF do Usuário:</strong> <span id="cpfUsuario"></span></p>
+      <p><strong>Status:</strong> <span id="status"></span></p>
+      <p><strong>Conteúdo:</strong></p>
+      <p id="conteudo"></p>
+    </div>
   </div>
 
   <button class="btn btn-secondary" onclick="closeTab()">Voltar</button>
