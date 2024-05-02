@@ -63,7 +63,16 @@
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    // Função para carregar os dados do documento da URL
+    // Função para verificar se há dados de usuário salvos no localStorage
+    function checkUserData() {
+      const userDataString = localStorage.getItem('userData');
+      if (!userDataString) {
+        // Se não houver dados do usuário, redirecione para a página de login
+        window.location.href = 'login.html';
+      }
+    }
+
+    // Carregar os dados do documento ao carregar a página
     function loadDocumentData() {
       var titulo = getParameterByName('titulo');
       var imagem = getParameterByName('imagem');
@@ -89,7 +98,10 @@
     }
 
     // Carregar os dados do documento ao carregar a página
-    window.onload = loadDocumentData;
+    window.onload = function() {
+      checkUserData();
+      loadDocumentData();
+    };
   </script>
 </body>
 </html>
