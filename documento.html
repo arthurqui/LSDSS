@@ -55,6 +55,42 @@
         font-size: 20px; /* Tamanho menor da fonte para dispositivos móveis */
       }
     }
+
+    /* Estilo para os botões flutuantes */
+    .floating-button {
+      position: fixed;
+      bottom: 20px;
+      width: 60px; /* Tamanho do botão */
+      height: 60px;
+      border-radius: 50%; /* Torna o botão redondo */
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+      z-index: 9999; /* Garante que o botão fique sobreposto a outros elementos */
+    }
+
+    /* Ícone dos botões flutuantes */
+    .floating-button img {
+      height: 60%; /* Ajusta a altura do ícone */
+      width: auto;
+    }
+
+    /* Estilo específico para o botão flutuante de voltar */
+    .floating-back-button {
+      left: 20px;
+      background-color: #183452; /* Cor de fundo do botão */
+      color: #fff;
+    }
+
+    /* Estilo específico para o botão flutuante de edição */
+    .floating-edit-button {
+      right: 20px;
+      background-color: #183452; /* Cor de fundo do botão */
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -74,8 +110,17 @@
     </div>
   </div>
 
-  <button class="btn btn-secondary" onclick="closeTab()">Voltar</button>
+  <!-- Botão flutuante de voltar -->
+  <button id="backButton" class="floating-button floating-back-button" onclick="closeTab()">
+    <img src="https://png.pngtree.com/png-vector/20220623/ourmid/pngtree-back-arrow-backward-direction-previous-png-image_5198415.png" alt="Voltar">
+  </button>
 
+  <!-- Botão flutuante de edição -->
+  <button id="editButton" class="floating-button floating-edit-button" style="display: none;">
+    <img src="https://cdn-icons-png.flaticon.com/512/505/505159.png" alt="Editar">
+  </button>
+
+  <!-- Scripts JavaScript -->
   <script>
     // Função para fechar a guia atual
     function closeTab() {
@@ -99,6 +144,38 @@
       if (!userDataString) {
         // Se não houver dados do usuário, redirecione para a página de login
         window.location.href = 'login.html';
+      }
+    }
+
+    // Função para verificar se o usuário é um administrador
+    function isAdmin() {
+      const userDataString = localStorage.getItem('userData');
+      if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        const user = Object.values(userData)[0];
+        return user.admin === true;
+      }
+      return false;
+    }
+
+    // Função para verificar se o usuário é o mesmo que criou o documento
+    function isSameUserAsDocument() {
+      const userDataString = localStorage.getItem('userData');
+      const cpfUsuario = getParameterByName('cpfUsuario');
+      if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        const user = Object.values(userData)[0];
+        return user.cpf === cpfUsuario;
+      }
+      return false;
+    }
+
+    // Função para verificar as condições e exibir o botão de edição
+    function showEditButton() {
+      const isAdminUser = isAdmin();
+      const isSameUser = isSameUserAsDocument();
+      if (isAdminUser || isSameUser) {
+        document.getElementById('editButton').style.display = 'block';
       }
     }
 
@@ -131,6 +208,7 @@
     window.onload = function() {
       checkUserData();
       loadDocumentData();
+      showEditButton();
     };
   </script>
 </body>
