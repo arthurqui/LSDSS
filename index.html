@@ -339,6 +339,20 @@
           push(documentosRef, novoDocumento)
             .then((snapshot) => {
               console.log('Documento salvo com sucesso:', snapshot.key);
+              // Constrói a URL para a página do documento
+              const urlDocumento = `/documento.html?titulo=${encodeURIComponent(titulo)}&imagem=${encodeURIComponent(imagem)}&conteudo=${encodeURIComponent(null)}&data=${encodeURIComponent(novoDocumento.data)}&cpfUsuario=${encodeURIComponent(cpfUsuario)}&emailUsuario=${encodeURIComponent(emailUsuario)}&nomeUsuario=${encodeURIComponent(nomeUsuario)}&status=${encodeURIComponent('iniciado')}`;
+              // Abre a página do documento em uma nova aba
+              window.open(urlDocumento, '_blank');
+
+              // Fecha o modal após salvar o documento
+              $('#myModal').modal('hide');
+
+              // Limpa os campos do formulário dentro do modal
+              document.getElementById('imagem').value = '';
+              document.getElementById('titulo').value = '';
+
+              // Atualiza a lista de documentos na página index.html
+              carregarDocumentacoes();
             })
             .catch((error) => {
               console.error('Erro ao salvar o documento:', error);
@@ -421,15 +435,13 @@ function carregarDocumentacoes() {
 
 // Função para redirecionar para a página do documento com os dados do documento como parâmetros
 function redirectToDocument(documento) {
-  // Constrói a URL com os parâmetros do documento
-  const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}`;
-  // Redireciona para a página do documento
-  window.open(url, '_blank');
-}
-
-
-
-  </script>
+    // Constrói a URL com os parâmetros do documento
+    const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}`;
+    // Redireciona para a página do documento
+    window.open(url, '_blank');
+    
+  }
+</script>
   
 </body>
 </html>
