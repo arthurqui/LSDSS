@@ -91,6 +91,64 @@
       background-color: #183452; /* Cor de fundo do botão */
       color: #fff;
     }
+
+    /* Estilo para os campos de texto editáveis */
+    .editable-field {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px;
+      margin-bottom: 10px;
+      width: calc(100% - 12px); /* Ajusta a largura do campo */
+    }
+
+    /* Estilo para os rótulos (labels) */
+    .field-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    /* Estilo para o botão "Adicionar Parágrafo" */
+    #addParagraphButton {
+      position: fixed;
+      bottom: 90px; /* Ajusta a posição para que fique abaixo do botão de edição */
+      left: 20px;
+      width: calc(100% - 40px); /* Ajusta a largura para que fique alinhado com os outros botões */
+      background-color: #183452;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    /* Estilo para o botão "Salvar" */
+    #saveButton {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: calc(50% - 30px);
+      background-color: #2ecc71; /* Tom mais claro de verde */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    /* Estilo para o botão "Cancelar" */
+    #cancelButton {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: calc(50% - 30px);
+      background-color: #e74c3c; /* Tom mais claro de vermelho */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -116,9 +174,18 @@
   </button>
 
   <!-- Botão flutuante de edição -->
-  <button id="editButton" class="floating-button floating-edit-button" style="display: none;">
+  <button id="editButton" class="floating-button floating-edit-button" style="display: none;" onclick="enableEditing()">
     <img src="https://cdn-icons-png.flaticon.com/512/505/505159.png" alt="Editar">
   </button>
+
+  <!-- Botão para adicionar parágrafo -->
+  <button id="addParagraphButton" style="display: none;" onclick="addParagraph()">Adicionar Parágrafo</button>
+
+  <!-- Botão "Salvar" -->
+  <button id="saveButton" style="display: none;">Salvar</button>
+
+  <!-- Botão "Cancelar" -->
+  <button id="cancelButton" style="display: none;" onclick="cancelEditing()">Cancelar</button>
 
   <!-- Scripts JavaScript -->
   <script>
@@ -170,13 +237,75 @@
       return false;
     }
 
-    // Função para verificar as condições e exibir o botão de edição
+    // Exibir o botão de edição se o usuário for um administrador ou o mesmo que criou o documento
     function showEditButton() {
       const isAdminUser = isAdmin();
       const isSameUser = isSameUserAsDocument();
+      const editButton = document.getElementById('editButton');
       if (isAdminUser || isSameUser) {
-        document.getElementById('editButton').style.display = 'block';
+        editButton.style.display = 'block';
       }
+    }
+
+    // Habilitar a edição dos campos de texto
+    function enableEditing() {
+      const tituloElement = document.getElementById('titulo');
+      const imagemElement = document.getElementById('imagem');
+      
+      // Criar campos de texto editáveis
+      const inputTitulo = document.createElement('input');
+      inputTitulo.setAttribute('type', 'text');
+      inputTitulo.setAttribute('class', 'editable-field');
+      inputTitulo.value = tituloElement.innerText;
+      
+      const inputImagem = document.createElement('input');
+      inputImagem.setAttribute('type', 'text');
+      inputImagem.setAttribute('class', 'editable-field');
+      inputImagem.value = imagemElement.src;
+      
+      // Criar rótulos (labels) para os campos de texto
+      const labelTitulo = document.createElement('label');
+      labelTitulo.setAttribute('for', 'titulo');
+      labelTitulo.setAttribute('class', 'field-label');
+      labelTitulo.innerText = 'Título do Documento';
+      
+      const labelImagem = document.createElement('label');
+      labelImagem.setAttribute('for', 'imagem');
+      labelImagem.setAttribute('class', 'field-label');
+      labelImagem.innerText = 'URL da Imagem';
+      
+      // Adicionar os elementos à página
+      tituloElement.parentNode.insertBefore(labelTitulo, tituloElement);
+      tituloElement.parentNode.replaceChild(inputTitulo, tituloElement);
+      
+      imagemElement.parentNode.insertBefore(labelImagem, imagemElement);
+      imagemElement.parentNode.replaceChild(inputImagem, imagemElement);
+
+      // Exibir os botões "Salvar" e "Cancelar"
+      const saveButton = document.getElementById('saveButton');
+      saveButton.style.display = 'block';
+
+      const cancelButton = document.getElementById('cancelButton');
+      cancelButton.style.display = 'block';
+
+      // Ocultar o botão de edição
+      const editButton = document.getElementById('editButton');
+      editButton.style.display = 'none';
+
+      // Exibir o botão "Adicionar Parágrafo"
+      const addParagraphButton = document.getElementById('addParagraphButton');
+      addParagraphButton.style.display = 'block';
+    }
+
+    // Cancelar a edição dos campos de texto
+    function cancelEditing() {
+      // Recarregar a página para cancelar as edições
+      window.location.reload();
+    }
+
+    // Função para adicionar um parágrafo ao conteúdo
+    function addParagraph() {
+      // Implemente a lógica para adicionar um parágrafo ao conteúdo aqui
     }
 
     // Carregar os dados do documento ao carregar a página
