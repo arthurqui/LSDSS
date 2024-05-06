@@ -182,7 +182,7 @@
   <button id="addParagraphButton" style="display: none;" onclick="addParagraph()">Adicionar Parágrafo</button>
 
   <!-- Botão "Salvar" -->
-  <button id="saveButton" style="display: none;">Salvar</button>
+  <button id="saveButton" style="display: none;" onclick="saveData()">Salvar</button>
 
   <!-- Botão "Cancelar" -->
   <button id="cancelButton" style="display: none;" onclick="cancelEditing()">Cancelar</button>
@@ -303,6 +303,53 @@
       window.location.reload();
     }
 
+    // Função para salvar os dados editados no Firebase
+function saveData() {
+  // Captura dos valores editados nos campos de texto
+  const editableFields = document.getElementsByClassName('editable-field');
+  const novoTitulo = editableFields[1].value; // O segundo campo é o título
+  const novaImagem = editableFields[0].value; // O primeiro campo é a imagem
+
+  // Verifica se os elementos foram encontrados antes de acessar suas propriedades
+  if (editableFields.length >= 2) {
+    // Captura da data e CPF do usuário a partir dos parâmetros da URL
+    const data = getParameterByName('data');
+    const cpfUsuario = getParameterByName('cpfUsuario');
+
+    // Atualização dos dados no Firebase
+    const database = firebase.database();
+    // Consulta para encontrar o documento com a mesma data e CPF do usuário
+    database.ref('documentacao').orderByChild('data').equalTo(data).once('value', snapshot => {
+      // Verifica se há algum documento correspondente
+      if (snapshot.exists()) {
+        // Captura do ID do primeiro documento correspondente
+        const docId = Object.keys(snapshot.val())[0];
+        // Atualização dos dados no documento encontrado
+        const docRef = database.ref('documentacao/' + docId);
+        docRef.update({
+          nomeDoc: novoTitulo,
+          capaDoc: novaImagem
+          // Não estamos atualizando o conteúdo aqui, pois não está claro como ele é editado
+        }).then(() => {
+          alert('Dados atualizados com sucesso!');
+          // Redireciona para a página de visualização do documento
+          window.location.href = 'documento.html?data=' + data + '&cpfUsuario=' + cpfUsuario; // Ajuste aqui se necessário
+        }).catch((error) => {
+          console.error('Erro ao atualizar os dados:', error);
+          alert('Erro ao atualizar os dados. Consulte o console para mais informações.');
+        });
+      } else {
+        console.error('Nenhum documento correspondente encontrado.');
+        alert('Erro ao salvar os dados. Nenhum documento correspondente encontrado.');
+      }
+    });
+  } else {
+    console.error('Elementos não encontrados no DOM.');
+    alert('Erro ao salvar os dados. Elementos não encontrados no DOM.');
+  }
+}
+
+
     // Função para adicionar um parágrafo ao conteúdo
     function addParagraph() {
       // Implemente a lógica para adicionar um parágrafo ao conteúdo aqui
@@ -339,6 +386,27 @@
       loadDocumentData();
       showEditButton();
     };
+  </script>
+
+  <!-- Firebase JavaScript -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+
+  <script>
+    // Configurações do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC41KIa9wdb3Vevjwno89SNt4U0vsPIaMo",
+      authDomain: "bdkdb-e8ee5.firebaseapp.com",
+      databaseURL: "https://bdkdb-e8ee5-default-rtdb.firebaseio.com",
+      projectId: "bdkdb-e8ee5",
+      storageBucket: "bdkdb-e8ee5.appspot.com",
+      messagingSenderId: "129625246761",
+      appId: "1:129625246761:web:dbcabee42d53da7a422038",
+      measurementId: "G-WG2MJDR4Q9"
+    };
+
+    // Inicialização do Firebase
+    const firebaseApp = firebase.initializeApp(firebaseConfig);
   </script>
 </body>
 </html>
