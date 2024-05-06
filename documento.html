@@ -303,7 +303,7 @@
       window.location.reload();
     }
 
-    // Função para salvar os dados editados no Firebase
+// Função para salvar os dados editados no Firebase
 function saveData() {
   // Captura dos valores editados nos campos de texto
   const editableFields = document.getElementsByClassName('editable-field');
@@ -331,9 +331,9 @@ function saveData() {
           capaDoc: novaImagem
           // Não estamos atualizando o conteúdo aqui, pois não está claro como ele é editado
         }).then(() => {
-          alert('Dados atualizados com sucesso!');
-          // Redireciona para a página de visualização do documento
-          window.location.href = 'documento.html?data=' + data + '&cpfUsuario=' + cpfUsuario; // Ajuste aqui se necessário
+          alert('Dados atualizados com sucesso! Volte para página inicial e atualize para ver alterações');
+          // Fecha a aba
+          window.close();
         }).catch((error) => {
           console.error('Erro ao atualizar os dados:', error);
           alert('Erro ao atualizar os dados. Consulte o console para mais informações.');
@@ -348,6 +348,7 @@ function saveData() {
     alert('Erro ao salvar os dados. Elementos não encontrados no DOM.');
   }
 }
+
 
 
     // Função para adicionar um parágrafo ao conteúdo
