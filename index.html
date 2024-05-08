@@ -368,17 +368,18 @@
     // Adiciona um ouvinte de evento de clique ao botão de salvar do modal
     document.getElementById('btnSalvarModal').addEventListener('click', salvarDocumento);
 
-    // Função para carregar as documentações iniciadas
+// Função para carregar as documentações iniciadas e prontas
 function carregarDocumentacoes() {
   const documentacoesList = document.getElementById('documentacoesList');
   // Limpa a lista antes de adicionar novos elementos
   documentacoesList.innerHTML = '';
-  // Realiza uma consulta no banco de dados para obter as documentações com status 'iniciado'
+  // Realiza uma consulta no banco de dados para obter as documentações com status 'iniciado' e 'pronto'
   get(documentosRef)
     .then((snapshot) => {
       snapshot.forEach((childSnapshot) => {
         const documento = childSnapshot.val();
-        if (documento.status === 'iniciado') {
+        // Verifica se o status é 'iniciado' ou 'pronto'
+        if (documento.status === 'iniciado' || documento.status === 'pronto') {
           // Cria um novo elemento de lista
           const listItem = document.createElement('div');
           listItem.classList.add('documentacoes-item');
@@ -405,6 +406,8 @@ function carregarDocumentacoes() {
       console.error('Erro ao carregar as documentações:', error);
     });
 }
+
+
     // Chama a função para carregar as documentações ao carregar a página
     document.addEventListener('DOMContentLoaded', carregarDocumentacoes);
   </script>

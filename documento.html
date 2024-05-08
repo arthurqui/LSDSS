@@ -315,6 +315,7 @@
 </div>
 
 <script>
+  
   // Função para abrir o modal
   function openModal() {
     const modal = document.getElementById('modal');
@@ -650,10 +651,27 @@ function saveData() {
         const docRef = database.ref('documentacao/' + docId);
         docRef.update({
           nomeDoc: novoTitulo,
-          capaDoc: novaImagem
+          capaDoc: novaImagem,
           // Não estamos atualizando o conteúdo aqui, pois não está claro como ele é editado
         }).then(() => {
-          alert('Dados atualizados com sucesso! Volte para página inicial e atualize para ver alterações');
+          alert('Dados atualizados com sucesso!');
+
+          // Verificar se existe ao menos um parágrafo no documento
+          const paragrafos = document.querySelectorAll('.paragrafo-container');
+          if (paragrafos.length > 0) {
+            // Se existir ao menos um parágrafo, atualizar o status do documento para "pronto"
+            docRef.update({
+              status: 'pronto'
+            }).then(() => {
+              alert('Status do documento atualizado para "pronto"');
+            }).catch((error) => {
+              console.error('Erro ao atualizar o status do documento:', error);
+              alert('Erro ao atualizar o status do documento. Consulte o console para mais informações.');
+            });
+          } else {
+            alert('Não existem parágrafos no documento.');
+          }
+          
           // Fecha a aba
           window.close();
         }).catch((error) => {
@@ -673,6 +691,7 @@ function saveData() {
 
 
 
+
     // Função para adicionar um parágrafo ao conteúdo
     function addParagraph() {
       // Implemente a lógica para adicionar um parágrafo ao conteúdo aqui
@@ -682,7 +701,6 @@ function saveData() {
     function loadDocumentData() {
       var titulo = getParameterByName('titulo');
       var imagem = getParameterByName('imagem');
-      var conteudo = getParameterByName('conteudo');
       var data = getParameterByName('data');
       var cpfUsuario = getParameterByName('cpfUsuario');
       var emailUsuario = getParameterByName('emailUsuario');
@@ -692,7 +710,6 @@ function saveData() {
       // Exibir os dados no HTML
       document.getElementById('titulo').innerText = titulo;
       document.getElementById('imagem').src = imagem;
-      document.getElementById('conteudo').innerText = conteudo;
       document.getElementById('data').innerText = data;
       document.getElementById('cpfUsuario').innerText = cpfUsuario;
       document.getElementById('emailUsuario').innerText = emailUsuario;
