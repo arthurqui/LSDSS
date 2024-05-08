@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Parágrafos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos CSS personalizados -->
+    <style>
+        body {
+            background-color: #f2f4f6;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Garante que o conteúdo ocupa a tela inteira */
+            margin: 0;
+        }
+
+        .container {
+            width: 400px; /* Ajustando a largura do container */
+            padding: 30px;
+            background-color: #fff; /* Fundo branco */
+            border-radius: 10px; /* Bordas arredondadas */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+            margin-top: 30px; /* Adicionando margem superior para separar do topo */
+        }
+
+        h1 {
+            color: #333;
+            font-size: 3rem; /* Tamanho grande */
+            margin-bottom: 10px; /* Espaçamento inferior */
+            text-align: center;
+        }
+
+        h2 {
+            color: #666;
+            font-size: 1.3rem; /* Tamanho menor */
+            margin-bottom: 30px; /* Espaçamento inferior */
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Espaçamento inferior */
+        }
+
+        .btn {
+            width: 100%; /* Largura total */
+        }
+
+        /* Estilo para o link "Esqueci minha senha" */
+        #forgotPasswordLink {
+            text-align: right; /* Alinhamento à direita */
+            font-size: 12px; /* Tamanho de fonte menor */
+        }
+
+        /* Estilo para o rodapé */
+        .footer {
+            background-color: #0f243e;
+            color: #fff;
+            padding: 10px;
+            text-align: right;
+            position: fixed; /* Fixa o rodapé na parte inferior */
+            width: 100%; /* Largura total */
+            bottom: 0; /* Alinha ao final da tela */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Título da página -->
+        <h1>Editar Parágrafos</h1>
+
+        <!-- Subtítulo -->
+        <h2>Criar aqui a lógica de edição de parágrafos de um documento específico lendo os valores do URL.</h2>
+
+        <!-- Exibindo os valores obtidos na página -->
+        <p>Data: <span id="data"></span></p>
+        <p>CPF do Usuário: <span id="cpfUsuario"></span></p>
+    </div>
+
+   
+
+    <!-- Bootstrap JavaScript (opcional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Função para obter os parâmetros da URL
+        function getURLParams() {
+            const searchParams = new URLSearchParams(window.location.search);
+            const params = {};
+            for (const [key, value] of searchParams.entries()) {
+                params[key] = value;
+            }
+            return params;
+        }
+
+        // Obtendo os parâmetros da URL
+        const urlParams = getURLParams();
+        const data = urlParams['data'];
+        const cpfUsuario = urlParams['cpfUsuario'];
+
+        // Exibindo os valores obtidos na página
+        document.getElementById('data').textContent = data;
+        document.getElementById('cpfUsuario').textContent = cpfUsuario;
+    </script>
+</body>
+</html>

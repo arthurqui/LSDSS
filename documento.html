@@ -122,6 +122,20 @@
       cursor: pointer;
     }
 
+    /* Estilo para o botão "Editar Parágrafos" */
+#editParagraphButton {
+  position: fixed;
+  bottom: 160px; /* Ajusta a posição para que fique acima do botão de adicionar parágrafo */
+  left: 20px;
+  width: calc(100% - 40px); /* Ajusta a largura para que fique alinhado com os outros botões */
+  background-color: #183452;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
     /* Estilo para o botão "Salvar" */
     #saveButton {
       position: fixed;
@@ -533,11 +547,13 @@ paragrafos.forEach((paragrafo, index) => {
       }
     }
 
-    // Habilitar a edição dos campos de texto
-function enableEditing() {
+    function enableEditing() {
   const tituloElement = document.getElementById('titulo');
   const imagemElement = document.getElementById('imagem');
   
+  // Verificar se existe pelo menos um parágrafo-container
+  const hasParagraphContainer = document.querySelector('.paragrafo-container') !== null;
+
   // Criar campos de texto editáveis
   const inputTitulo = document.createElement('input');
   inputTitulo.setAttribute('type', 'text');
@@ -582,24 +598,30 @@ function enableEditing() {
   const addParagraphButton = document.getElementById('addParagraphButton');
   addParagraphButton.style.display = 'block';
 
-  // Adicionar botões "Editar Parágrafo" aos parágrafos existentes
-  const paragrafoContainers = document.querySelectorAll('.paragrafo-container');
-  paragrafoContainers.forEach(container => {
-    // Crie o botão "Editar Parágrafo"
-    const editarParagrafoButton = document.createElement('button');
-    editarParagrafoButton.innerText = 'Editar Parágrafo';
-    editarParagrafoButton.classList.add('editar-paragrafo-button');
-    editarParagrafoButton.onclick = function() {
-      // Lógica para habilitar a edição do parágrafo correspondente
-      // Você pode implementar essa lógica conforme necessário
-      // Por exemplo, abrir um modal de edição específico para o parágrafo clicado
-      alert('Editar parágrafo ' + container.dataset.paragrafoId);
-    };
+  // Se houver pelo menos um parágrafo-container, exibir o botão "Editar Parágrafos"
+if (hasParagraphContainer) {
+  const editParagraphButton = document.createElement('button');
+  editParagraphButton.setAttribute('id', 'editParagraphButton');
+  editParagraphButton.innerText = 'Editar Parágrafos';
+  addParagraphButton.parentNode.insertBefore(editParagraphButton, addParagraphButton.nextSibling);
+  editParagraphButton.style.display = 'block';
 
-    // Adicione o botão ao container de parágrafo
-    container.appendChild(editarParagrafoButton);
+  // Adicionar evento de clique ao botão "Editar Parágrafos"
+  editParagraphButton.addEventListener('click', function() {
+    // Obter a data e o CPF do usuário do documento
+    const data = document.getElementById('data').innerText;
+    const cpfUsuario = document.getElementById('cpfUsuario').innerText;
+
+    // Construir a URL com os parâmetros
+    const url = `editarparagrafos.html?data=${encodeURIComponent(data)}&cpfUsuario=${encodeURIComponent(cpfUsuario)}`;
+
+    // Abrir a página editarparagrafos.html
+    window.location.href = url;
   });
 }
+
+}
+
 
 
     // Percorra todos os containers de parágrafo e adicione o botão "Editar Parágrafo"
