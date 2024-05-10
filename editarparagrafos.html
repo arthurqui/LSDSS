@@ -20,52 +20,115 @@
         }
 
         .container {
-            width: 400px; /* Ajustando a largura do container */
+            width: 100%; /* Ajustando a largura do container */
             padding: 30px;
             background-color: #fff; /* Fundo branco */
             border-radius: 10px; /* Bordas arredondadas */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
             margin-top: 30px; /* Adicionando margem superior para separar do topo */
+            position: relative; /* Necessário para o posicionamento absoluto do botão flutuante */
         }
 
         h1 {
             color: #333;
             font-size: 3rem; /* Tamanho grande */
-            margin-bottom: 10px; /* Espaçamento inferior */
+            margin-bottom: 20px; /* Espaçamento inferior */
             text-align: center;
         }
 
         h2 {
             color: #666;
-            font-size: 1.3rem; /* Tamanho menor */
+            font-size: 1.5rem; /* Tamanho menor */
             margin-bottom: 30px; /* Espaçamento inferior */
             text-align: center;
         }
 
-        .form-group {
-            margin-bottom: 20px; /* Espaçamento inferior */
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+            table-layout: fixed; /* Define a largura das células */
+        }
+
+        .table th,
+        .table td {
+            padding: 1.25rem;
+            vertical-align: middle;
+            border-top: 1px solid #dee2e6;
+            border-left: 1px solid #dee2e6;
+            text-align: center;
+            word-wrap: break-word; /* Quebra de linha automática */
+            max-height: 100px; /* Altura máxima da célula */
+            overflow-y: auto; /* Adiciona scroll vertical quando necessário */
+        }
+
+        .table th:first-child,
+        .table td:first-child {
+            border-left: none; /* Remove borda esquerda da primeira coluna */
+        }
+
+        .table th:last-child,
+        .table td:last-child {
+            border-right: none; /* Remove borda direita da última coluna */
         }
 
         .btn {
-            width: 100%; /* Largura total */
+            width: 30px; /* Largura dos botões */
+            padding: 0; /* Remover padding */
+            height: 30px; /* Altura dos botões */
         }
 
-        /* Estilo para o link "Esqueci minha senha" */
-        #forgotPasswordLink {
-            text-align: right; /* Alinhamento à direita */
-            font-size: 12px; /* Tamanho de fonte menor */
+        .btn img {
+            max-width: 100%; /* Ajusta o tamanho máximo da imagem */
+            height: auto; /* Altura automática para manter proporções */
         }
 
-        /* Estilo para o rodapé */
-        .footer {
-            background-color: #0f243e;
+        .paragrafo-col {
+            width: 50%; /* Largura da coluna do parágrafo */
+        }
+
+        /* Estilo específico para o botão flutuante de edição */
+        .floating-edit-button {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 60px; /* Tamanho do botão */
+            height: 60px;
+            background-color: #183452; /* Cor de fundo do botão */
             color: #fff;
-            padding: 10px;
-            text-align: right;
-            position: fixed; /* Fixa o rodapé na parte inferior */
-            width: 100%; /* Largura total */
-            bottom: 0; /* Alinha ao final da tela */
+            border: none;
+            border-radius: 50%; /* Torna o botão redondo */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+            z-index: 9999; /* Garante que o botão fique sobreposto a outros elementos */
         }
+
+        .edit-input {
+            width: 100%; /* Garante que o campo de texto ocupe toda a largura da célula */
+        }
+
+        .save-button {
+    margin-top: 20px;
+    text-align: center;
+    display: none; /* Inicialmente oculto */
+}
+
+.save-button .btn {
+    width: 120px; /* Largura maior */
+    height: 40px; /* Altura maior */
+    background-color: #183452; /* Cor #183452 */
+    color: #fff;
+}
+
+.save-button .btn:hover {
+    background-color: #0f2438; /* Cor de hover */
+}
+
+        
     </style>
 </head>
 <body>
@@ -74,39 +137,173 @@
         <h1>Editar Parágrafos</h1>
 
         <!-- Subtítulo -->
-        <h2>Criar aqui a lógica de edição de parágrafos de um documento específico lendo os valores do URL.</h2>
+        <h2>Lista de Parágrafos</h2>
 
-        <!-- Exibindo os valores obtidos na página -->
-        <p>Data: <span id="data"></span></p>
-        <p>CPF do Usuário: <span id="cpfUsuario"></span></p>
+        <!-- Lista de Parágrafos -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Imagem 1</th>
+                    <th class="paragrafo-col">Parágrafo</th>
+                    <th style="width: 15%;">Imagem 2</th>
+                    <th style="width: 10%;">Excluir</th>
+                </tr>
+            </thead>
+            <tbody id="paragrafosList">
+                <!-- Os parágrafos serão adicionados dinamicamente aqui -->
+            </tbody>
+        </table>
+
+
+        <button class="floating-edit-button" onclick="enableEditing()">
+            <img src="https://cdn-icons-png.flaticon.com/512/505/505159.png" alt="Editar" style="height: 60%;">
+        </button>
+
+        <!-- Botão para salvar as edições -->
+        <div class="save-button" id="saveButton">
+            <button class="btn btn-primary" onclick="saveChanges()">Salvar</button>
+        </div>
     </div>
 
-   
-
-    <!-- Bootstrap JavaScript (opcional) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
 
     <script>
-        // Função para obter os parâmetros da URL
-        function getURLParams() {
-            const searchParams = new URLSearchParams(window.location.search);
-            const params = {};
-            for (const [key, value] of searchParams.entries()) {
-                params[key] = value;
-            }
-            return params;
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC41KIa9wdb3Vevjwno89SNt4U0vsPIaMo",
+            authDomain: "bdkdb-e8ee5.firebaseapp.com",
+            databaseURL: "https://bdkdb-e8ee5-default-rtdb.firebaseio.com",
+            projectId: "bdkdb-e8ee5",
+            storageBucket: "bdkdb-e8ee5.appspot.com",
+            messagingSenderId: "129625246761",
+            appId: "1:129625246761:web:dbcabee42d53da7a422038",
+            measurementId: "G-WG2MJDR4Q9"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Função para exibir os parágrafos do Firebase
+function displayParagrafos(data, cpfUsuario) {
+    const paragrafosList = document.getElementById('paragrafosList');
+    paragrafosList.innerHTML = ''; // Limpa a lista antes de adicionar novos parágrafos
+
+    // Armazena os parágrafos no sessionStorage
+    sessionStorage.setItem('paragrafos', JSON.stringify(data));
+
+    // Itera sobre os parágrafos recuperados do Firebase
+    data.forEach(paragrafo => {
+        // Verifica se o parágrafo corresponde ao CPF do usuário e à data
+        if (paragrafo.cpfUsuario === cpfUsuario && paragrafo.dataDocumento === getUrlParameter('data')) {
+            const row = document.createElement('tr');
+
+            // Cria a célula de imagem 1
+            const img1Cell = document.createElement('td');
+            img1Cell.textContent = paragrafo.imagem1;
+            row.appendChild(img1Cell);
+
+            // Cria a célula de parágrafo
+            const paragrafoCell = document.createElement('td');
+            paragrafoCell.textContent = paragrafo.paragrafo;
+            paragrafoCell.classList.add('paragrafo-col'); // Adiciona a classe para definir a largura
+            row.appendChild(paragrafoCell);
+
+            // Cria a célula de imagem 2
+            const img2Cell = document.createElement('td');
+            img2Cell.textContent = paragrafo.imagem2;
+            row.appendChild(img2Cell);
+
+            // Cria a célula de excluir
+            const excluirCell = document.createElement('td');
+            const excluirButton = document.createElement('button');
+            excluirButton.className = 'btn';
+            const excluirIcon = document.createElement('img');
+            excluirIcon.src = 'https://images.emojiterra.com/mozilla/512px/1f5d1.png';
+            excluirButton.appendChild(excluirIcon);
+            excluirCell.appendChild(excluirButton);
+            row.appendChild(excluirCell);
+
+            // Adiciona a linha à tabela
+            paragrafosList.appendChild(row);
+        }
+    });
+}
+
+        // Função para obter parâmetros da URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Obtendo os parâmetros da URL
-        const urlParams = getURLParams();
-        const data = urlParams['data'];
-        const cpfUsuario = urlParams['cpfUsuario'];
+        // Função para carregar parágrafos do Firebase
+        function loadParagrafos() {
+            const cpfUsuario = getUrlParameter('cpfUsuario');
 
-        // Exibindo os valores obtidos na página
-        document.getElementById('data').textContent = data;
-        document.getElementById('cpfUsuario').textContent = cpfUsuario;
+            // Referência ao nó 'paragrafos' no Firebase
+            const paragrafosRef = firebase.database().ref('paragrafos');
+
+            // Escuta as alterações no nó 'paragrafos' e atualiza a lista quando os dados mudam
+            paragrafosRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                const paragrafos = [];
+                for (let key in data) {
+                    paragrafos.push(data[key]);
+                }
+                displayParagrafos(paragrafos, cpfUsuario);
+            });
+        }
+
+        // Função para habilitar a edição dos parágrafos
+        function enableEditing() {
+            const tableRows = document.querySelectorAll('#paragrafosList tr');
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
+                cells.forEach(cell => {
+                    const originalContent = cell.textContent;
+                    const inputField = document.createElement('input');
+                    inputField.setAttribute('type', 'text');
+                    inputField.setAttribute('value', originalContent);
+                    inputField.classList.add('edit-input');
+                    cell.textContent = '';
+                    cell.appendChild(inputField);
+                });
+            });
+            document.getElementById('saveButton').style.display = 'block'; // Mostra o botão de salvar
+        }
+
+        // Função para salvar as alterações
+function saveChanges() {
+    const tableRows = document.querySelectorAll('#paragrafosList tr');
+    const updatedParagrafos = JSON.parse(sessionStorage.getItem('paragrafos'));
+
+    tableRows.forEach((row, rowIndex) => {
+        const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
+
+        cells.forEach((cell, index) => {
+            updatedParagrafos[rowIndex][index === 1 ? 'paragrafo' : (index === 0 ? 'imagem1' : 'imagem2')] = cell.querySelector('.edit-input').value;
+        });
+    });
+
+    // Atualiza os valores no Firebase
+    const paragrafosRef = firebase.database().ref('paragrafos');
+    paragrafosRef.set(updatedParagrafos)
+        .then(() => {
+            console.log('Valores atualizados com sucesso!');
+            // Aqui você pode adicionar qualquer outra ação após a atualização bem-sucedida
+        })
+        .catch((error) => {
+            console.error('Erro ao atualizar os valores:', error);
+        });
+}
+
+        // Carrega os parágrafos ao carregar a página
+        window.onload = loadParagrafos;
     </script>
+
+    
 </body>
 </html>
