@@ -185,7 +185,6 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-        // Função para exibir os parágrafos do Firebase
 // Função para exibir os parágrafos do Firebase
 function displayParagrafos(data, cpfUsuario) {
     const paragrafosList = document.getElementById('paragrafosList');
@@ -195,12 +194,11 @@ function displayParagrafos(data, cpfUsuario) {
     sessionStorage.setItem('paragrafos', JSON.stringify(data));
 
     // Itera sobre os parágrafos recuperados do Firebase
-    data.forEach(paragrafo => {
+    data.forEach((paragrafo, index) => {
         // Verifica se o parágrafo corresponde ao CPF do usuário e à data
         if (paragrafo.cpfUsuario === cpfUsuario && paragrafo.dataDocumento === getUrlParameter('data')) {
             const row = document.createElement('tr');
-            row.setAttribute('data-documento', paragrafo.dataDocumento); // Define o atributo data-documento
-            row.setAttribute('data-cpf-usuario', paragrafo.cpfUsuario); // Define o atributo data-cpf-usuario
+            row.setAttribute('data-index', index); // Define o atributo data-index com o índice do parágrafo
 
             // Cria a célula de imagem 1
             const img1Cell = document.createElement('td');
@@ -235,6 +233,7 @@ function displayParagrafos(data, cpfUsuario) {
 }
 
 
+
         // Função para obter parâmetros da URL
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -262,68 +261,65 @@ function displayParagrafos(data, cpfUsuario) {
         }
 
         // Função para habilitar a edição dos parágrafos
-        function enableEditing() {
-            const tableRows = document.querySelectorAll('#paragrafosList tr');
-            tableRows.forEach(row => {
-                const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
-                cells.forEach(cell => {
-                    const originalContent = cell.textContent;
-                    const inputField = document.createElement('input');
-                    inputField.setAttribute('type', 'text');
-                    inputField.setAttribute('value', originalContent);
-                    inputField.classList.add('edit-input');
-                    cell.textContent = '';
-                    cell.appendChild(inputField);
-                });
-            });
-            document.getElementById('saveButton').style.display = 'block'; // Mostra o botão de salvar
-        }
+function enableEditing() {
+    const tableRows = document.querySelectorAll('#paragrafosList tr');
+    tableRows.forEach(row => {
+        const index = row.getAttribute('data-index'); // Obtém o índice do parágrafo
+        const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
+        cells.forEach(cell => {
+            const originalContent = cell.textContent;
+            const inputField = document.createElement('input');
+            inputField.setAttribute('type', 'text');
+            inputField.setAttribute('value', originalContent);
+            inputField.classList.add('edit-input');
+            cell.textContent = '';
+            cell.appendChild(inputField);
+        });
+        // Armazena o índice do parágrafo atualmente sendo editado
+        sessionStorage.setItem('editingIndex', index);
+    });
+    document.getElementById('saveButton').style.display = 'block'; // Mostra o botão de salvar
+}
 
        
-        function saveChanges() {
+        // Função para salvar as alterações
+function saveChanges() {
+    const updatedParagrafos = JSON.parse(sessionStorage.getItem('paragrafos'));
     const tableRows = document.querySelectorAll('#paragrafosList tr');
-    const storedParagrafos = JSON.parse(sessionStorage.getItem('paragrafos'));
 
-    tableRows.forEach((row, rowIndex) => {
-        const dataDocumento = row.getAttribute('data-documento');
-        const cpfUsuario = row.getAttribute('data-cpf-usuario');
-
-        console.log("Data do documento na tabela:", dataDocumento);
-        console.log("CPF do usuário na tabela:", cpfUsuario);
-
-        const editedParagrafoIndex = storedParagrafos.findIndex(paragrafo => paragrafo.dataDocumento === dataDocumento && paragrafo.cpfUsuario === cpfUsuario);
-        console.log("Index do parágrafo editado:", editedParagrafoIndex);
-
-        if (editedParagrafoIndex !== -1) {
-            const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
-
-            cells.forEach((cell, index) => {
-                const inputValue = cell.querySelector('.edit-input').value;
-                if (index === 1) { // Verifica se é a célula do parágrafo
-                    storedParagrafos[editedParagrafoIndex].paragrafo = inputValue; // Atualiza o parágrafo no sessionStorage
-                } else if (index === 0) { // Verifica se é a célula da imagem 1
-                    storedParagrafos[editedParagrafoIndex].imagem1 = inputValue; // Atualiza a imagem1 no sessionStorage
-                } else { // Caso contrário, é a célula da imagem 2
-                    storedParagrafos[editedParagrafoIndex].imagem2 = inputValue; // Atualiza a imagem2 no sessionStorage
+    tableRows.forEach((row) => {
+        const index = row.getAttribute('data-index');
+        const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
+        
+        if (index !== null) {
+            cells.forEach((cell, cellIndex) => {
+                const value = cell.querySelector('.edit-input').value;
+                if (cellIndex === 1) {
+                    updatedParagrafos[index].paragrafo = value;
+                } else if (cellIndex === 0) {
+                    updatedParagrafos[index].imagem1 = value;
+                } else {
+                    updatedParagrafos[index].imagem2 = value;
                 }
             });
         }
     });
 
-    console.log("Parágrafos atualizados no sessionStorage:", storedParagrafos);
+    // Atualiza os valores no sessionStorage
+    sessionStorage.setItem('paragrafos', JSON.stringify(updatedParagrafos));
 
     // Atualiza os valores no Firebase
     const paragrafosRef = firebase.database().ref('paragrafos');
-    paragrafosRef.set(storedParagrafos)
+    paragrafosRef.set(updatedParagrafos)
         .then(() => {
             console.log('Valores atualizados com sucesso!');
-            // Atualiza a exibição dos parágrafos na página
-            displayParagrafos(storedParagrafos, getUrlParameter('cpfUsuario'));
+            // Aqui você pode adicionar qualquer outra ação após a atualização bem-sucedida
         })
         .catch((error) => {
             console.error('Erro ao atualizar os valores:', error);
         });
 }
+
 
 
 
