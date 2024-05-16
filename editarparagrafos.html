@@ -357,19 +357,18 @@ function deleteParagrafo(rowIndex) {
         }
 
        // Função para habilitar a edição dos parágrafos e atribuir eventos aos botões de exclusão
-function enableEditing() {
+       function enableEditing() {
     const tableRows = document.querySelectorAll('#paragrafosList tr');
     tableRows.forEach(row => {
         const index = row.getAttribute('data-index'); // Obtém o índice do parágrafo
         const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
         cells.forEach(cell => {
             const originalContent = cell.textContent;
-            const inputField = document.createElement('input');
-            inputField.setAttribute('type', 'text');
-            inputField.setAttribute('value', originalContent);
-            inputField.classList.add('edit-input');
+            const textareaField = document.createElement('textarea');
+            textareaField.textContent = originalContent;
+            textareaField.classList.add('edit-input');
             cell.textContent = '';
-            cell.appendChild(inputField);
+            cell.appendChild(textareaField);
         });
 
         // Armazena o índice do parágrafo atualmente sendo editado
@@ -387,6 +386,7 @@ function enableEditing() {
 
     document.getElementById('saveButton').style.display = 'block'; // Mostra o botão de salvar
 }
+
 
 
 
