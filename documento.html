@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Documento</title>
-  
+
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -38,7 +39,8 @@
 
     #titulo {
       margin: 0;
-      font-size: 24px; /* Tamanho normal da fonte */
+      font-size: 24px;
+      /* Tamanho normal da fonte */
     }
 
     .info-container {
@@ -52,7 +54,8 @@
     /* Media query para dispositivos móveis */
     @media (max-width: 767px) {
       #titulo {
-        font-size: 20px; /* Tamanho menor da fonte para dispositivos móveis */
+        font-size: 20px;
+        /* Tamanho menor da fonte para dispositivos móveis */
       }
     }
 
@@ -60,35 +63,42 @@
     .floating-button {
       position: fixed;
       bottom: 20px;
-      width: 60px; /* Tamanho do botão */
+      width: 60px;
+      /* Tamanho do botão */
       height: 60px;
-      border-radius: 50%; /* Torna o botão redondo */
+      border-radius: 50%;
+      /* Torna o botão redondo */
       border: none;
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
-      z-index: 9999; /* Garante que o botão fique sobreposto a outros elementos */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* Sombra */
+      z-index: 9999;
+      /* Garante que o botão fique sobreposto a outros elementos */
     }
 
     /* Ícone dos botões flutuantes */
     .floating-button img {
-      height: 60%; /* Ajusta a altura do ícone */
+      height: 60%;
+      /* Ajusta a altura do ícone */
       width: auto;
     }
 
     /* Estilo específico para o botão flutuante de voltar */
     .floating-back-button {
       left: 20px;
-      background-color: #183452; /* Cor de fundo do botão */
+      background-color: #183452;
+      /* Cor de fundo do botão */
       color: #fff;
     }
 
     /* Estilo específico para o botão flutuante de edição */
     .floating-edit-button {
       right: 20px;
-      background-color: #183452; /* Cor de fundo do botão */
+      background-color: #183452;
+      /* Cor de fundo do botão */
       color: #fff;
     }
 
@@ -98,7 +108,8 @@
       border-radius: 5px;
       padding: 5px;
       margin-bottom: 10px;
-      width: calc(100% - 12px); /* Ajusta a largura do campo */
+      width: calc(100% - 12px);
+      /* Ajusta a largura do campo */
     }
 
     /* Estilo para os rótulos (labels) */
@@ -108,12 +119,29 @@
       display: block;
     }
 
-    /* Estilo para o botão "Adicionar Parágrafo" */
-    #addParagraphButton {
+
+
+    /* Estilo para o botão "deletar" */
+    #deleteButton {
       position: fixed;
-      bottom: 90px; /* Ajusta a posição para que fique abaixo do botão de edição */
+      bottom: 20px;
       left: 20px;
-      width: calc(100% - 40px); /* Ajusta a largura para que fique alinhado com os outros botões */
+      width: calc(100% - 40px);
+      background-color: #1f2124;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+
+    /* Estilo para o botão "Editar Parágrafos" */
+    #editParagraphButton {
+      position: fixed;
+      bottom: 140px;
+      left: 20px;
+      width: calc(50% - 30px);
       background-color: #183452;
       color: #fff;
       border: none;
@@ -122,27 +150,28 @@
       cursor: pointer;
     }
 
-    /* Estilo para o botão "Editar Parágrafos" */
-#editParagraphButton {
-  position: fixed;
-  bottom: 160px; /* Ajusta a posição para que fique acima do botão de adicionar parágrafo */
-  left: 20px;
-  width: calc(100% - 40px); /* Ajusta a largura para que fique alinhado com os outros botões */
-  background-color: #183452;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  cursor: pointer;
-}
+    /* Estilo para o botão "Adicionar Parágrafo" */
+    #addParagraphButton {
+      position: fixed;
+      bottom: 140px;
+      right: 20px;
+      width: calc(50% - 30px);
+      background-color: #183452;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
 
     /* Estilo para o botão "Salvar" */
     #saveButton {
       position: fixed;
-      bottom: 20px;
+      bottom: 80px;
       left: 20px;
       width: calc(50% - 30px);
-      background-color: #2ecc71; /* Tom mais claro de verde */
+      background-color: #2ecc71;
+      /* Tom mais claro de verde */
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -153,10 +182,11 @@
     /* Estilo para o botão "Cancelar" */
     #cancelButton {
       position: fixed;
-      bottom: 20px;
+      bottom: 80px;
       right: 20px;
       width: calc(50% - 30px);
-      background-color: #e74c3c; /* Tom mais claro de vermelho */
+      background-color: #e74c3c;
+      /* Tom mais claro de vermelho */
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -165,91 +195,108 @@
     }
 
     /* Estilo para o modal */
-.modal {
-  display: none; /* Oculta o modal por padrão */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-}
+    .modal {
+      display: none;
+      /* Oculta o modal por padrão */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+    }
 
-/* Estilo para o overlay escuro */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Cor escura com transparência */
-}
+    /* Estilo para o overlay escuro */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Cor escura com transparência */
+    }
 
-/* Estilo para o conteúdo do modal */
-.modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  z-index: 10000; /* Certifique-se de que o conteúdo do modal esteja acima do overlay */
-}
+    /* Estilo para o conteúdo do modal */
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      z-index: 10000;
+      /* Certifique-se de que o conteúdo do modal esteja acima do overlay */
+    }
 
-/* Estilo para o botão de fechar */
-.close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
+    /* Estilo para o botão de fechar */
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
 
-/* Outros estilos para o conteúdo do modal */
-/* ... */
+    /* Outros estilos para o conteúdo do modal */
+    /* ... */
 
-/* Media query para telas maiores que 767px (desktop) */
-@media (min-width: 768px) {
-  .modal-content {
-    width: 80%; /* Defina a largura desejada para o modal */
-    max-width: 600px; /* Defina a largura máxima desejada para o modal */
-    margin: 0 auto; /* Centraliza o modal na tela */
-  }
-}
+    /* Media query para telas maiores que 767px (desktop) */
+    @media (min-width: 768px) {
+      .modal-content {
+        width: 80%;
+        /* Defina a largura desejada para o modal */
+        max-width: 600px;
+        /* Defina a largura máxima desejada para o modal */
+        margin: 0 auto;
+        /* Centraliza o modal na tela */
+      }
+    }
 
-/* Estilo para o container de parágrafos */
-.paragrafo-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px; /* Espaçamento entre os parágrafos */
-}
+    /* Estilo para o container de parágrafos */
+    .paragrafo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      /* Espaçamento entre os parágrafos */
+    }
 
-/* Estilo para as imagens dentro dos parágrafos */
-.paragrafo-imagem {
-  width: 40%; /* Definindo o tamanho da imagem */
-  max-width: 100px; /* Limitando a largura máxima da imagem */
-  max-height: 100px; /* Limitando a altura da imagem */
-  margin-right: 10px; /* Espaçamento entre os elementos */
-  display: flex;
-  justify-content: center; /* Centralizando a imagem horizontalmente */
-  align-items: center; /* Centralizando a imagem verticalmente */
-  overflow: hidden; /* Para garantir que a imagem não ultrapasse o contêiner */
-}
+    /* Estilo para as imagens dentro dos parágrafos */
+    .paragrafo-imagem {
+      width: 40%;
+      /* Definindo o tamanho da imagem */
+      max-width: 100px;
+      /* Limitando a largura máxima da imagem */
+      max-height: 100px;
+      /* Limitando a altura da imagem */
+      margin-right: 10px;
+      /* Espaçamento entre os elementos */
+      display: flex;
+      justify-content: center;
+      /* Centralizando a imagem horizontalmente */
+      align-items: center;
+      /* Centralizando a imagem verticalmente */
+      overflow: hidden;
+      /* Para garantir que a imagem não ultrapasse o contêiner */
+    }
 
-/* Estilo para as imagens dentro dos parágrafos */
-.paragrafo-imagem img {
-  width: auto; /* Para garantir que a largura da imagem seja ajustada automaticamente */
-  max-height: 100%; /* Garantir que a imagem não ultrapasse a altura do contêiner */
-}
+    /* Estilo para as imagens dentro dos parágrafos */
+    .paragrafo-imagem img {
+      width: auto;
+      /* Para garantir que a largura da imagem seja ajustada automaticamente */
+      max-height: 100%;
+      /* Garantir que a imagem não ultrapasse a altura do contêiner */
+    }
 
-/* Estilo para o texto do parágrafo */
-.paragrafo-texto {
-  flex-grow: 1; /* Permite que o texto ocupe o espaço restante */
-}
-
+    /* Estilo para o texto do parágrafo */
+    .paragrafo-texto {
+      flex-grow: 1;
+      /* Permite que o texto ocupe o espaço restante */
+    }
   </style>
 </head>
+
 <body>
   <div class="documento-container">
     <div class="documento-header">
@@ -283,7 +330,9 @@
 
   <!-- Botão flutuante de voltar -->
   <button id="backButton" class="floating-button floating-back-button" onclick="closeTab()">
-    <img src="https://png.pngtree.com/png-vector/20220623/ourmid/pngtree-back-arrow-backward-direction-previous-png-image_5198415.png" alt="Voltar">
+    <img
+      src="https://png.pngtree.com/png-vector/20220623/ourmid/pngtree-back-arrow-backward-direction-previous-png-image_5198415.png"
+      alt="Voltar">
   </button>
 
   <!-- Botão flutuante de edição -->
@@ -300,6 +349,10 @@
   <!-- Botão "Cancelar" -->
   <button id="cancelButton" style="display: none;" onclick="cancelEditing()">Cancelar</button>
 
+  <!-- Botão "Deletar" -->
+  <button id="deleteButton" style="display: none;" onclick="deleteDocument()">Deletar</button>
+
+
   <!-- Modal para adicionar parágrafo -->
   <div id="modal" class="modal">
     <div class="modal-overlay" onclick="closeModal()"></div> <!-- Overlay escuro -->
@@ -307,112 +360,113 @@
       <span class="close" onclick="closeModal()">&times;</span>
       <h2>Adicionar Parágrafo</h2>
       <form id="paragraphForm">
-      <div class="form-group">
-        <label for="imagem1">Imagem 1:</label>
-        <input type="text" id="imagem1" class="form-control" disabled>
-        <input type="checkbox" id="checkImagem1" onchange="toggleField('imagem1')">
-      </div>
-      <div class="form-group">
-        <label for="paragrafo">Parágrafo:</label>
-        <textarea id="paragrafo" class="form-control" disabled></textarea>
-        <input type="checkbox" id="checkParagrafo" onchange="toggleField('paragrafo')">
-      </div>
-      <div class="form-group">
-        <label for="imagem2">Imagem 2:</label>
-        <input type="text" id="imagem2" class="form-control" disabled>
-        <input type="checkbox" id="checkImagem2" onchange="toggleField('imagem2')">
-      </div>
-      <button type="button" onclick="saveParagraph()" class="btn btn-primary">Salvar</button>
-      <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancelar</button>
-    </form>
+        <div class="form-group">
+          <label for="imagem1">Imagem 1:</label>
+          <input type="text" id="imagem1" class="form-control" disabled>
+          <input type="checkbox" id="checkImagem1" onchange="toggleField('imagem1')">
+        </div>
+        <div class="form-group">
+          <label for="paragrafo">Parágrafo:</label>
+          <textarea id="paragrafo" class="form-control" disabled></textarea>
+          <input type="checkbox" id="checkParagrafo" onchange="toggleField('paragrafo')">
+        </div>
+        <div class="form-group">
+          <label for="imagem2">Imagem 2:</label>
+          <input type="text" id="imagem2" class="form-control" disabled>
+          <input type="checkbox" id="checkImagem2" onchange="toggleField('imagem2')">
+        </div>
+        <button type="button" onclick="saveParagraph()" class="btn btn-primary">Salvar</button>
+        <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancelar</button>
+      </form>
+    </div>
   </div>
-</div>
 
-<script>
-  
-  // Função para abrir o modal
-  function openModal() {
-    const modal = document.getElementById('modal');
-    modal.style.display = 'block';
-  }
+  <script>
 
-  // Função para fechar o modal
-  function closeModal() {
-    const modal = document.getElementById('modal');
-    modal.style.display = 'none';
-    // Limpar os campos do formulário
-    document.getElementById('paragraphForm').reset();
-  }
+    // Função para abrir o modal
+    function openModal() {
+      const modal = document.getElementById('modal');
+      modal.style.display = 'block';
+    }
 
-  // Função para habilitar/desabilitar campos de formulário com base no estado do checkbox
-  function toggleField(fieldId) {
-    const checkbox = document.getElementById('check' + fieldId.charAt(0).toUpperCase() + fieldId.slice(1));
-    const field = document.getElementById(fieldId);
-    field.disabled = !checkbox.checked;
-  }
+    // Função para fechar o modal
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.style.display = 'none';
+      // Limpar os campos do formulário
+      document.getElementById('paragraphForm').reset();
+    }
 
-  // Função para obter a data e hora atual no formato desejado
-function getCurrentDateTime() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-}
+    // Função para habilitar/desabilitar campos de formulário com base no estado do checkbox
+    function toggleField(fieldId) {
+      const checkbox = document.getElementById('check' + fieldId.charAt(0).toUpperCase() + fieldId.slice(1));
+      const field = document.getElementById(fieldId);
+      field.disabled = !checkbox.checked;
+    }
 
-// Função para salvar o parágrafo no Firebase
-function saveParagraph() {
-  // Captura dos valores dos campos de texto
-  const imagem1 = document.getElementById('imagem1').value.trim();
-  const paragrafo = document.getElementById('paragrafo').value.trim();
-  const imagem2 = document.getElementById('imagem2').value.trim();
-  
-  // Verifica se pelo menos um dos campos está preenchido
-  if (imagem1 || paragrafo || imagem2) {
-    const database = firebase.database();
-    const dataDocumento = getParameterByName('data');
-    const cpfUsuario = getParameterByName('cpfUsuario');
-    const emailUsuario = getParameterByName('emailUsuario');
-    const nomeUsuario = getParameterByName('nomeUsuario');
+    // Função para obter a data e hora atual no formato desejado
+    function getCurrentDateTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
 
-    // Obter a data e hora atual no formato desejado
-    const dataParagrafo = getCurrentDateTime();
+    // Função para salvar o parágrafo no Firebase
+    function saveParagraph() {
+      // Captura dos valores dos campos de texto
+      const imagem1 = document.getElementById('imagem1').value.trim();
+      const paragrafo = document.getElementById('paragrafo').value.trim();
+      const imagem2 = document.getElementById('imagem2').value.trim();
 
-    // Salvar os dados no Firebase
-    database.ref('paragrafos').push({
-      imagem1: imagem1,
-      paragrafo: paragrafo,
-      imagem2: imagem2,
-      dataDocumento: dataDocumento,
-      cpfUsuario: cpfUsuario,
-      emailUsuario: emailUsuario,
-      nomeUsuario: nomeUsuario,
-      dataParagrafo: dataParagrafo // Adiciona a data do parágrafo
-    }).then(() => {
-      alert('Parágrafo salvo com sucesso!');
-      closeModal();
-    }).catch((error) => {
-      console.error('Erro ao salvar o parágrafo:', error);
-      alert('Erro ao salvar o parágrafo. Consulte o console para mais informações.');
-    });
-  } else {
-    alert('Por favor, preencha pelo menos um dos formulários antes de salvar.');
-  }
-}
+      // Verifica se pelo menos um dos campos está preenchido
+      if (imagem1 || paragrafo || imagem2) {
+        const database = firebase.database();
+        const dataDocumento = getParameterByName('data');
+        const cpfUsuario = getParameterByName('cpfUsuario');
+        const emailUsuario = getParameterByName('emailUsuario');
+        const nomeUsuario = getParameterByName('nomeUsuario');
+
+        // Obter a data e hora atual no formato desejado
+        const dataParagrafo = getCurrentDateTime();
+
+        // Salvar os dados no Firebase
+        database.ref('paragrafos').push({
+          imagem1: imagem1,
+          paragrafo: paragrafo,
+          imagem2: imagem2,
+          dataDocumento: dataDocumento,
+          cpfUsuario: cpfUsuario,
+          emailUsuario: emailUsuario,
+          nomeUsuario: nomeUsuario,
+          dataParagrafo: dataParagrafo // Adiciona a data do parágrafo
+        }).then(() => {
+          alert('Parágrafo salvo com sucesso!');
+          closeModal();
+          loadParagraphs();
+        }).catch((error) => {
+          console.error('Erro ao salvar o parágrafo:', error);
+          alert('Erro ao salvar o parágrafo. Consulte o console para mais informações.');
+        });
+      } else {
+        alert('Por favor, preencha pelo menos um dos formulários antes de salvar.');
+      }
+    }
 
 
 
-</script>
-  
+  </script>
+
 
   <!-- Scripts JavaScript -->
   <script>
-    // Função para fechar a guia atual
+    // Função para voltar
     function closeTab() {
-      window.close();
+      window.history.back();
     }
 
     // Função para obter parâmetros da URL
@@ -420,7 +474,7 @@ function saveParagraph() {
       if (!url) url = window.location.href;
       name = name.replace(/[\[\]]/g, '\\$&');
       var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-          results = regex.exec(url);
+        results = regex.exec(url);
       if (!results) return null;
       if (!results[2]) return '';
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
@@ -458,7 +512,9 @@ function saveParagraph() {
       return false;
     }
 
-// Função para carregar os parágrafos do Firebase
+
+
+    // Função para carregar os parágrafos do Firebase
 function loadParagraphs() {
   // Captura dos valores de cpfUsuario e dataDocumento da URL
   const cpfUsuario = getParameterByName('cpfUsuario');
@@ -471,6 +527,13 @@ function loadParagraphs() {
   paragrafosRef.once('value', snapshot => {
     // Array para armazenar os parágrafos que correspondem ao documento
     const paragrafos = [];
+
+    // Verifica se há parágrafos já carregados na tela
+    const conteudoContainer = document.getElementById('conteudo');
+    if (conteudoContainer.children.length > 0) {
+      // Limpa os parágrafos existentes
+      conteudoContainer.innerHTML = '';
+    }
 
     // Verifica se há parágrafos
     if (snapshot.exists()) {
@@ -487,53 +550,49 @@ function loadParagraphs() {
       });
 
       // Exibe os parágrafos no HTML
-const conteudoContainer = document.getElementById('conteudo');
-paragrafos.forEach((paragrafo, index) => {
-  // Verifica se pelo menos um dos valores não está vazio
-  if (paragrafo.imagem1 || paragrafo.paragrafo || paragrafo.imagem2) {
-    // Crie um container para o parágrafo
-    const container = document.createElement('div');
-    container.classList.add('paragrafo-container');
-    container.dataset.paragrafoId = index; // Adiciona um atributo data para identificar o parágrafo
+      paragrafos.forEach((paragrafo, index) => {
+        // Verifica se pelo menos um dos valores não está vazio
+        if (paragrafo.imagem1 || paragrafo.paragrafo || paragrafo.imagem2) {
+          // Crie um container para o parágrafo
+          const container = document.createElement('div');
+          container.classList.add('paragrafo-container');
+          container.dataset.paragrafoId = index; // Adiciona um atributo data para identificar o parágrafo
 
+          // Cria um elemento para a imagem1 se não estiver vazio
+          if (paragrafo.imagem1) {
+            const imagem1 = document.createElement('img');
+            imagem1.src = paragrafo.imagem1;
+            imagem1.classList.add('paragrafo-imagem');
+            container.appendChild(imagem1);
+          }
 
-    // Cria um elemento para a imagem1 se não estiver vazio
-    if (paragrafo.imagem1) {
-      const imagem1 = document.createElement('img');
-      imagem1.src = paragrafo.imagem1;
-      imagem1.classList.add('paragrafo-imagem');
-      container.appendChild(imagem1);
-    }
+          // Cria um elemento para o parágrafo central se não estiver vazio
+          if (paragrafo.paragrafo) {
+            const paragrafoCentral = document.createElement('p');
+            paragrafoCentral.innerText = paragrafo.paragrafo;
+            paragrafoCentral.classList.add('paragrafo-texto');
+            container.appendChild(paragrafoCentral);
+          }
 
-    // Cria um elemento para o parágrafo central se não estiver vazio
-    if (paragrafo.paragrafo) {
-      const paragrafoCentral = document.createElement('p');
-      paragrafoCentral.innerText = paragrafo.paragrafo;
-      paragrafoCentral.classList.add('paragrafo-texto');
-      container.appendChild(paragrafoCentral);
-    }
+          // Cria um elemento para a imagem2 se não estiver vazio
+          if (paragrafo.imagem2) {
+            const imagem2 = document.createElement('img');
+            imagem2.src = paragrafo.imagem2;
+            imagem2.classList.add('paragrafo-imagem');
+            container.appendChild(imagem2);
+          }
 
-    // Cria um elemento para a imagem2 se não estiver vazio
-    if (paragrafo.imagem2) {
-      const imagem2 = document.createElement('img');
-      imagem2.src = paragrafo.imagem2;
-      imagem2.classList.add('paragrafo-imagem');
-      container.appendChild(imagem2);
-    }
-
-    
-
-    // Adiciona o container ao conteúdo
-    conteudoContainer.appendChild(container);
-  }
-});
+          // Adiciona o container ao conteúdo
+          conteudoContainer.appendChild(container);
+        }
+      });
     } else {
       console.log('Nenhum parágrafo encontrado.');
     }
   });
+}
 
   
-}
 
 
 
@@ -548,99 +607,102 @@ paragrafos.forEach((paragrafo, index) => {
     }
 
     function enableEditing() {
-  const tituloElement = document.getElementById('titulo');
-  const imagemElement = document.getElementById('imagem');
-  
-  // Verificar se existe pelo menos um parágrafo-container
-  const hasParagraphContainer = document.querySelector('.paragrafo-container') !== null;
+      const tituloElement = document.getElementById('titulo');
+      const imagemElement = document.getElementById('imagem');
 
-  // Criar campos de texto editáveis
-  const inputTitulo = document.createElement('input');
-  inputTitulo.setAttribute('type', 'text');
-  inputTitulo.setAttribute('class', 'editable-field');
-  inputTitulo.value = tituloElement.innerText;
-  
-  const inputImagem = document.createElement('input');
-  inputImagem.setAttribute('type', 'text');
-  inputImagem.setAttribute('class', 'editable-field');
-  inputImagem.value = imagemElement.src;
-  
-  // Criar rótulos (labels) para os campos de texto
-  const labelTitulo = document.createElement('label');
-  labelTitulo.setAttribute('for', 'titulo');
-  labelTitulo.setAttribute('class', 'field-label');
-  labelTitulo.innerText = 'Título do Documento';
-  
-  const labelImagem = document.createElement('label');
-  labelImagem.setAttribute('for', 'imagem');
-  labelImagem.setAttribute('class', 'field-label');
-  labelImagem.innerText = 'URL da Imagem';
-  
-  // Adicionar os elementos à página
-  tituloElement.parentNode.insertBefore(labelTitulo, tituloElement);
-  tituloElement.parentNode.replaceChild(inputTitulo, tituloElement);
-  
-  imagemElement.parentNode.insertBefore(labelImagem, imagemElement);
-  imagemElement.parentNode.replaceChild(inputImagem, imagemElement);
+      // Verificar se existe pelo menos um parágrafo-container
+      const hasParagraphContainer = document.querySelector('.paragrafo-container') !== null;
 
-  // Exibir os botões "Salvar" e "Cancelar"
-  const saveButton = document.getElementById('saveButton');
-  saveButton.style.display = 'block';
+      // Criar campos de texto editáveis
+      const inputTitulo = document.createElement('input');
+      inputTitulo.setAttribute('type', 'text');
+      inputTitulo.setAttribute('class', 'editable-field');
+      inputTitulo.value = tituloElement.innerText;
 
-  const cancelButton = document.getElementById('cancelButton');
-  cancelButton.style.display = 'block';
+      const inputImagem = document.createElement('input');
+      inputImagem.setAttribute('type', 'text');
+      inputImagem.setAttribute('class', 'editable-field');
+      inputImagem.value = imagemElement.src;
 
-  // Ocultar o botão de edição
-  const editButton = document.getElementById('editButton');
-  editButton.style.display = 'none';
+      // Criar rótulos (labels) para os campos de texto
+      const labelTitulo = document.createElement('label');
+      labelTitulo.setAttribute('for', 'titulo');
+      labelTitulo.setAttribute('class', 'field-label');
+      labelTitulo.innerText = 'Título do Documento';
 
-  // Exibir o botão "Adicionar Parágrafo"
-  const addParagraphButton = document.getElementById('addParagraphButton');
-  addParagraphButton.style.display = 'block';
+      const labelImagem = document.createElement('label');
+      labelImagem.setAttribute('for', 'imagem');
+      labelImagem.setAttribute('class', 'field-label');
+      labelImagem.innerText = 'URL da Imagem';
 
-  // Se houver pelo menos um parágrafo-container, exibir o botão "Editar Parágrafos"
-if (hasParagraphContainer) {
-  const editParagraphButton = document.createElement('button');
-  editParagraphButton.setAttribute('id', 'editParagraphButton');
-  editParagraphButton.innerText = 'Editar Parágrafos';
-  addParagraphButton.parentNode.insertBefore(editParagraphButton, addParagraphButton.nextSibling);
-  editParagraphButton.style.display = 'block';
+      // Adicionar os elementos à página
+      tituloElement.parentNode.insertBefore(labelTitulo, tituloElement);
+      tituloElement.parentNode.replaceChild(inputTitulo, tituloElement);
 
-  // Adicionar evento de clique ao botão "Editar Parágrafos"
-  editParagraphButton.addEventListener('click', function() {
-    // Obter a data e o CPF do usuário do documento
-    const data = document.getElementById('data').innerText;
-    const cpfUsuario = document.getElementById('cpfUsuario').innerText;
+      imagemElement.parentNode.insertBefore(labelImagem, imagemElement);
+      imagemElement.parentNode.replaceChild(inputImagem, imagemElement);
 
-    // Construir a URL com os parâmetros
-    const url = `editarparagrafos.html?data=${encodeURIComponent(data)}&cpfUsuario=${encodeURIComponent(cpfUsuario)}`;
+      // Exibir os botões "Salvar" e "Cancelar"
+      const saveButton = document.getElementById('saveButton');
+      saveButton.style.display = 'block';
 
-    // Abrir a página editarparagrafos.html
-    window.location.href = url;
-  });
-}
+      const cancelButton = document.getElementById('cancelButton');
+      cancelButton.style.display = 'block';
 
-}
+      const deletButton = document.getElementById('deleteButton');
+      deletButton.style.display = 'block';
+
+      // Ocultar o botão de edição
+      const editButton = document.getElementById('editButton');
+      editButton.style.display = 'none';
+
+      // Exibir o botão "Adicionar Parágrafo"
+      const addParagraphButton = document.getElementById('addParagraphButton');
+      addParagraphButton.style.display = 'block';
+
+      // Se houver pelo menos um parágrafo-container, exibir o botão "Editar Parágrafos"
+      if (hasParagraphContainer) {
+        const editParagraphButton = document.createElement('button');
+        editParagraphButton.setAttribute('id', 'editParagraphButton');
+        editParagraphButton.innerText = 'Editar Parágrafos';
+        addParagraphButton.parentNode.insertBefore(editParagraphButton, addParagraphButton.nextSibling);
+        editParagraphButton.style.display = 'block';
+
+        // Adicionar evento de clique ao botão "Editar Parágrafos"
+        editParagraphButton.addEventListener('click', function () {
+          // Obter a data e o CPF do usuário do documento
+          const data = document.getElementById('data').innerText;
+          const cpfUsuario = document.getElementById('cpfUsuario').innerText;
+
+          // Construir a URL com os parâmetros
+          const url = `editarparagrafos.html?data=${encodeURIComponent(data)}&cpfUsuario=${encodeURIComponent(cpfUsuario)}`;
+
+          // Abrir a página editarparagrafos.html
+          window.location.href = url;
+        });
+      }
+
+    }
 
 
 
     // Percorra todos os containers de parágrafo e adicione o botão "Editar Parágrafo"
-  const paragrafoContainers = document.querySelectorAll('.paragrafo-container');
-  paragrafoContainers.forEach(container => {
-    // Crie o botão "Editar Parágrafo"
-    const editarParagrafoButton = document.createElement('button');
-    editarParagrafoButton.innerText = 'Editar Parágrafo';
-    editarParagrafoButton.classList.add('editar-paragrafo-button');
-    editarParagrafoButton.onclick = function() {
-      // Lógica para habilitar a edição do parágrafo correspondente
-      // Você pode implementar essa lógica conforme necessário
-      // Por exemplo, abrir um modal de edição específico para o parágrafo clicado
-      alert('Editar parágrafo ' + container.dataset.paragrafoId);
-    };
+    const paragrafoContainers = document.querySelectorAll('.paragrafo-container');
+    paragrafoContainers.forEach(container => {
+      // Crie o botão "Editar Parágrafo"
+      const editarParagrafoButton = document.createElement('button');
+      editarParagrafoButton.innerText = 'Editar Parágrafo';
+      editarParagrafoButton.classList.add('editar-paragrafo-button');
+      editarParagrafoButton.onclick = function () {
+        // Lógica para habilitar a edição do parágrafo correspondente
+        // Você pode implementar essa lógica conforme necessário
+        // Por exemplo, abrir um modal de edição específico para o parágrafo clicado
+        alert('Editar parágrafo ' + container.dataset.paragrafoId);
+      };
 
-    // Adicione o botão ao container de parágrafo
-    container.appendChild(editarParagrafoButton);
-  });
+      // Adicione o botão ao container de parágrafo
+      container.appendChild(editarParagrafoButton);
+    });
 
     // Cancelar a edição dos campos de texto
     function cancelEditing() {
@@ -648,69 +710,125 @@ if (hasParagraphContainer) {
       window.location.reload();
     }
 
-// Função para salvar os dados editados no Firebase
-function saveData() {
-  // Captura dos valores editados nos campos de texto
-  const editableFields = document.getElementsByClassName('editable-field');
-  const novoTitulo = editableFields[1].value; // O segundo campo é o título
-  const novaImagem = editableFields[0].value; // O primeiro campo é a imagem
+    // Função para salvar os dados editados no Firebase
+    function saveData() {
+      // Captura dos valores editados nos campos de texto
+      const editableFields = document.getElementsByClassName('editable-field');
+      const novoTitulo = editableFields[1].value; // O segundo campo é o título
+      const novaImagem = editableFields[0].value; // O primeiro campo é a imagem
 
-  // Verifica se os elementos foram encontrados antes de acessar suas propriedades
-  if (editableFields.length >= 2) {
-    // Captura da data e CPF do usuário a partir dos parâmetros da URL
-    const data = getParameterByName('data');
-    const cpfUsuario = getParameterByName('cpfUsuario');
+      // Verifica se os elementos foram encontrados antes de acessar suas propriedades
+      if (editableFields.length >= 2) {
+        // Captura da data e CPF do usuário a partir dos parâmetros da URL
+        const data = getParameterByName('data');
+        const cpfUsuario = getParameterByName('cpfUsuario');
 
-    // Atualização dos dados no Firebase
-    const database = firebase.database();
-    // Consulta para encontrar o documento com a mesma data e CPF do usuário
-    database.ref('documentacao').orderByChild('data').equalTo(data).once('value', snapshot => {
-      // Verifica se há algum documento correspondente
-      if (snapshot.exists()) {
-        // Captura do ID do primeiro documento correspondente
-        const docId = Object.keys(snapshot.val())[0];
-        // Atualização dos dados no documento encontrado
-        const docRef = database.ref('documentacao/' + docId);
-        docRef.update({
-          nomeDoc: novoTitulo,
-          capaDoc: novaImagem,
-          // Não estamos atualizando o conteúdo aqui, pois não está claro como ele é editado
-        }).then(() => {
-          alert('Dados atualizados com sucesso!');
-
-          // Verificar se existe ao menos um parágrafo no documento
-          const paragrafos = document.querySelectorAll('.paragrafo-container');
-          if (paragrafos.length > 0) {
-            // Se existir ao menos um parágrafo, atualizar o status do documento para "pronto"
+        // Atualização dos dados no Firebase
+        const database = firebase.database();
+        // Consulta para encontrar o documento com a mesma data e CPF do usuário
+        database.ref('documentacao').orderByChild('data').equalTo(data).once('value', snapshot => {
+          // Verifica se há algum documento correspondente
+          if (snapshot.exists()) {
+            // Captura do ID do primeiro documento correspondente
+            const docId = Object.keys(snapshot.val())[0];
+            // Atualização dos dados no documento encontrado
+            const docRef = database.ref('documentacao/' + docId);
             docRef.update({
-              status: 'pronto'
+              nomeDoc: novoTitulo,
+              capaDoc: novaImagem,
+              // Não estamos atualizando o conteúdo aqui, pois não está claro como ele é editado
             }).then(() => {
-              alert('Status do documento atualizado para "pronto"');
+              alert('Dados atualizados com sucesso!');
+
+              // Verificar se existe ao menos um parágrafo no documento
+              const paragrafos = document.querySelectorAll('.paragrafo-container');
+              if (paragrafos.length > 0) {
+                // Se existir ao menos um parágrafo, atualizar o status do documento para "pronto"
+                docRef.update({
+                  status: 'pronto'
+                }).then(() => {
+                  alert('Status do documento atualizado para "pronto"');
+                }).catch((error) => {
+                  console.error('Erro ao atualizar o status do documento:', error);
+                  alert('Erro ao atualizar o status do documento. Consulte o console para mais informações.');
+                });
+              } else {
+                alert('Não existem parágrafos no documento.');
+              }
+
+              // volta para index
+              window.history.back();
             }).catch((error) => {
-              console.error('Erro ao atualizar o status do documento:', error);
-              alert('Erro ao atualizar o status do documento. Consulte o console para mais informações.');
+              console.error('Erro ao atualizar os dados:', error);
+              alert('Erro ao atualizar os dados. Consulte o console para mais informações.');
             });
           } else {
-            alert('Não existem parágrafos no documento.');
+            console.error('Nenhum documento correspondente encontrado.');
+            alert('Erro ao salvar os dados. Nenhum documento correspondente encontrado.');
           }
-          
-          // Fecha a aba
-          window.close();
-        }).catch((error) => {
-          console.error('Erro ao atualizar os dados:', error);
-          alert('Erro ao atualizar os dados. Consulte o console para mais informações.');
         });
       } else {
-        console.error('Nenhum documento correspondente encontrado.');
-        alert('Erro ao salvar os dados. Nenhum documento correspondente encontrado.');
+        console.error('Elementos não encontrados no DOM.');
+        alert('Erro ao salvar os dados. Elementos não encontrados no DOM.');
       }
-    });
-  } else {
-    console.error('Elementos não encontrados no DOM.');
-    alert('Erro ao salvar os dados. Elementos não encontrados no DOM.');
-  }
-}
+    }
 
+    function deleteDocument() {
+      // Captura dos valores editados nos campos de texto
+      const editableFields = document.getElementsByClassName('editable-field');
+      const novoTitulo = editableFields[1].value; // O segundo campo é o título
+      const novaImagem = editableFields[0].value; // O primeiro campo é a imagem
+
+      // Verifica se os elementos foram encontrados antes de acessar suas propriedades
+      if (editableFields.length >= 2) {
+        // Captura da data e CPF do usuário a partir dos parâmetros da URL
+        const data = getParameterByName('data');
+        const cpfUsuario = getParameterByName('cpfUsuario');
+
+        // Atualização dos dados no Firebase
+        const database = firebase.database();
+        // Consulta para encontrar o documento com a mesma data e CPF do usuário
+        database.ref('documentacao').orderByChild('data').equalTo(data).once('value', snapshot => {
+          // Verifica se há algum documento correspondente
+          if (snapshot.exists()) {
+            // Captura do ID do primeiro documento correspondente
+            const docId = Object.keys(snapshot.val())[0];
+            // Atualização dos dados no documento encontrado
+            const docRef = database.ref('documentacao/' + docId);
+            docRef.update({
+              nomeDoc: "deletado",
+              capaDoc: novaImagem,
+
+            }).then(() => {
+              alert('Dados atualizados com sucesso!');
+
+
+              docRef.update({
+                status: 'deletado'
+              }).then(() => {
+                alert('Status do documento atualizado para "deletado"');
+              }).catch((error) => {
+                console.error('Erro ao atualizar o status do documento:', error);
+                alert('Erro ao atualizar o status do documento. Consulte o console para mais informações.');
+              });
+
+
+              // Fecha a aba
+              window.history.back();
+            }).catch((error) => {
+              console.error('Erro ao atualizar os dados:', error);
+              alert('Erro ao atualizar os dados. Consulte o console para mais informações.');
+            });
+          } else {
+            console.error('Nenhum documento correspondente encontrado.');
+            alert('Erro ao salvar os dados. Nenhum documento correspondente encontrado.');
+          }
+        });
+      } else {
+        console.error('Elementos não encontrados no DOM.');
+        alert('Erro ao salvar os dados. Elementos não encontrados no DOM.');
+      }
+    }
 
 
 
@@ -742,8 +860,12 @@ function saveData() {
       document.title = titulo;
     }
 
+
+
+
+
     // Carregar os dados do documento ao carregar a página
-    window.onload = function() {
+    window.onload = function () {
       checkUserData();
       loadDocumentData();
       showEditButton();
@@ -772,4 +894,5 @@ function saveData() {
     const firebaseApp = firebase.initializeApp(firebaseConfig);
   </script>
 </body>
+
 </html>
