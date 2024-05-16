@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,31 +16,42 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Garante que o conteúdo ocupa a tela inteira */
+            min-height: 100vh;
+            /* Garante que o conteúdo ocupa a tela inteira */
             margin: 0;
         }
 
         .container {
-            width: 100%; /* Ajustando a largura do container */
+            width: 100%;
+            /* Ajustando a largura do container */
             padding: 30px;
-            background-color: #fff; /* Fundo branco */
-            border-radius: 10px; /* Bordas arredondadas */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
-            margin-top: 30px; /* Adicionando margem superior para separar do topo */
-            position: relative; /* Necessário para o posicionamento absoluto do botão flutuante */
+            background-color: #fff;
+            /* Fundo branco */
+            border-radius: 10px;
+            /* Bordas arredondadas */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Sombra */
+            margin-top: 30px;
+            /* Adicionando margem superior para separar do topo */
+            position: relative;
+            /* Necessário para o posicionamento absoluto do botão flutuante */
         }
 
         h1 {
             color: #333;
-            font-size: 3rem; /* Tamanho grande */
-            margin-bottom: 20px; /* Espaçamento inferior */
+            font-size: 3rem;
+            /* Tamanho grande */
+            margin-bottom: 20px;
+            /* Espaçamento inferior */
             text-align: center;
         }
 
         h2 {
             color: #666;
-            font-size: 1.5rem; /* Tamanho menor */
-            margin-bottom: 30px; /* Espaçamento inferior */
+            font-size: 1.5rem;
+            /* Tamanho menor */
+            margin-bottom: 30px;
+            /* Espaçamento inferior */
             text-align: center;
         }
 
@@ -48,7 +60,8 @@
             margin-bottom: 1rem;
             color: #212529;
             border-collapse: collapse;
-            table-layout: fixed; /* Define a largura das células */
+            table-layout: fixed;
+            /* Define a largura das células */
         }
 
         .table th,
@@ -58,34 +71,45 @@
             border-top: 1px solid #dee2e6;
             border-left: 1px solid #dee2e6;
             text-align: center;
-            word-wrap: break-word; /* Quebra de linha automática */
-            max-height: 100px; /* Altura máxima da célula */
-            overflow-y: auto; /* Adiciona scroll vertical quando necessário */
+            word-wrap: break-word;
+            /* Quebra de linha automática */
+            max-height: 100px;
+            /* Altura máxima da célula */
+            overflow-y: auto;
+            /* Adiciona scroll vertical quando necessário */
         }
 
         .table th:first-child,
         .table td:first-child {
-            border-left: none; /* Remove borda esquerda da primeira coluna */
+            border-left: none;
+            /* Remove borda esquerda da primeira coluna */
         }
 
         .table th:last-child,
         .table td:last-child {
-            border-right: none; /* Remove borda direita da última coluna */
+            border-right: none;
+            /* Remove borda direita da última coluna */
         }
 
         .btn {
-            width: 30px; /* Largura dos botões */
-            padding: 0; /* Remover padding */
-            height: 30px; /* Altura dos botões */
+            width: 30px;
+            /* Largura dos botões */
+            padding: 0;
+            /* Remover padding */
+            height: 30px;
+            /* Altura dos botões */
         }
 
         .btn img {
-            max-width: 100%; /* Ajusta o tamanho máximo da imagem */
-            height: auto; /* Altura automática para manter proporções */
+            max-width: 100%;
+            /* Ajusta o tamanho máximo da imagem */
+            height: auto;
+            /* Altura automática para manter proporções */
         }
 
         .paragrafo-col {
-            width: 50%; /* Largura da coluna do parágrafo */
+            width: 50%;
+            /* Largura da coluna do parágrafo */
         }
 
         /* Estilo específico para o botão flutuante de edição */
@@ -93,44 +117,79 @@
             position: fixed;
             right: 20px;
             bottom: 20px;
-            width: 60px; /* Tamanho do botão */
+            width: 60px;
+            /* Tamanho do botão */
             height: 60px;
-            background-color: #183452; /* Cor de fundo do botão */
+            background-color: #183452;
+            /* Cor de fundo do botão */
             color: #fff;
             border: none;
-            border-radius: 50%; /* Torna o botão redondo */
+            border-radius: 50%;
+            /* Torna o botão redondo */
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
-            z-index: 9999; /* Garante que o botão fique sobreposto a outros elementos  */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Sombra */
+            z-index: 9999;
+            /* Garante que o botão fique sobreposto a outros elementos  */
         }
 
+        /* Estilo específico para o botão flutuante de voltar */
+        .floating-back-button {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 60px;
+            /* Tamanho do botão */
+            height: 60px;
+            background-color: #183452;
+            /* Cor de fundo do botão */
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            /* Torna o botão redondo */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Sombra */
+            z-index: 9999;
+            /* Garante que o botão fique sobreposto a outros elementos */
+        }
+
+
         .edit-input {
-            width: 100%; /* Garante que o campo de texto ocupe toda a largura da célula */
+            width: 100%;
+            /* Garante que o campo de texto ocupe toda a largura da célula */
         }
 
         .save-button {
-    margin-top: 20px;
-    text-align: center;
-    display: none; /* Inicialmente oculto */
-}
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+            /* Inicialmente oculto */
+        }
 
-.save-button .btn {
-    width: 120px; /* Largura maior */
-    height: 40px; /* Altura maior */
-    background-color: #183452; /* Cor #183452 */
-    color: #fff;
-}
+        .save-button .btn {
+            width: 120px;
+            /* Largura maior */
+            height: 40px;
+            /* Altura maior */
+            background-color: #183452;
+            /* Cor #183452 */
+            color: #fff;
+        }
 
-.save-button .btn:hover {
-    background-color: #0f2438; /* Cor de hover */
-}
-
-        
+        .save-button .btn:hover {
+            background-color: #0f2438;
+            /* Cor de hover */
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Título da página -->
@@ -159,6 +218,10 @@
             <img src="https://cdn-icons-png.flaticon.com/512/505/505159.png" alt="Editar" style="height: 60%;">
         </button>
 
+        <button class="floating-back-button" onclick="goBack()">
+            <img src="https://png.pngtree.com/png-vector/20220623/ourmid/pngtree-back-arrow-backward-direction-previous-png-image_5198415.png" alt="Voltar" style="height: 60%;">
+        </button>
+
         <!-- Botão para salvar as edições -->
         <div class="save-button" id="saveButton">
             <button class="btn btn-primary" onclick="saveChanges()">Salvar</button>
@@ -185,52 +248,52 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-// Função para exibir os parágrafos do Firebase
-function displayParagrafos(data, cpfUsuario) {
-    const paragrafosList = document.getElementById('paragrafosList');
-    paragrafosList.innerHTML = ''; // Limpa a lista antes de adicionar novos parágrafos
+        // Função para exibir os parágrafos do Firebase
+        function displayParagrafos(data, cpfUsuario) {
+            const paragrafosList = document.getElementById('paragrafosList');
+            paragrafosList.innerHTML = ''; // Limpa a lista antes de adicionar novos parágrafos
 
-    // Armazena os parágrafos no sessionStorage
-    sessionStorage.setItem('paragrafos', JSON.stringify(data));
+            // Armazena os parágrafos no sessionStorage
+            sessionStorage.setItem('paragrafos', JSON.stringify(data));
 
-    // Itera sobre os parágrafos recuperados do Firebase
-    data.forEach((paragrafo, index) => {
-        // Verifica se o parágrafo corresponde ao CPF do usuário e à data
-        if (paragrafo.cpfUsuario === cpfUsuario && paragrafo.dataDocumento === getUrlParameter('data')) {
-            const row = document.createElement('tr');
-            row.setAttribute('data-index', index); // Define o atributo data-index com o índice do parágrafo
+            // Itera sobre os parágrafos recuperados do Firebase
+            data.forEach((paragrafo, index) => {
+                // Verifica se o parágrafo corresponde ao CPF do usuário e à data
+                if (paragrafo.cpfUsuario === cpfUsuario && paragrafo.dataDocumento === getUrlParameter('data')) {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-index', index); // Define o atributo data-index com o índice do parágrafo
 
-            // Cria a célula de imagem 1
-            const img1Cell = document.createElement('td');
-            img1Cell.textContent = paragrafo.imagem1;
-            row.appendChild(img1Cell);
+                    // Cria a célula de imagem 1
+                    const img1Cell = document.createElement('td');
+                    img1Cell.textContent = paragrafo.imagem1;
+                    row.appendChild(img1Cell);
 
-            // Cria a célula de parágrafo
-            const paragrafoCell = document.createElement('td');
-            paragrafoCell.textContent = paragrafo.paragrafo;
-            paragrafoCell.classList.add('paragrafo-col'); // Adiciona a classe para definir a largura
-            row.appendChild(paragrafoCell);
+                    // Cria a célula de parágrafo
+                    const paragrafoCell = document.createElement('td');
+                    paragrafoCell.textContent = paragrafo.paragrafo;
+                    paragrafoCell.classList.add('paragrafo-col'); // Adiciona a classe para definir a largura
+                    row.appendChild(paragrafoCell);
 
-            // Cria a célula de imagem 2
-            const img2Cell = document.createElement('td');
-            img2Cell.textContent = paragrafo.imagem2;
-            row.appendChild(img2Cell);
+                    // Cria a célula de imagem 2
+                    const img2Cell = document.createElement('td');
+                    img2Cell.textContent = paragrafo.imagem2;
+                    row.appendChild(img2Cell);
 
-            // Cria a célula de excluir
-            const excluirCell = document.createElement('td');
-            const excluirButton = document.createElement('button');
-            excluirButton.className = 'btn';
-            const excluirIcon = document.createElement('img');
-            excluirIcon.src = 'https://images.emojiterra.com/mozilla/512px/1f5d1.png';
-            excluirButton.appendChild(excluirIcon);
-            excluirCell.appendChild(excluirButton);
-            row.appendChild(excluirCell);
+                    // Cria a célula de excluir
+                    const excluirCell = document.createElement('td');
+                    const excluirButton = document.createElement('button');
+                    excluirButton.className = 'btn';
+                    const excluirIcon = document.createElement('img');
+                    excluirIcon.src = 'https://images.emojiterra.com/mozilla/512px/1f5d1.png';
+                    excluirButton.appendChild(excluirIcon);
+                    excluirCell.appendChild(excluirButton);
+                    row.appendChild(excluirCell);
 
-            // Adiciona a linha à tabela
-            paragrafosList.appendChild(row);
+                    // Adiciona a linha à tabela
+                    paragrafosList.appendChild(row);
+                }
+            });
         }
-    });
-}
 
 
 
@@ -261,73 +324,76 @@ function displayParagrafos(data, cpfUsuario) {
         }
 
         // Função para habilitar a edição dos parágrafos
-function enableEditing() {
-    const tableRows = document.querySelectorAll('#paragrafosList tr');
-    tableRows.forEach(row => {
-        const index = row.getAttribute('data-index'); // Obtém o índice do parágrafo
-        const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
-        cells.forEach(cell => {
-            const originalContent = cell.textContent;
-            const inputField = document.createElement('input');
-            inputField.setAttribute('type', 'text');
-            inputField.setAttribute('value', originalContent);
-            inputField.classList.add('edit-input');
-            cell.textContent = '';
-            cell.appendChild(inputField);
-        });
-        // Armazena o índice do parágrafo atualmente sendo editado
-        sessionStorage.setItem('editingIndex', index);
-    });
-    document.getElementById('saveButton').style.display = 'block'; // Mostra o botão de salvar
-}
+        function enableEditing() {
+            const tableRows = document.querySelectorAll('#paragrafosList tr');
+            tableRows.forEach(row => {
+                const index = row.getAttribute('data-index'); // Obtém o índice do parágrafo
+                const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
+                cells.forEach(cell => {
+                    const originalContent = cell.textContent;
+                    const inputField = document.createElement('input');
+                    inputField.setAttribute('type', 'text');
+                    inputField.setAttribute('value', originalContent);
+                    inputField.classList.add('edit-input');
+                    cell.textContent = '';
+                    cell.appendChild(inputField);
+                });
+                // Armazena o índice do parágrafo atualmente sendo editado
+                sessionStorage.setItem('editingIndex', index);
+            });
+            document.getElementById('saveButton').style.display = 'block'; // Mostra o botão de salvar
+        }
 
-       
+
         // Função para salvar as alterações
-function saveChanges() {
-    const updatedParagrafos = JSON.parse(sessionStorage.getItem('paragrafos'));
-    const tableRows = document.querySelectorAll('#paragrafosList tr');
+        function saveChanges() {
+            const updatedParagrafos = JSON.parse(sessionStorage.getItem('paragrafos'));
+            const tableRows = document.querySelectorAll('#paragrafosList tr');
 
-    tableRows.forEach((row) => {
-        const index = row.getAttribute('data-index');
-        const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
-        
-        if (index !== null) {
-            cells.forEach((cell, cellIndex) => {
-                const value = cell.querySelector('.edit-input').value;
-                if (cellIndex === 1) {
-                    updatedParagrafos[index].paragrafo = value;
-                } else if (cellIndex === 0) {
-                    updatedParagrafos[index].imagem1 = value;
-                } else {
-                    updatedParagrafos[index].imagem2 = value;
+            tableRows.forEach((row) => {
+                const index = row.getAttribute('data-index');
+                const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
+
+                if (index !== null) {
+                    cells.forEach((cell, cellIndex) => {
+                        const value = cell.querySelector('.edit-input').value;
+                        if (cellIndex === 1) {
+                            updatedParagrafos[index].paragrafo = value;
+                        } else if (cellIndex === 0) {
+                            updatedParagrafos[index].imagem1 = value;
+                        } else {
+                            updatedParagrafos[index].imagem2 = value;
+                        }
+                    });
                 }
             });
+
+            // Atualiza os valores no sessionStorage
+            sessionStorage.setItem('paragrafos', JSON.stringify(updatedParagrafos));
+
+            // Atualiza os valores no Firebase
+            const paragrafosRef = firebase.database().ref('paragrafos');
+            paragrafosRef.set(updatedParagrafos)
+                .then(() => {
+                    console.log('Valores atualizados com sucesso!');
+                    // Oculta o botão de salvar após salvar as alterações
+                    document.getElementById('saveButton').style.display = 'none';
+                })
+                .catch((error) => {
+                    console.error('Erro ao atualizar os valores:', error);
+                });
         }
-    });
 
-    // Atualiza os valores no sessionStorage
-    sessionStorage.setItem('paragrafos', JSON.stringify(updatedParagrafos));
-
-    // Atualiza os valores no Firebase
-    const paragrafosRef = firebase.database().ref('paragrafos');
-    paragrafosRef.set(updatedParagrafos)
-        .then(() => {
-            console.log('Valores atualizados com sucesso!');
-            // Aqui você pode adicionar qualquer outra ação após a atualização bem-sucedida
-        })
-        .catch((error) => {
-            console.error('Erro ao atualizar os valores:', error);
-        });
-}
-
-
-
-
+        // Função para voltar à página anterior
+        function goBack() {
+            window.history.back();
+        }
 
         // Carrega os parágrafos ao carregar a página
         window.onload = loadParagrafos;
     </script>
 
-    
+
 </body>
+
 </html>
