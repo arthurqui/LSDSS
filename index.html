@@ -143,22 +143,38 @@
       width: auto;
     }
 
-    /* Estilo para a lista de documentações */
-    .documentacoes-row {
-      display: flex;
-      flex-wrap: wrap;
-    }
+    /* Estilo para a lista de documentações em formato de linha */
+.documentacoes-row {
+  display: flex;
+  flex-direction: column; /* Alinha os itens verticalmente */
+  margin: 0; /* Remove margens da lista */
+  padding: 0; /* Remove preenchimento da lista */
+}
 
-    .documentacoes-item {
-      flex: 0 0 calc(20% - 20px); /* Define a largura dos itens para 20% da largura da tela, com espaçamento entre eles */
-      margin: 10px;
-      text-align: center;
-    }
+.documentacoes-item {
+  display: flex;
+  align-items: center; /* Centraliza verticalmente os itens dentro da linha */
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Linha separadora entre os itens */
+}
 
-    .documentacoes-item img {
-      max-width: 100%;
-      height: auto;
-    }
+.documentacoes-item img {
+  max-width: 100px; /* Define um tamanho máximo para a imagem */
+  max-height: 100px;
+  margin-right: 20px; /* Espaçamento entre a imagem e o texto */
+}
+
+.documentacoes-item h4 {
+  margin: 0; /* Remove margens do título */
+  font-size: 1.2em;
+}
+
+.documentacoes-item p {
+  margin: 0; /* Remove margens da data */
+  margin-left: auto; /* Alinha a data à direita */
+  font-size: 0.9em;
+  color: #666; /* Cor cinza para a data */
+}
 
     /* Estilo para centralizar o conteúdo em dispositivos móveis */
 @media (max-width: 767px) {
@@ -370,46 +386,49 @@
 
 // Função para carregar as documentações iniciadas e prontas
 function carregarDocumentacoes() {
-  const documentacoesList = document.getElementById('documentacoesList');
-  // Limpa a lista antes de adicionar novos elementos
-  documentacoesList.innerHTML = '';
-  // Realiza uma consulta no banco de dados para obter as documentações com status 'iniciado' e 'pronto'
-  get(documentosRef)
-    .then((snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        const documento = childSnapshot.val();
-        // Verifica se o status é 'iniciado' ou 'pronto'
-        if (documento.status === 'iniciado' || documento.status === 'pronto') {
-          // Cria um novo elemento de lista
-          const listItem = document.createElement('div');
-          listItem.classList.add('documentacoes-item');
-          // Adiciona a capa do documento como uma imagem
-          const capaImg = document.createElement('img');
-          capaImg.src = documento.capaDoc;
-          capaImg.classList.add('img-fluid', 'rounded', 'documentacao-img');
-          // Adiciona o título do documento como texto
-          const titulo = document.createElement('h4');
-          titulo.textContent = documento.nomeDoc;
-          // Adiciona o evento onclick para redirecionar para a página do documento com os dados como parâmetros
-          listItem.addEventListener('click', function() {
-            redirectToDocument(documento);
-          });
-          // Adiciona a imagem e o título à lista
-          listItem.appendChild(capaImg);
-          listItem.appendChild(titulo);
-          // Adiciona o item à lista de documentações
-          documentacoesList.appendChild(listItem);
-        }
+    const documentacoesList = document.getElementById('documentacoesList');
+    // Limpa a lista antes de adicionar novos elementos
+    documentacoesList.innerHTML = '';
+    // Realiza uma consulta no banco de dados para obter as documentações com status 'iniciado' e 'pronto'
+    get(documentosRef)
+      .then((snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const documento = childSnapshot.val();
+          // Verifica se o status é 'iniciado' ou 'pronto'
+          if (documento.status === 'iniciado' || documento.status === 'pronto') {
+            // Cria um novo elemento de lista
+            const listItem = document.createElement('div');
+            listItem.classList.add('documentacoes-item');
+            // Adiciona a capa do documento como uma imagem
+            const capaImg = document.createElement('img');
+            capaImg.src = documento.capaDoc;
+            capaImg.classList.add('img-fluid', 'rounded');
+            // Adiciona o título do documento como texto
+            const titulo = document.createElement('h4');
+            titulo.textContent = documento.nomeDoc;
+            // Adiciona a data de criação do documento como texto
+            const dataCriacao = document.createElement('p');
+            dataCriacao.textContent = new Date(documento.data).toLocaleString();
+            // Adiciona o evento onclick para redirecionar para a página do documento com os dados como parâmetros
+            listItem.addEventListener('click', function() {
+              redirectToDocument(documento);
+            });
+            // Adiciona a imagem, o título e a data à lista
+            listItem.appendChild(capaImg);
+            listItem.appendChild(titulo);
+            listItem.appendChild(dataCriacao);
+            // Adiciona o item à lista de documentações
+            documentacoesList.appendChild(listItem);
+          }
+        });
+      })
+      .catch((error) => {
+        console.error('Erro ao carregar as documentações:', error);
       });
-    })
-    .catch((error) => {
-      console.error('Erro ao carregar as documentações:', error);
-    });
-}
+  }
 
-
-    // Chama a função para carregar as documentações ao carregar a página
-    document.addEventListener('DOMContentLoaded', carregarDocumentacoes);
+  // Chama a função para carregar as documentações ao carregar a página
+  document.addEventListener('DOMContentLoaded', carregarDocumentacoes);
   </script>
 
   <!-- Bootstrap JavaScript -->
