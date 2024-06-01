@@ -213,7 +213,7 @@
 
   <!-- Conteúdo principal -->
   <div class="content align-center-mobile">
-    <h1>Documentações</h1>
+    <h1>Suas Documentações</h1>
     <div id="documentacoesList" class="documentacoes-row">
       <!-- Lista de documentações aqui -->
     </div>
@@ -390,18 +390,23 @@
     // Adiciona um ouvinte de evento de clique ao botão de salvar do modal
     document.getElementById('btnSalvarModal').addEventListener('click', salvarDocumento);
 
-// Função para carregar as documentações prontas
+// Função para carregar as documentações iniciadas e prontas
 function carregarDocumentacoes() {
     const documentacoesList = document.getElementById('documentacoesList');
     // Limpa a lista antes de adicionar novos elementos
     documentacoesList.innerHTML = '';
-    // Realiza uma consulta no banco de dados para obter as documentações com status 'iniciado' e 'pronto'
+
+    // Obtém o objeto userData do localStorage e extrai o cpf
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const userCpf = Object.values(userData)[0].cpf;
+
+    // Realiza uma consulta no banco de dados para obter as documentações
     get(documentosRef)
       .then((snapshot) => {
         snapshot.forEach((childSnapshot) => {
           const documento = childSnapshot.val();
-          // Verifica se o status é 'iniciado' ou 'pronto'
-          if (documento.status === 'pronto') {
+          // Verifica se o status é 'iniciado' ou 'pronto' e se o cpfUsuario corresponde ao cpf no localStorage
+          if ((documento.status === 'iniciado' || documento.status === 'pronto') && documento.cpfUsuario === userCpf) {
             // Cria um novo elemento de lista
             const listItem = document.createElement('div');
             listItem.classList.add('documentacoes-item');
@@ -431,7 +436,7 @@ function carregarDocumentacoes() {
       .catch((error) => {
         console.error('Erro ao carregar as documentações:', error);
       });
-  }
+}
 
   // Chama a função para carregar as documentações ao carregar a página
   document.addEventListener('DOMContentLoaded', carregarDocumentacoes);
