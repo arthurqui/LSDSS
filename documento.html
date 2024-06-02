@@ -261,20 +261,25 @@
       margin-bottom: 20px;
       max-width: 100%;
       word-wrap: break-word;
-      overflow-wrap: break-word; /* Força a quebra de palavra */
-      
+      overflow-wrap: break-word;
+      /* Força a quebra de palavra */
+
       /* Espaçamento entre os parágrafos */
     }
 
     .paragrafo-container p {
-  overflow-wrap: break-word; /* Força a quebra de palavra */
-  word-wrap: break-word; /* Para compatibilidade com navegadores mais antigos */
-  max-width: 100%; /* Garante que o parágrafo não ultrapasse a largura da tela */
-}
+      overflow-wrap: break-word;
+      /* Força a quebra de palavra */
+      word-wrap: break-word;
+      /* Para compatibilidade com navegadores mais antigos */
+      max-width: 100%;
+      /* Garante que o parágrafo não ultrapasse a largura da tela */
+    }
 
-.paragrafo-container a {
-  word-break: break-all; /* Quebra o link em várias linhas, se necessário */
-}
+    .paragrafo-container a {
+      word-break: break-all;
+      /* Quebra o link em várias linhas, se necessário */
+    }
 
     /* Estilo para as imagens dentro dos parágrafos */
     .paragrafo-imagem {
@@ -529,84 +534,84 @@
 
 
     // Função para carregar os parágrafos do Firebase
-function loadParagraphs() {
-  // Captura dos valores de cpfUsuario e dataDocumento da URL
-  const cpfUsuario = getParameterByName('cpfUsuario');
-  const dataDocumento = getParameterByName('data');
+    function loadParagraphs() {
+      // Captura dos valores de cpfUsuario e dataDocumento da URL
+      const cpfUsuario = getParameterByName('cpfUsuario');
+      const dataDocumento = getParameterByName('data');
 
-  // Referência ao nó "paragrafos" no Firebase
-  const paragrafosRef = firebase.database().ref('paragrafos');
+      // Referência ao nó "paragrafos" no Firebase
+      const paragrafosRef = firebase.database().ref('paragrafos');
 
-  // Consulta para obter todos os parágrafos
-  paragrafosRef.once('value', snapshot => {
-    // Array para armazenar os parágrafos que correspondem ao documento
-    const paragrafos = [];
+      // Consulta para obter todos os parágrafos
+      paragrafosRef.once('value', snapshot => {
+        // Array para armazenar os parágrafos que correspondem ao documento
+        const paragrafos = [];
 
-    // Verifica se há parágrafos já carregados na tela
-    const conteudoContainer = document.getElementById('conteudo');
-    if (conteudoContainer.children.length > 0) {
-      // Limpa os parágrafos existentes
-      conteudoContainer.innerHTML = '';
-    }
+        // Verifica se há parágrafos já carregados na tela
+        const conteudoContainer = document.getElementById('conteudo');
+        if (conteudoContainer.children.length > 0) {
+          // Limpa os parágrafos existentes
+          conteudoContainer.innerHTML = '';
+        }
 
-    // Verifica se há parágrafos
-    if (snapshot.exists()) {
-      snapshot.forEach(paragrafo => {
-        // Verifica se os valores de cpfUsuario e dataDocumento correspondem aos do documento
-        if (paragrafo.val().cpfUsuario === cpfUsuario && paragrafo.val().dataDocumento === dataDocumento) {
-          paragrafos.push(paragrafo.val());
+        // Verifica se há parágrafos
+        if (snapshot.exists()) {
+          snapshot.forEach(paragrafo => {
+            // Verifica se os valores de cpfUsuario e dataDocumento correspondem aos do documento
+            if (paragrafo.val().cpfUsuario === cpfUsuario && paragrafo.val().dataDocumento === dataDocumento) {
+              paragrafos.push(paragrafo.val());
+            }
+          });
+
+          // Ordena os parágrafos pelo campo dataParagrafo do mais antigo para o mais recente
+          paragrafos.sort((a, b) => {
+            return new Date(a.dataParagrafo) - new Date(b.dataParagrafo);
+          });
+
+          // Exibe os parágrafos no HTML
+          paragrafos.forEach((paragrafo, index) => {
+            // Verifica se pelo menos um dos valores não está vazio
+            if (paragrafo.imagem1 || paragrafo.paragrafo || paragrafo.imagem2) {
+              // Crie um container para o parágrafo
+              const container = document.createElement('div');
+              container.classList.add('paragrafo-container');
+              container.dataset.paragrafoId = index; // Adiciona um atributo data para identificar o parágrafo
+
+              // Cria um elemento para a imagem1 se não estiver vazio
+              if (paragrafo.imagem1) {
+                const imagem1 = document.createElement('img');
+                imagem1.src = paragrafo.imagem1;
+                imagem1.classList.add('paragrafo-imagem');
+                container.appendChild(imagem1);
+              }
+
+              // Cria um elemento para o parágrafo central se não estiver vazio
+              if (paragrafo.paragrafo) {
+                const paragrafoCentral = document.createElement('p');
+                paragrafoCentral.innerText = paragrafo.paragrafo;
+                paragrafoCentral.classList.add('paragrafo-texto');
+                container.appendChild(paragrafoCentral);
+              }
+
+              // Cria um elemento para a imagem2 se não estiver vazio
+              if (paragrafo.imagem2) {
+                const imagem2 = document.createElement('img');
+                imagem2.src = paragrafo.imagem2;
+                imagem2.classList.add('paragrafo-imagem');
+                container.appendChild(imagem2);
+              }
+
+              // Adiciona o container ao conteúdo
+              conteudoContainer.appendChild(container);
+            }
+          });
+        } else {
+          console.log('Nenhum parágrafo encontrado.');
         }
       });
-
-      // Ordena os parágrafos pelo campo dataParagrafo do mais antigo para o mais recente
-      paragrafos.sort((a, b) => {
-        return new Date(a.dataParagrafo) - new Date(b.dataParagrafo);
-      });
-
-      // Exibe os parágrafos no HTML
-      paragrafos.forEach((paragrafo, index) => {
-        // Verifica se pelo menos um dos valores não está vazio
-        if (paragrafo.imagem1 || paragrafo.paragrafo || paragrafo.imagem2) {
-          // Crie um container para o parágrafo
-          const container = document.createElement('div');
-          container.classList.add('paragrafo-container');
-          container.dataset.paragrafoId = index; // Adiciona um atributo data para identificar o parágrafo
-
-          // Cria um elemento para a imagem1 se não estiver vazio
-          if (paragrafo.imagem1) {
-            const imagem1 = document.createElement('img');
-            imagem1.src = paragrafo.imagem1;
-            imagem1.classList.add('paragrafo-imagem');
-            container.appendChild(imagem1);
-          }
-
-          // Cria um elemento para o parágrafo central se não estiver vazio
-          if (paragrafo.paragrafo) {
-            const paragrafoCentral = document.createElement('p');
-            paragrafoCentral.innerText = paragrafo.paragrafo;
-            paragrafoCentral.classList.add('paragrafo-texto');
-            container.appendChild(paragrafoCentral);
-          }
-
-          // Cria um elemento para a imagem2 se não estiver vazio
-          if (paragrafo.imagem2) {
-            const imagem2 = document.createElement('img');
-            imagem2.src = paragrafo.imagem2;
-            imagem2.classList.add('paragrafo-imagem');
-            container.appendChild(imagem2);
-          }
-
-          // Adiciona o container ao conteúdo
-          conteudoContainer.appendChild(container);
-        }
-      });
-    } else {
-      console.log('Nenhum parágrafo encontrado.');
     }
-  });
-}
 
-  
+
 
 
 

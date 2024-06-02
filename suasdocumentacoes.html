@@ -1,10 +1,11 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LSDSS</title>
-  
+
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -18,7 +19,8 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      position: relative; /* Adiciona posição relativa para que o botão flutuante possa ser posicionado corretamente */
+      position: relative;
+      /* Adiciona posição relativa para que o botão flutuante possa ser posicionado corretamente */
     }
 
     .topbar {
@@ -102,28 +104,35 @@
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background-color: #183452; /* Cor da sidebar e navbar */
+      background-color: #183452;
+      /* Cor da sidebar e navbar */
       color: #fff;
-      width: 50px; /* Tamanho do botão */
+      width: 50px;
+      /* Tamanho do botão */
       height: 50px;
-      border-radius: 50%; /* Torna o botão redondo */
+      border-radius: 50%;
+      /* Torna o botão redondo */
       border: none;
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* Sombra */
     }
 
     /* Estilo para o ícone do botão */
     .floating-button i {
-      font-size: 24px; /* Tamanho do ícone */
+      font-size: 24px;
+      /* Tamanho do ícone */
     }
 
     /* Estilo para o modal */
     .modal-content {
-      background-color: #fff; /* Fundo branco */
-      border-radius: 10px; /* Cantos arredondados */
+      background-color: #fff;
+      /* Fundo branco */
+      border-radius: 10px;
+      /* Cantos arredondados */
     }
 
     /* Estilo para o conteúdo do modal */
@@ -134,87 +143,93 @@
 
     /* Estilo para o botão salvar */
     .modal-footer .btn-save {
-      background-color: #183452; /* Mesma cor do botão flutuante */
+      background-color: #183452;
+      /* Mesma cor do botão flutuante */
       color: #fff;
     }
 
     /* Estilo para as imagens das documentações */
     .documentacao-img {
-      max-height: 10vh; /* Altura fixa de 10% da altura da página */
+      max-height: 10vh;
+      /* Altura fixa de 10% da altura da página */
       width: auto;
     }
 
     /* Estilo para a lista de documentações em formato de linha */
-.documentacoes-row {
-  display: flex;
-  flex-direction: column; /* Alinha os itens verticalmente */
-  margin: 0; /* Remove margens da lista */
-  padding: 0; /* Remove preenchimento da lista */
-}
+    .documentacoes-row {
+      display: flex;
+      flex-direction: column;
+      /* Alinha os itens verticalmente */
+      margin: 0;
+      /* Remove margens da lista */
+      padding: 0;
+      /* Remove preenchimento da lista */
+    }
 
-.documentacoes-item {
-  display: flex;
-  align-items: center; /* Centraliza verticalmente os itens dentro da linha */
-  padding: 10px;
-  border-bottom: 1px solid #ddd; /* Linha separadora entre os itens */
-}
+    .documentacoes-item {
+      display: flex;
+      align-items: center;
+      /* Centraliza verticalmente os itens dentro da linha */
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      /* Linha separadora entre os itens */
+    }
 
-.documentacoes-item img {
-  max-width: 100px; /* Define um tamanho máximo para a imagem */
-  max-height: 100px;
-  margin-right: 20px; /* Espaçamento entre a imagem e o texto */
-}
+    .documentacoes-item img {
+      max-width: 100px;
+      /* Define um tamanho máximo para a imagem */
+      max-height: 100px;
+      margin-right: 20px;
+      /* Espaçamento entre a imagem e o texto */
+    }
 
-.documentacoes-item h4 {
-  margin: 0; /* Remove margens do título */
-  font-size: 1.2em;
-}
+    .documentacoes-item h4 {
+      margin: 0;
+      /* Remove margens do título */
+      font-size: 1.2em;
+    }
 
-.documentacoes-item p {
-  margin: 0; /* Remove margens da data */
-  margin-left: auto; /* Alinha a data à direita */
-  font-size: 0.9em;
-  color: #666; /* Cor cinza para a data */
-}
+    .documentacoes-item p {
+      margin: 0;
+      /* Remove margens da data */
+      margin-left: auto;
+      /* Alinha a data à direita */
+      font-size: 0.9em;
+      color: #666;
+      /* Cor cinza para a data */
+    }
 
     /* Estilo para centralizar o conteúdo em dispositivos móveis */
-@media (max-width: 767px) {
-  .align-center-mobile {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
+    @media (max-width: 767px) {
+      .align-center-mobile {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
   </style>
 
 </head>
+
 <body>
   <!-- Sidebar -->
-  <div class="sidebar d-none d-sm-block"> 
+  <div class="sidebar d-none d-sm-block">
     <div class="sidebar-logo">
-        <img src="https://www1.cdtsoftware.com.br/wp-content/uploads/2022/09/CDT-FUNDO-ESCURO-02.png" alt="Logo">
+      <img src="https://www1.cdtsoftware.com.br/wp-content/uploads/2022/09/CDT-FUNDO-ESCURO-02.png" alt="Logo">
     </div>
-  <div id="sidebar-container"></div>
-  <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
+    <div id="sidebar-container"></div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
 
-    <script>
-        function loadSidebar() {
-            fetch('componentes/sidebar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('sidebar-container').innerHTML = data;
-                })
-                .catch(error => console.error('Error loading sidebar:', error));
-        }
-
-        document.addEventListener('DOMContentLoaded', loadSidebar);
-    </script>
+  <script src="componentes/sidebar.js"></script>
 
   <!-- Topbar -->
   <div class="topbar">
-    <button class="admin-btn ml-auto d-block d-sm-none" onclick="logout()">Logout</button> <!-- Adicionado o botão de logout para telas pequenas -->
-    <button class="admin-btn ml-auto d-none d-sm-block" onclick="window.location.href='responsavel.html'">Administrador</button> <!-- Botão de administrador para telas maiores que pequenas -->
+    <button class="admin-btn ml-auto d-block d-sm-none" onclick="logout()">Logout</button>
+    <!-- Adicionado o botão de logout para telas pequenas -->
+    <button class="admin-btn ml-auto d-none d-sm-block"
+      onclick="window.location.href='responsavel.html'">Administrador</button>
+    <!-- Botão de administrador para telas maiores que pequenas -->
   </div>
 
   <!-- Conteúdo principal -->
@@ -264,7 +279,7 @@
   <!-- JavaScript para abrir o modal -->
   <script>
     // Adiciona um ouvinte de evento de clique ao botão flutuante
-    document.getElementById('openModalButton').addEventListener('click', function() {
+    document.getElementById('openModalButton').addEventListener('click', function () {
       $('#myModal').modal('show'); // Abre o modal
     });
   </script>
@@ -275,8 +290,8 @@
     import { getDatabase, ref, push, get } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js'; // Adicionando a importação da função get
     import { getAuth } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
 
-     // Configurações do Firebase
-     const firebaseConfig = {
+    // Configurações do Firebase
+    const firebaseConfig = {
       apiKey: "AIzaSyC41KIa9wdb3Vevjwno89SNt4U0vsPIaMo",
       authDomain: "bdkdb-e8ee5.firebaseapp.com",
       databaseURL: "https://bdkdb-e8ee5-default-rtdb.firebaseio.com",
@@ -365,23 +380,23 @@
 
           // Salva o documento no Firebase usando push
           push(documentosRef, novoDocumento)
-    .then((snapshot) => {
-        console.log('Documento salvo com sucesso:', snapshot.key);
-        // Constrói a URL para a página do documento
-        const urlDocumento = `/documento.html?titulo=${encodeURIComponent(titulo)}&imagem=${encodeURIComponent(imagem)}&conteudo=${encodeURIComponent(null)}&data=${encodeURIComponent(novoDocumento.data)}&cpfUsuario=${encodeURIComponent(cpfUsuario)}&emailUsuario=${encodeURIComponent(emailUsuario)}&nomeUsuario=${encodeURIComponent(nomeUsuario)}&status=${encodeURIComponent('iniciado')}`;
-        // Redireciona para a página do documento
-        window.location.href = urlDocumento;
+            .then((snapshot) => {
+              console.log('Documento salvo com sucesso:', snapshot.key);
+              // Constrói a URL para a página do documento
+              const urlDocumento = `/documento.html?titulo=${encodeURIComponent(titulo)}&imagem=${encodeURIComponent(imagem)}&conteudo=${encodeURIComponent(null)}&data=${encodeURIComponent(novoDocumento.data)}&cpfUsuario=${encodeURIComponent(cpfUsuario)}&emailUsuario=${encodeURIComponent(emailUsuario)}&nomeUsuario=${encodeURIComponent(nomeUsuario)}&status=${encodeURIComponent('iniciado')}`;
+              // Redireciona para a página do documento
+              window.location.href = urlDocumento;
 
-        // Fecha o modal após salvar o documento
-        $('#myModal').modal('hide');
+              // Fecha o modal após salvar o documento
+              $('#myModal').modal('hide');
 
-        // Limpa os campos do formulário dentro do modal
-        document.getElementById('imagem').value = '';
-        document.getElementById('titulo').value = '';
+              // Limpa os campos do formulário dentro do modal
+              document.getElementById('imagem').value = '';
+              document.getElementById('titulo').value = '';
 
-        // Atualiza a lista de documentos na página index.html
-        carregarDocumentacoes();
-    })
+              // Atualiza a lista de documentos na página index.html
+              carregarDocumentacoes();
+            })
             .catch((error) => {
               console.error('Erro ao salvar o documento:', error);
             });
@@ -396,56 +411,56 @@
     // Adiciona um ouvinte de evento de clique ao botão de salvar do modal
     document.getElementById('btnSalvarModal').addEventListener('click', salvarDocumento);
 
-// Função para carregar as documentações iniciadas e prontas
-function carregarDocumentacoes() {
-    const documentacoesList = document.getElementById('documentacoesList');
-    // Limpa a lista antes de adicionar novos elementos
-    documentacoesList.innerHTML = '';
+    // Função para carregar as documentações iniciadas e prontas
+    function carregarDocumentacoes() {
+      const documentacoesList = document.getElementById('documentacoesList');
+      // Limpa a lista antes de adicionar novos elementos
+      documentacoesList.innerHTML = '';
 
-    // Obtém o objeto userData do localStorage e extrai o cpf
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    const userCpf = Object.values(userData)[0].cpf;
+      // Obtém o objeto userData do localStorage e extrai o cpf
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      const userCpf = Object.values(userData)[0].cpf;
 
-    // Realiza uma consulta no banco de dados para obter as documentações
-    get(documentosRef)
-      .then((snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-          const documento = childSnapshot.val();
-          // Verifica se o status é 'iniciado' ou 'pronto' e se o cpfUsuario corresponde ao cpf no localStorage
-          if ((documento.status === 'iniciado' || documento.status === 'pronto') && documento.cpfUsuario === userCpf) {
-            // Cria um novo elemento de lista
-            const listItem = document.createElement('div');
-            listItem.classList.add('documentacoes-item');
-            // Adiciona a capa do documento como uma imagem
-            const capaImg = document.createElement('img');
-            capaImg.src = documento.capaDoc;
-            capaImg.classList.add('img-fluid', 'rounded');
-            // Adiciona o título do documento como texto
-            const titulo = document.createElement('h4');
-            titulo.textContent = documento.nomeDoc;
-            // Adiciona a data de criação do documento como texto
-            const dataCriacao = document.createElement('p');
-            dataCriacao.textContent = new Date(documento.data).toLocaleString();
-            // Adiciona o evento onclick para redirecionar para a página do documento com os dados como parâmetros
-            listItem.addEventListener('click', function() {
-              redirectToDocument(documento);
-            });
-            // Adiciona a imagem, o título e a data à lista
-            listItem.appendChild(capaImg);
-            listItem.appendChild(titulo);
-            listItem.appendChild(dataCriacao);
-            // Adiciona o item à lista de documentações
-            documentacoesList.appendChild(listItem);
-          }
+      // Realiza uma consulta no banco de dados para obter as documentações
+      get(documentosRef)
+        .then((snapshot) => {
+          snapshot.forEach((childSnapshot) => {
+            const documento = childSnapshot.val();
+            // Verifica se o status é 'iniciado' ou 'pronto' e se o cpfUsuario corresponde ao cpf no localStorage
+            if ((documento.status === 'iniciado' || documento.status === 'pronto') && documento.cpfUsuario === userCpf) {
+              // Cria um novo elemento de lista
+              const listItem = document.createElement('div');
+              listItem.classList.add('documentacoes-item');
+              // Adiciona a capa do documento como uma imagem
+              const capaImg = document.createElement('img');
+              capaImg.src = documento.capaDoc;
+              capaImg.classList.add('img-fluid', 'rounded');
+              // Adiciona o título do documento como texto
+              const titulo = document.createElement('h4');
+              titulo.textContent = documento.nomeDoc;
+              // Adiciona a data de criação do documento como texto
+              const dataCriacao = document.createElement('p');
+              dataCriacao.textContent = new Date(documento.data).toLocaleString();
+              // Adiciona o evento onclick para redirecionar para a página do documento com os dados como parâmetros
+              listItem.addEventListener('click', function () {
+                redirectToDocument(documento);
+              });
+              // Adiciona a imagem, o título e a data à lista
+              listItem.appendChild(capaImg);
+              listItem.appendChild(titulo);
+              listItem.appendChild(dataCriacao);
+              // Adiciona o item à lista de documentações
+              documentacoesList.appendChild(listItem);
+            }
+          });
+        })
+        .catch((error) => {
+          console.error('Erro ao carregar as documentações:', error);
         });
-      })
-      .catch((error) => {
-        console.error('Erro ao carregar as documentações:', error);
-      });
-}
+    }
 
-  // Chama a função para carregar as documentações ao carregar a página
-  document.addEventListener('DOMContentLoaded', carregarDocumentacoes);
+    // Chama a função para carregar as documentações ao carregar a página
+    document.addEventListener('DOMContentLoaded', carregarDocumentacoes);
   </script>
 
   <!-- Bootstrap JavaScript -->
@@ -462,24 +477,25 @@ function carregarDocumentacoes() {
         window.location.href = 'login.html';
       }
     }
-  
+
     // Chama a função de verificação durante o carregamento da página
     document.addEventListener('DOMContentLoaded', checkUserData);
-    
+
     // Função de logout
     function logout() {
       localStorage.removeItem('userData'); // Remove os dados do usuário do localStorage
       window.location.href = 'login.html'; // Redireciona para a página de login
     }
 
-// Função para redirecionar para a página do documento com os dados do documento como parâmetros
-function redirectToDocument(documento) {
-    // Constrói a URL com os parâmetros do documento
-    const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}`;
-    // Redireciona para a página do documento
-    window.location.href = url;
-}
-</script>
-  
+    // Função para redirecionar para a página do documento com os dados do documento como parâmetros
+    function redirectToDocument(documento) {
+      // Constrói a URL com os parâmetros do documento
+      const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}`;
+      // Redireciona para a página do documento
+      window.location.href = url;
+    }
+  </script>
+
 </body>
+
 </html>

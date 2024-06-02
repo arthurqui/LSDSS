@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LSDSS</title>
-  
+
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -16,44 +17,57 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh; /* Garante que o conteúdo ocupa a tela inteira */
+      min-height: 100vh;
+      /* Garante que o conteúdo ocupa a tela inteira */
       margin: 0;
     }
 
     .container {
-      width: 400px; /* Ajustando a largura do container */
+      width: 400px;
+      /* Ajustando a largura do container */
       padding: 30px;
-      background-color: #fff; /* Fundo branco */
-      border-radius: 10px; /* Bordas arredondadas */
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+      background-color: #fff;
+      /* Fundo branco */
+      border-radius: 10px;
+      /* Bordas arredondadas */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      /* Sombra */
     }
 
     h1 {
       color: #333;
-      font-size: 3rem; /* Tamanho grande */
-      margin-bottom: 10px; /* Espaçamento inferior */
+      font-size: 3rem;
+      /* Tamanho grande */
+      margin-bottom: 10px;
+      /* Espaçamento inferior */
       text-align: center;
     }
 
     h2 {
       color: #666;
-      font-size: 1.3rem; /* Tamanho menor */
-      margin-bottom: 30px; /* Espaçamento inferior */
+      font-size: 1.3rem;
+      /* Tamanho menor */
+      margin-bottom: 30px;
+      /* Espaçamento inferior */
       text-align: center;
     }
 
     .form-group {
-      margin-bottom: 20px; /* Espaçamento inferior */
+      margin-bottom: 20px;
+      /* Espaçamento inferior */
     }
 
     .btn {
-      width: 100%; /* Largura total */
+      width: 100%;
+      /* Largura total */
     }
 
     /* Estilo para o link "Esqueci minha senha" */
     #forgotPasswordLink {
-      text-align: right; /* Alinhamento à direita */
-      font-size: 12px; /* Tamanho de fonte menor */
+      text-align: right;
+      /* Alinhamento à direita */
+      font-size: 12px;
+      /* Tamanho de fonte menor */
     }
 
     /* Estilo para o rodapé */
@@ -62,9 +76,12 @@
       color: #fff;
       padding: 10px;
       text-align: right;
-      position: fixed; /* Fixa o rodapé na parte inferior */
-      width: 100%; /* Largura total */
-      bottom: 0; /* Alinha ao final da tela */
+      position: fixed;
+      /* Fixa o rodapé na parte inferior */
+      width: 100%;
+      /* Largura total */
+      bottom: 0;
+      /* Alinha ao final da tela */
     }
   </style>
 
@@ -72,8 +89,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  
+
 </head>
+
 <body>
   <div class="container">
     <!-- Título da página -->
@@ -140,7 +158,7 @@
     }
 
     // Event listener para o formulário de login
-    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+    document.getElementById('loginForm').addEventListener('submit', async function (event) {
       event.preventDefault(); // Evita o envio do formulário
       const email = document.getElementById('login').value;
       const senha = document.getElementById('senha').value;
@@ -172,4 +190,5 @@
     }, 3600000); // 1 hora em milissegundos
   </script>
 </body>
+
 </html>

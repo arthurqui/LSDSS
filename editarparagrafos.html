@@ -196,11 +196,11 @@
             background-color: #0f2438;
             /* Cor de hover */
         }
-        
     </style>
 </head>
 
 <body>
+    <script src="componentes/sessionCheck.js"></script>
     <div class="container">
         <!-- Título da página -->
         <h1>Editar Parágrafos</h1>
@@ -229,7 +229,8 @@
         </button>
 
         <button class="floating-back-button" onclick="goBack()">
-            <img src="https://png.pngtree.com/png-vector/20220623/ourmid/pngtree-back-arrow-backward-direction-previous-png-image_5198415.png" alt="Voltar" style="height: 60%;">
+            <img src="https://png.pngtree.com/png-vector/20220623/ourmid/pngtree-back-arrow-backward-direction-previous-png-image_5198415.png"
+                alt="Voltar" style="height: 60%;">
         </button>
 
         <!-- Botão para salvar as edições -->
@@ -306,28 +307,28 @@
         }
 
         // Função para excluir um parágrafo
-function deleteParagrafo(rowIndex) {
-    
-    const updatedParagrafos = JSON.parse(sessionStorage.getItem('paragrafos'));
-    
-    // Remove o parágrafo da lista
-    updatedParagrafos.splice(rowIndex, 1);
+        function deleteParagrafo(rowIndex) {
 
-    // Atualiza os valores no sessionStorage
-    sessionStorage.setItem('paragrafos', JSON.stringify(updatedParagrafos));
+            const updatedParagrafos = JSON.parse(sessionStorage.getItem('paragrafos'));
 
-    // Atualiza os valores no Firebase
-    const paragrafosRef = firebase.database().ref('paragrafos');
-    paragrafosRef.set(updatedParagrafos)
-        .then(() => {
-            console.log('Parágrafo excluído com sucesso!');
-            // Desabilita o botão de salvar
-            document.getElementById('saveButton').style.display = 'none';
-        })
-        .catch((error) => {
-            console.error('Erro ao excluir o parágrafo:', error);
-        });
-}
+            // Remove o parágrafo da lista
+            updatedParagrafos.splice(rowIndex, 1);
+
+            // Atualiza os valores no sessionStorage
+            sessionStorage.setItem('paragrafos', JSON.stringify(updatedParagrafos));
+
+            // Atualiza os valores no Firebase
+            const paragrafosRef = firebase.database().ref('paragrafos');
+            paragrafosRef.set(updatedParagrafos)
+                .then(() => {
+                    console.log('Parágrafo excluído com sucesso!');
+                    // Desabilita o botão de salvar
+                    document.getElementById('saveButton').style.display = 'none';
+                })
+                .catch((error) => {
+                    console.error('Erro ao excluir o parágrafo:', error);
+                });
+        }
 
 
         // Função para obter parâmetros da URL
@@ -356,36 +357,36 @@ function deleteParagrafo(rowIndex) {
             });
         }
 
-       // Função para habilitar a edição dos parágrafos e atribuir eventos aos botões de exclusão
-       function enableEditing() {
-    const tableRows = document.querySelectorAll('#paragrafosList tr');
-    tableRows.forEach(row => {
-        const index = row.getAttribute('data-index'); // Obtém o índice do parágrafo
-        const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
-        cells.forEach(cell => {
-            const originalContent = cell.textContent;
-            const textareaField = document.createElement('textarea');
-            textareaField.textContent = originalContent;
-            textareaField.classList.add('edit-input');
-            cell.textContent = '';
-            cell.appendChild(textareaField);
-        });
+        // Função para habilitar a edição dos parágrafos e atribuir eventos aos botões de exclusão
+        function enableEditing() {
+            const tableRows = document.querySelectorAll('#paragrafosList tr');
+            tableRows.forEach(row => {
+                const index = row.getAttribute('data-index'); // Obtém o índice do parágrafo
+                const cells = row.querySelectorAll('td:not(:last-child)'); // Excluindo a última coluna (excluir)
+                cells.forEach(cell => {
+                    const originalContent = cell.textContent;
+                    const textareaField = document.createElement('textarea');
+                    textareaField.textContent = originalContent;
+                    textareaField.classList.add('edit-input');
+                    cell.textContent = '';
+                    cell.appendChild(textareaField);
+                });
 
-        // Armazena o índice do parágrafo atualmente sendo editado
-        sessionStorage.setItem('editingIndex', index);
-    });
+                // Armazena o índice do parágrafo atualmente sendo editado
+                sessionStorage.setItem('editingIndex', index);
+            });
 
-    // Adiciona eventos de clique aos botões de exclusão
-    const excluirButtons = document.querySelectorAll('.btn');
-    excluirButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const rowIndex = button.closest('tr').getAttribute('data-index');
-            deleteParagrafo(rowIndex);
-        });
-    });
+            // Adiciona eventos de clique aos botões de exclusão
+            const excluirButtons = document.querySelectorAll('.btn');
+            excluirButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const rowIndex = button.closest('tr').getAttribute('data-index');
+                    deleteParagrafo(rowIndex);
+                });
+            });
 
-    document.getElementById('saveButton').style.display = 'block'; // Mostra o botão de salvar
-}
+            document.getElementById('saveButton').style.display = 'block'; // Mostra o botão de salvar
+        }
 
 
 
