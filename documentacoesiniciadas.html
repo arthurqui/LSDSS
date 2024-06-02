@@ -210,6 +210,17 @@
         margin-right: auto;
       }
     }
+
+    .menu-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+      }
+
+      .menu-btn:hover {
+        color: #ddd;
+      }
   </style>
 
 </head>
@@ -228,6 +239,7 @@
 
   <!-- Topbar -->
   <div class="topbar">
+    <button class="menu-btn d-block d-sm-none" onclick="window.location.href='menuMobile.html'"><i class="fas fa-bars"></i></button>
     <button class="admin-btn ml-auto d-block d-sm-none" onclick="logout()">Logout</button>
     <!-- Adicionado o botão de logout para telas pequenas -->
     <button class="admin-btn ml-auto d-none d-sm-block"

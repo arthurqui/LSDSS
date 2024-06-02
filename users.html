@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LSDSS</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <script src="componentes/seguranca.js"></script>
+
+  <!-- Estilos CSS personalizados -->
+  <style>
+    body {
+      background-color: #f2f4f6;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    .topbar {
+      background-color: #183452;
+      color: #fff;
+      padding: 5px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .sidebar {
+      background-color: #183452;
+      color: #fff;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 200px;
+      padding-top: 10px;
+    }
+
+    .sidebar-item {
+      font-size: small;
+      padding: 10px 20px;
+      border-bottom: 1px solid #fff;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover {
+      background-color: #0f243e;
+    }
+
+    .sidebar-logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-logo img {
+      max-width: 150px;
+      max-height: 60px;
+    }
+
+    .logout-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background-color: transparent;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      margin-left: 200px;
+      padding: 20px;
+    }
+
+    .admin-btn {
+      background-color: transparent;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .admin-btn:hover {
+      text-decoration: underline;
+    }
+
+    .navbar {
+      width: calc(100% - 200px);
+    }
+
+    
+
+    /* Estilo para a lista de usuários */
+    .user-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .user-list li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    @media (max-width: 767px) {
+  .align-center-mobile {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.menu-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+      }
+
+      .menu-btn:hover {
+        color: #ddd;
+      }
+  </style>
+
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar d-none d-sm-block">
+    <div class="sidebar-logo">
+      <img src="https://www1.cdtsoftware.com.br/wp-content/uploads/2022/09/CDT-FUNDO-ESCURO-02.png" alt="Logo">
+    </div>
+    <div id="sidebar-container"></div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script src="componentes/sidebar.js"></script>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <button class="menu-btn d-block d-sm-none" onclick="window.location.href='menuMobile.html'"><i class="fas fa-bars"></i></button>
+    <button class="admin-btn ml-auto d-block d-sm-none" onclick="logout()">Logout</button>
+    <button class="admin-btn ml-auto d-none d-sm-block"
+      onclick="window.location.href='responsavel.html'">Administrador</button>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <div class="content align-center-mobile">
+    <h1>Lista de Usuários</h1>
+    <ul id="listaUsuarios" class="user-list"></ul>
+  </div>
+
+  
+
+  <!-- Firebase JavaScript -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+    import { getAuth } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+
+    // Configurações do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC41KIa9wdb3Vevjwno89SNt4U0vsPIaMo",
+      authDomain: "bdkdb-e8ee5.firebaseapp.com",
+      databaseURL: "https://bdkdb-e8ee5-default-rtdb.firebaseio.com",
+      projectId: "bdkdb-e8ee5",
+      storageBucket: "bdkdb-e8ee5.appspot.com",
+      messagingSenderId: "129625246761",
+      appId: "1:129625246761:web:dbcabee42d53da7a422038",
+      measurementId: "G-WG2MJDR4Q9"
+    };
+
+    // Inicialização do Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
+    const auth = getAuth(firebaseApp);
+    const database = getDatabase(firebaseApp);
+
+    // Referência ao nó 'usersLsdss'
+    const usersRef = ref(database, 'usersLsdss');
+
+    // Função para retornar todos os usuários cadastrados
+    function getUsuarios() {
+      get(usersRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const usuarios = [];
+            snapshot.forEach((childSnapshot) => {
+              const usuario = childSnapshot.val();
+              usuarios.push(usuario);
+            });
+            console.log('Lista de usuários:', usuarios);
+            exibirUsuarios(usuarios);
+          } else {
+            console.log('Não há usuários cadastrados.');
+          }
+        })
+        .catch((error) => {
+          console.error('Erro ao retornar os usuários:', error);
+        });
+    }
+
+    // Função para exibir os usuários na página
+    function exibirUsuarios(usuarios) {
+      const listaUsuarios = document.getElementById('listaUsuarios');
+      listaUsuarios.innerHTML = '';
+
+      usuarios.forEach((usuario, index) => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <strong>Nome:</strong> ${usuario.nome}<br>
+          <strong>Email:</strong> ${usuario.email}<br>
+          <strong>CPF:</strong> ${usuario.cpf}<br>
+          <strong>Senha:</strong> <span id="senha-${index}">${'*'.repeat(usuario.senha.length)}</span>
+          <button onclick="revelarSenha(${index}, '${usuario.senha}')" style="border: none; background: transparent; cursor: pointer;">
+  <img src="https://cdn.icon-icons.com/icons2/567/PNG/512/eye_icon-icons.com_54399.png" alt="Revelar Senha" style="width: 20px; height: 20px;">
+</button>
+<br>
+          <strong>Admin:</strong> ${usuario.admin ? 'Sim' : 'Não'}
+        `;
+        listaUsuarios.appendChild(listItem);
+      });
+    }
+
+    // Chamada da função para retornar todos os usuários cadastrados
+    getUsuarios();
+
+    
+
+    // Função para revelar a senha
+    window.revelarSenha = function (index, senha) {
+      const senhaSpan = document.getElementById(`senha-${index}`);
+      if (senhaSpan.textContent === senha) {
+        senhaSpan.textContent = '*'.repeat(senha.length);
+      } else {
+        senhaSpan.textContent = senha;
+      }
+    }
+  </script>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script src="componentes/sessionCheck.js"></script>
+
+  <script>
+    // Função de logout
+    function logout() {
+      localStorage.removeItem('userData');
+      window.location.href = 'login.html';
+    }
+  </script>
+
+</body>
+
+</html>

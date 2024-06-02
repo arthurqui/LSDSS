@@ -16,6 +16,7 @@ function checkAdmin() {
     const isAdmin = userData[userKey].admin;
 
     if (isAdmin) {
+        //adicionar botão registrar usuario
         const adminItem = document.createElement('div');
         adminItem.className = 'sidebar-item';
         adminItem.textContent = 'Registrar Usuário';
@@ -23,6 +24,15 @@ function checkAdmin() {
             window.location.href = 'register.html';
         };
         document.getElementById('admin-item').appendChild(adminItem);
+
+        //adicionar botão lista usuarios
+        const adminItemList = document.createElement('div');
+        adminItemList.className = 'sidebar-item';
+        adminItemList.textContent = 'Lista de Usuários';
+        adminItemList.onclick = function () {
+            window.location.href = 'users.html';
+        };
+        document.getElementById('admin-item').appendChild(adminItemList);
     }
 }
 

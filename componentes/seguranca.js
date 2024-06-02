@@ -1,10 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', //function () { 
+    //!!descomentar o 'function ()' para aplicar medidas de segurança, comentar para desenvolver.
+
+
     // Desabilitar clique direito
     document.addEventListener('contextmenu', function (e) {
       e.preventDefault();
     });
 
-    // Fechar guia ao pressionar Ctrl + Shift + C
+    // Não abrir ferramentas de desenvolvedor com Ctrl + Shift + C
     document.addEventListener('keydown', function (e) {
       if (e.ctrlKey && e.shiftKey && e.key === 'C') {
         e.preventDefault();
@@ -13,11 +16,20 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-     // Fechar guia ao pressionar Ctrl + Shift + I
+     // Não abrir ferramentas de desenvolvedor com Ctrl + Shift + I
      document.addEventListener('keydown', function (e) {
         if (e.ctrlKey && e.shiftKey && e.key === 'I') {
             e.preventDefault();
           alert("Para segurança dos usuários, NÃO é permitido o uso das ferramentas de desenvolvedor. ");
+        //   logout();
+        }
+      });
+
+      // desabilitar alt
+     document.addEventListener('keydown', function (e) {
+        if (e.altKey) {
+            e.preventDefault();
+          
         //   logout();
         }
       });
@@ -31,6 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // document.body.innerHTML = 'Ferramentas de desenvolvedor desativadas, pressione F5 ou atualize a página'; // Limpar o conteúdo da página
         }
     });
+
+    
 
     // Detectar ferramentas de desenvolvedor baseando-se no desempenho
     function detectDevTools() {

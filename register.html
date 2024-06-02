@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criar Conta</title>
+  <title>LSDSS</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- componente de segurança -->
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <script src="componentes/seguranca.js"></script>
 
   <!-- Estilos CSS personalizados -->
@@ -17,94 +19,229 @@
     body {
       background-color: #f2f4f6;
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      padding: 0;
+      position: relative;
     }
 
-    .container {
-      width: 400px;
-      /* Ajustando a largura do container */
+    .topbar {
+      background-color: #183452;
+      color: #fff;
+      padding: 5px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .sidebar {
+      background-color: #183452;
+      color: #fff;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 200px;
+      padding-top: 10px;
+    }
+
+    .sidebar-item {
+      font-size: small;
+      padding: 10px 20px;
+      border-bottom: 1px solid #fff;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover {
+      background-color: #0f243e;
+    }
+
+    .sidebar-logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-logo img {
+      max-width: 150px;
+      max-height: 60px;
+    }
+
+    .logout-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background-color: transparent;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      margin-left: 200px;
+      padding: 20px;
+    }
+
+    .admin-btn {
+      background-color: transparent;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .admin-btn:hover {
+      text-decoration: underline;
+    }
+
+    .navbar {
+      width: calc(100% - 200px);
+    }
+
+    .user-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .user-list li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .register-container {
+      width: 100%;
+      max-width: 400px;
       padding: 30px;
       background-color: #fff;
-      /* Fundo branco */
       border-radius: 10px;
-      /* Bordas arredondadas */
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      /* Sombra */
+      margin: 20px auto;
     }
 
     h1 {
       color: #333;
-      font-size: 3rem;
-      /* Tamanho grande */
+      font-size: 2rem;
       margin-bottom: 30px;
-      /* Espaçamento inferior */
       text-align: center;
     }
 
     .form-group {
       margin-bottom: 20px;
-      /* Espaçamento inferior */
     }
 
     .btn {
       width: 100%;
-      /* Largura total */
+      background-color: #183452;
+      border: 0;
     }
 
-    /* Estilo para o link "Esqueci minha senha" */
-    #forgotPasswordLink {
-      text-align: right;
-      /* Alinhamento à direita */
+    .btn:hover {
+      background-color: #0f243e;
+    }
+
+    @media (max-width: 767px) {
+      .align-center-mobile {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 10px;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .navbar {
+        width: 100%;
+      }
+
+      .topbar {
+        border-radius: 0;
+      }
+
+      .menu-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+      }
+
+      .menu-btn:hover {
+        color: #ddd;
+      }
     }
   </style>
-
-  <!-- Bootstrap JavaScript (opcional) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="componentes/sessionCheck.js"></script>
-
 </head>
 
 <body>
-  <div class="container">
-    <!-- Título da página -->
-    <h1>Criar Conta</h1>
+  <!-- Sidebar -->
+  <div class="sidebar d-none d-sm-block">
+    <div class="sidebar-logo">
+      <img src="https://www1.cdtsoftware.com.br/wp-content/uploads/2022/09/CDT-FUNDO-ESCURO-02.png" alt="Logo">
+    </div>
+    <div id="sidebar-container"></div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script src="componentes/sidebar.js"></script>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <button class="menu-btn d-block d-sm-none" onclick="window.location.href='menuMobile.html'"><i class="fas fa-bars"></i></button>
+    <button class="admin-btn ml-auto d-block d-sm-none" onclick="logout()">Logout</button>
+    <button class="admin-btn ml-auto d-none d-sm-block" onclick="window.location.href='responsavel.html'">Administrador</button>
+  </div>
+
+  <script>
+    function logout() {
+      localStorage.removeItem('userData');
+      window.location.href = 'login.html';
+    }
+  </script>
+
+  <!-- Conteúdo principal -->
+  <div class="content align-center-mobile">
+    <ul id="listaUsuarios" class="user-list"></ul>
 
     <!-- Formulário de registro -->
-    <form id="registerForm">
-      <div class="form-group">
-        <input type="text" class="form-control" id="nome" placeholder="Nome" required>
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" id="cpf" placeholder="CPF" required>
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-control" id="email" placeholder="E-mail" required>
-        <small id="emailHelp" class="form-text text-muted">Por favor, insira um endereço de e-mail válido.</small>
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-control" id="senha" placeholder="Senha" required>
-      </div>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="adminToggle">
-        <label class="form-check-label" for="adminToggle">Administrador</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
-    </form>
+    <div class="register-container">
+      <h1>Criar Conta</h1>
+      <div id="messageArea"></div>
+      <form id="registerForm">
+        <div class="form-group">
+          <input type="text" class="form-control" id="nome" placeholder="Nome" required>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="cpf" placeholder="CPF" required>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" id="email" placeholder="E-mail" required>
+          <small id="emailHelp" class="form-text text-muted">Por favor, insira um endereço de e-mail válido.</small>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" id="senha" placeholder="Senha" required>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="adminToggle">
+          <label class="form-check-label" for="adminToggle">Administrador</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+      </form>
+    </div>
   </div>
 
   <!-- Firebase JavaScript -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-    import { getDatabase, ref, push } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
+    import { getDatabase, ref, push, get } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js';
     import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
 
-    // Configurações do Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyC41KIa9wdb3Vevjwno89SNt4U0vsPIaMo",
       authDomain: "bdkdb-e8ee5.firebaseapp.com",
@@ -116,53 +253,116 @@
       measurementId: "G-WG2MJDR4Q9"
     };
 
-    // Inicialização do Firebase
     const firebaseApp = initializeApp(firebaseConfig);
     const auth = getAuth(firebaseApp);
     const database = getDatabase(firebaseApp);
     const usersRef = ref(database, 'usersLsdss');
 
-    // Função para cadastrar um novo usuário
     function cadastrarUsuario(email, senha, nome, cpf, admin) {
-      createUserWithEmailAndPassword(auth, email, senha)
-        .then((userCredential) => {
-          // Criação do usuário bem-sucedida
-          const newUser = {
-            nome: nome,
-            cpf: cpf,
-            email: email,
-            senha: senha,
-            admin: admin
-          };
-          // Salva os dados do novo usuário no banco de dados
-          push(usersRef, newUser)
-            .then(() => {
-              console.log('Novo usuário cadastrado com sucesso:', newUser);
-            })
-            .catch((error) => {
-              console.error('Erro ao salvar os dados do novo usuário:', error);
-            });
+      verificarEmailExistente(email)
+        .then((emailExists) => {
+          if (emailExists) {
+            showMessage('danger', 'E-mail já está em uso.');
+          } else {
+            verificarCpfExistente(cpf)
+              .then((cpfExists) => {
+                if (cpfExists) {
+                  showMessage('danger', 'CPF já está em uso.');
+                } else {
+                  createUserWithEmailAndPassword(auth, email, senha)
+                    .then((userCredential) => {
+                      const user = userCredential.user;
+                      push(usersRef, {
+                        nome: nome,
+                        cpf: cpf,
+                        email: email,
+                        admin: admin,
+                      })
+                        .then(() => {
+                          showMessage('success', 'Usuário cadastrado com sucesso.');
+                          document.getElementById('registerForm').reset();
+                        })
+                        .catch((error) => {
+                          console.error('Erro ao adicionar dados ao Firebase Database:', error);
+                          showMessage('danger', 'Erro ao cadastrar usuário.');
+                        });
+                    })
+                    .catch((error) => {
+                      console.error('Erro ao criar usuário com email e senha:', error);
+                      showMessage('danger', 'Erro ao cadastrar usuário.');
+                    });
+                }
+              })
+              .catch((error) => {
+                console.error('Erro ao verificar CPF existente:', error);
+                showMessage('danger', 'Erro ao cadastrar usuário.');
+              });
+          }
         })
         .catch((error) => {
-          console.error('Erro ao cadastrar novo usuário:', error);
+          console.error('Erro ao verificar e-mail existente:', error);
+          showMessage('danger', 'Erro ao cadastrar usuário.');
         });
     }
 
-    // Evento de envio do formulário de registro
-    document.getElementById('registerForm').addEventListener('submit', function (event) {
-      event.preventDefault(); // Evita o comportamento padrão de envio do formulário
+    function verificarEmailExistente(email) {
+      return get(usersRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const users = snapshot.val();
+            for (const userId in users) {
+              if (users[userId].email === email) {
+                return true;
+              }
+            }
+          }
+          return false;
+        })
+        .catch((error) => {
+          console.error('Erro ao verificar e-mail existente:', error);
+          throw error;
+        });
+    }
 
-      // Captura dos valores dos campos
-      const nome = document.getElementById('nome').value;
-      const cpf = document.getElementById('cpf').value;
+    function verificarCpfExistente(cpf) {
+      return get(usersRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const users = snapshot.val();
+            for (const userId in users) {
+              if (users[userId].cpf === cpf) {
+                return true;
+              }
+            }
+          }
+          return false;
+        })
+        .catch((error) => {
+          console.error('Erro ao verificar CPF existente:', error);
+          throw error;
+        });
+    }
+
+    function showMessage(type, message) {
+      const messageArea = document.getElementById('messageArea');
+      messageArea.innerHTML = `<div class="alert alert-${type}" role="alert">${message}</div>`;
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', (e) => {
+      e.preventDefault();
       const email = document.getElementById('email').value;
       const senha = document.getElementById('senha').value;
+      const nome = document.getElementById('nome').value;
+      const cpf = document.getElementById('cpf').value;
       const admin = document.getElementById('adminToggle').checked;
-
-      // Chamada da função para cadastrar o usuário
       cadastrarUsuario(email, senha, nome, cpf, admin);
     });
   </script>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

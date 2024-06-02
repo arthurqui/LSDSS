@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Mobile</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Estilos CSS personalizados -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #183452;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #sidebar-container {
+      width: 100%;
+      max-width: 400px;
+      background-color: #183452;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .sidebar-item {
+      color: #fff;
+      padding: 15px;
+      border-bottom: 1px solid #fff;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+    }
+
+    .sidebar-item:hover {
+      background-color: #0f243e;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="sidebar-container"></div>
+
+  <script src="componentes/sidebar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarContainer = document.getElementById('sidebar-container');
+
+      // Conteúdo do sidebar
+      const sidebarContent = `
+        <div class="sidebar-item" onclick="window.location.href='index.html'">Documentações</div>
+        <div class="sidebar-item" onclick="window.location.href='suasdocumentacoes.html'">Suas Documentações</div>
+        <div class="sidebar-item" onclick="window.location.href='documentacoesiniciadas.html'">Documentações Iniciadas</div>
+        <div id="admin-item"></div> <!-- Espaço reservado para o item de administrador -->
+      `;
+
+      sidebarContainer.innerHTML = sidebarContent;
+
+      // Verificar se o usuário é administrador e adicionar o item de administrador
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      if (userData && userData.isAdmin) {
+        const adminItem = document.createElement('div');
+        adminItem.className = 'sidebar-item';
+        adminItem.textContent = 'Administrador';
+        adminItem.onclick = function() {
+          window.location.href = 'responsavel.html';
+        };
+        document.getElementById('admin-item').appendChild(adminItem);
+      }
+
+      // Ajustar a altura de cada item do menu
+      const items = sidebarContainer.getElementsByClassName('sidebar-item');
+      const itemHeight = 100 / items.length + 'vh';
+      for (let i = 0; i < items.length; i++) {
+        items[i].style.height = itemHeight;
+      }
+    });
+  </script>
+</body>
+
+</html>
