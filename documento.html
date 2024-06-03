@@ -331,6 +331,16 @@
       <p><strong>Nome do Usuário:</strong> <span id="nomeUsuario"></span></p>
       <p><strong>CPF do Usuário:</strong> <span id="cpfUsuario"></span></p>
       <p><strong>Status:</strong> <span id="status"></span></p>
+      
+      <div>
+        <label for="categoria" class="field-label">Categoria:</label>
+        <input type="text" id="categoria" class="editable-field" disabled>
+      </div>
+      <div>
+        <label for="publico" class="field-label">Público:</label>
+        <input type="text" id="publico" class="editable-field" disabled>
+      </div>
+
       <p><strong>Conteúdo:</strong></p>
       <p id="conteudo"></p>
       <!-- Tabela -->
@@ -492,15 +502,15 @@
     }
 
     // Função para obter parâmetros da URL
-    function getParameterByName(name, url) {
-      if (!url) url = window.location.href;
-      name = name.replace(/[\[\]]/g, '\\$&');
-      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 
     // Função para verificar se há dados de usuário salvos no localStorage
     function checkUserData() {
@@ -861,26 +871,19 @@
 
     // Carregar os dados do documento ao carregar a página
     function loadDocumentData() {
-      var titulo = getParameterByName('titulo');
-      var imagem = getParameterByName('imagem');
-      var data = getParameterByName('data');
-      var cpfUsuario = getParameterByName('cpfUsuario');
-      var emailUsuario = getParameterByName('emailUsuario');
-      var nomeUsuario = getParameterByName('nomeUsuario');
-      var status = getParameterByName('status');
+  document.getElementById('imagem').src = getParameterByName('imagem');
+  document.getElementById('titulo').innerText = getParameterByName('titulo');
+  document.getElementById('data').innerText = getParameterByName('data');
+  document.getElementById('emailUsuario').innerText = getParameterByName('emailUsuario');
+  document.getElementById('nomeUsuario').innerText = getParameterByName('nomeUsuario');
+  document.getElementById('cpfUsuario').innerText = getParameterByName('cpfUsuario');
+  document.getElementById('status').innerText = getParameterByName('status');
+  document.getElementById('categoria').value = getParameterByName('categoria'); // Novo campo
+  document.getElementById('publico').value = getParameterByName('publico'); // Novo campo
 
-      // Exibir os dados no HTML
-      document.getElementById('titulo').innerText = titulo;
-      document.getElementById('imagem').src = imagem;
-      document.getElementById('data').innerText = data;
-      document.getElementById('cpfUsuario').innerText = cpfUsuario;
-      document.getElementById('emailUsuario').innerText = emailUsuario;
-      document.getElementById('nomeUsuario').innerText = nomeUsuario;
-      document.getElementById('status').innerText = status;
-
-      // Definir o título da página
-      document.title = titulo;
-    }
+  // Definir o título da página
+  document.title = getParameterByName('titulo');
+}
 
 
 

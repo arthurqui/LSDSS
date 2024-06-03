@@ -12,9 +12,9 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <script src="componentes/seguranca.js">
-    
-  </script>
+  <script src="componentes/seguranca.js"></script>
+  
+
   <!-- Estilos CSS personalizados -->
   <style>
     body {
@@ -280,8 +280,15 @@
             <label for="titulo">Título:</label>
             <input type="text" class="form-control" id="titulo">
           </div>
-          <div class="conteudo">
-            <!-- Conteúdo aqui -->
+          <div class="form-group">
+            <label for="publico">Público:</label>
+            <input type="checkbox" class="form-control" id="publico">
+          </div>
+          <div class="form-group">
+            <label for="categoria">Categoria:</label>
+            <select class="form-control" id="categoria">
+              <!-- As opções serão adicionadas dinamicamente -->
+            </select>
           </div>
         </div>
         <div class="modal-footer">
@@ -293,12 +300,37 @@
   </div>
 
   <!-- JavaScript para abrir o modal -->
-  <script>
-    // Adiciona um ouvinte de evento de clique ao botão flutuante
-    document.getElementById('openModalButton').addEventListener('click', function () {
-      $('#myModal').modal('show'); // Abre o modal
-    });
-  </script>
+<script>
+  // Adiciona um ouvinte de evento de clique ao botão flutuante
+  document.getElementById('openModalButton').addEventListener('click', function () {
+    $('#myModal').modal('show'); // Abre o modal
+  });
+
+  // Função para carregar as categorias de um arquivo externo
+  async function carregarCategorias() {
+    try {
+      const response = await fetch('componentes/categorias.js');
+      const categoriasScript = await response.text();
+      eval(categoriasScript); // Executa o script para definir a variável `categorias`
+      
+      // Adiciona as categorias ao select
+      const categoriaSelect = document.getElementById('categoria');
+      categorias.forEach(categoria => {
+        const option = document.createElement('option');
+        option.value = categoria;
+        option.textContent = categoria;
+        categoriaSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Erro ao carregar categorias:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    carregarCategorias(); // Chama a função para carregar categorias
+  });
+</script>
+
 
   <!-- Firebase JavaScript -->
   <script type="module">
@@ -361,6 +393,8 @@
       // Captura dos valores dos campos do modal
       const imagem = document.getElementById('imagem').value;
       const titulo = document.getElementById('titulo').value;
+      const publico = document.getElementById('publico').checked;
+      const categoria = document.getElementById('categoria').value;
 
       // Verifica se o nome do documento já está em uso
       const nomeDocEmUso = await verificarNomeDocumento(titulo);
@@ -390,6 +424,8 @@
             cpfUsuario: cpfUsuario,
             nomeDoc: titulo,
             capaDoc: imagem,
+            publico: publico,  // Novo campo público
+            categoria: categoria,  // Novo campo categoria
             conteudoDoc: null, // Por enquanto fica null
             status: 'iniciado' // Novo campo 'status' com valor 'iniciado'
           };
@@ -409,6 +445,8 @@
               // Limpa os campos do formulário dentro do modal
               document.getElementById('imagem').value = '';
               document.getElementById('titulo').value = '';
+              document.getElementById('publico').checked = false;
+              document.getElementById('categoria').value = '';
 
               // Atualiza a lista de documentos na página index.html
               carregarDocumentacoes();
@@ -438,7 +476,7 @@
           snapshot.forEach((childSnapshot) => {
             const documento = childSnapshot.val();
             // Verifica se o status é 'iniciado' ou 'pronto'
-            if (documento.status === 'pronto') {
+            if (documento.status === 'pronto' && documento.publico === true) {
               // Cria um novo elemento de lista
               const listItem = document.createElement('div');
               listItem.classList.add('documentacoes-item');
@@ -491,12 +529,13 @@
     }
 
     // Função para redirecionar para a página do documento com os dados do documento como parâmetros
-    function redirectToDocument(documento) {
-      // Constrói a URL com os parâmetros do documento
-      const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}`;
-      // Redireciona para a página do documento
-      window.location.href = url;
-    }
+function redirectToDocument(documento) {
+  // Constrói a URL com os parâmetros do documento
+  const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}&publico=${encodeURIComponent(documento.publico)}&categoria=${encodeURIComponent(documento.categoria)}`;
+  // Redireciona para a página do documento
+  window.location.href = url;
+}
+
   </script>
 
 </body>
