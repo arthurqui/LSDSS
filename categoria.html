@@ -12,8 +12,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <!-- componente de segurança -->
   <script src="componentes/seguranca.js"></script>
+  
 
   <!-- Estilos CSS personalizados -->
   <style>
@@ -221,11 +221,33 @@
       .menu-btn:hover {
         color: #ddd;
       }
+
+      
+    .empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Altura total da viewport */
+    text-align: center;
+}
+#emptyStateImage {
+    display: none; /* Garantir que a imagem é exibida como bloco */
+    margin: 20px auto; /* Centralizar horizontalmente com margem automática */
+    width: 25vh; /* 25% da altura da viewport */
+    max-width: 100%; /* Garantir que a imagem não ultrapasse a largura do contêiner */
+}
+    
+
   </style>
 
 </head>
 
 <body>
+  <!-- <img id="emptyStateImage" src="https://i.ibb.co/HXvMWQR/image-removebg-preview-2.png" alt="Empty State" style="display: none; margin-top: 20px;"> -->
+
+  <script src="componentes/sidebar.js"></script>
+  <script src="componentes/categorias.js"></script>
   <!-- Sidebar -->
   <div class="sidebar d-none d-sm-block">
     <div class="sidebar-logo">
@@ -235,8 +257,8 @@
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
-  <script src="componentes/sidebar.js"></script>
-  <script src="componentes/categorias.js"></script>
+  
+
 
   <!-- Topbar -->
   <div class="topbar">
@@ -250,10 +272,11 @@
 
   <!-- Conteúdo principal -->
   <div class="content align-center-mobile">
-    <h1>Documentações Iniciadas</h1>
+    <h1>Documentações</h1>
     <div id="documentacoesList" class="documentacoes-row">
       <!-- Lista de documentações aqui -->
     </div>
+    <img id="emptyStateImage" src="https://i.ibb.co/dbFKNxZ/image-removebg-preview-2.png" alt="Empty State">
   </div>
 
   <!-- Botão flutuante -->
@@ -300,12 +323,13 @@
   </div>
 
   <!-- JavaScript para abrir o modal -->
-  <script>
-    // Adiciona um ouvinte de evento de clique ao botão flutuante
-    document.getElementById('openModalButton').addEventListener('click', function () {
-      $('#myModal').modal('show'); // Abre o modal
-    });
-    // Função para carregar as categorias de um arquivo externo
+<script>
+  // Adiciona um ouvinte de evento de clique ao botão flutuante
+  document.getElementById('openModalButton').addEventListener('click', function () {
+    $('#myModal').modal('show'); // Abre o modal
+  });
+
+  // Função para carregar as categorias de um arquivo externo
   async function carregarCategorias() {
     try {
       const response = await fetch('componentes/categorias.js');
@@ -328,7 +352,8 @@
   document.addEventListener('DOMContentLoaded', () => {
     carregarCategorias(); // Chama a função para carregar categorias
   });
-  </script>
+</script>
+
 
   <!-- Firebase JavaScript -->
   <script type="module">
@@ -463,53 +488,82 @@
     // Adiciona um ouvinte de evento de clique ao botão de salvar do modal
     document.getElementById('btnSalvarModal').addEventListener('click', salvarDocumento);
 
-    // Função para carregar as documentações iniciadas e prontas
-    function carregarDocumentacoes() {
-      const documentacoesList = document.getElementById('documentacoesList');
-      // Limpa a lista antes de adicionar novos elementos
-      documentacoesList.innerHTML = '';
+    // Função para obter o parâmetro 'categoria' da URL
+function getCategoriaFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('categoria');
+}
 
-      // Obtém o objeto userData do localStorage e extrai o cpf
-      const userData = JSON.parse(localStorage.getItem('userData'));
-      const userCpf = Object.values(userData)[0].cpf;
+ // Função para alterar o título com base na categoria
+ function alterarTituloComCategoria() {
+    const categoria = getCategoriaFromURL();
+    if (categoria) {
+      document.querySelector('h1').textContent = categoria;
+    }
+  }
 
-      // Realiza uma consulta no banco de dados para obter as documentações
-      get(documentosRef)
+  // Executa a função quando o conteúdo da página for carregado
+  document.addEventListener('DOMContentLoaded', alterarTituloComCategoria);
+
+// Função para carregar as documentações prontas
+function carregarDocumentacoes() {
+    const documentacoesList = document.getElementById('documentacoesList');
+    const emptyStateImage = document.getElementById('emptyStateImage');
+    const categoriaParam = getCategoriaFromURL(); // Obter categoria da URL
+    
+    // Limpa a lista antes de adicionar novos elementos
+    documentacoesList.innerHTML = '';
+
+    // Realiza uma consulta no banco de dados para obter as documentações com status 'iniciado' e 'pronto'
+    get(documentosRef)
         .then((snapshot) => {
-          snapshot.forEach((childSnapshot) => {
-            const documento = childSnapshot.val();
-            // Verifica se o status é 'iniciado' ou 'pronto' e se o cpfUsuario corresponde ao cpf no localStorage
-            if ((documento.status === 'iniciado') && documento.cpfUsuario === userCpf) {
-              // Cria um novo elemento de lista
-              const listItem = document.createElement('div');
-              listItem.classList.add('documentacoes-item');
-              // Adiciona a capa do documento como uma imagem
-              const capaImg = document.createElement('img');
-              capaImg.src = documento.capaDoc;
-              capaImg.classList.add('img-fluid', 'rounded');
-              // Adiciona o título do documento como texto
-              const titulo = document.createElement('h4');
-              titulo.textContent = documento.nomeDoc;
-              // Adiciona a data de criação do documento como texto
-              const dataCriacao = document.createElement('p');
-              dataCriacao.textContent = new Date(documento.data).toLocaleString();
-              // Adiciona o evento onclick para redirecionar para a página do documento com os dados como parâmetros
-              listItem.addEventListener('click', function () {
-                redirectToDocument(documento);
-              });
-              // Adiciona a imagem, o título e a data à lista
-              listItem.appendChild(capaImg);
-              listItem.appendChild(titulo);
-              listItem.appendChild(dataCriacao);
-              // Adiciona o item à lista de documentações
-              documentacoesList.appendChild(listItem);
+            let hasDocuments = false; // Variável para rastrear se há documentos
+
+            snapshot.forEach((childSnapshot) => {
+                const documento = childSnapshot.val();
+                // Verifica se o status é 'pronto', se é público e se a categoria corresponde
+                if (documento.status === 'pronto' && documento.publico === true && documento.categoria === categoriaParam) {
+                    hasDocuments = true; // Encontrou pelo menos um documento
+
+                    // Cria um novo elemento de lista
+                    const listItem = document.createElement('div');
+                    listItem.classList.add('documentacoes-item');
+
+                    // Adiciona a capa do documento como uma imagem
+                    const capaImg = document.createElement('img');
+                    capaImg.src = documento.capaDoc;
+                    capaImg.classList.add('img-fluid', 'rounded');
+
+                    // Adiciona o título do documento como texto
+                    const titulo = document.createElement('h4');
+                    titulo.textContent = documento.nomeDoc;
+
+                    // Adiciona a data de criação do documento como texto
+                    const dataCriacao = document.createElement('p');
+                    dataCriacao.textContent = new Date(documento.data).toLocaleString();
+
+                    // Adiciona os elementos ao item da lista
+                    listItem.appendChild(capaImg);
+                    listItem.appendChild(titulo);
+                    listItem.appendChild(dataCriacao);
+
+                    // Adiciona o item da lista à lista de documentações
+                    documentacoesList.appendChild(listItem);
+                }
+            });
+
+            if (!hasDocuments) {
+                // Se não houver documentos, exibe a mensagem de estado vazio e a imagem
+                
+                emptyStateImage.style.display = 'block';
+            } else {
+                emptyStateImage.style.display = 'none';
             }
-          });
         })
         .catch((error) => {
-          console.error('Erro ao carregar as documentações:', error);
+            console.error('Erro ao carregar documentações:', error);
         });
-    }
+}
 
     // Chama a função para carregar as documentações ao carregar a página
     document.addEventListener('DOMContentLoaded', carregarDocumentacoes);
@@ -520,18 +574,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <script>
-    // Função para verificar se os dados do usuário estão salvos no localStorage
-    function checkUserData() {
-      const userDataString = localStorage.getItem('userData');
-      if (!userDataString) {
-        // Se não houver dados do usuário, redirecione para a página de login
-        window.location.href = 'login.html';
-      }
-    }
+  <script src="componentes/sessionCheck.js"></script>
 
-    // Chama a função de verificação durante o carregamento da página
-    document.addEventListener('DOMContentLoaded', checkUserData);
+
+  <script>
 
     // Função de logout
     function logout() {
@@ -540,12 +586,13 @@
     }
 
     // Função para redirecionar para a página do documento com os dados do documento como parâmetros
-    function redirectToDocument(documento) {
-      // Constrói a URL com os parâmetros do documento
-      const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}&publico=${encodeURIComponent(documento.publico)}&categoria=${encodeURIComponent(documento.categoria)}`;
-      // Redireciona para a página do documento
-      window.location.href = url;
-    }
+function redirectToDocument(documento) {
+  // Constrói a URL com os parâmetros do documento
+  const url = `/documento.html?titulo=${encodeURIComponent(documento.nomeDoc)}&imagem=${encodeURIComponent(documento.capaDoc)}&conteudo=${encodeURIComponent(documento.conteudoDoc)}&data=${encodeURIComponent(documento.data)}&cpfUsuario=${encodeURIComponent(documento.cpfUsuario)}&emailUsuario=${encodeURIComponent(documento.emailUsuario)}&nomeUsuario=${encodeURIComponent(documento.nomeUsuario)}&status=${encodeURIComponent(documento.status)}&publico=${encodeURIComponent(documento.publico)}&categoria=${encodeURIComponent(documento.categoria)}`;
+  // Redireciona para a página do documento
+  window.location.href = url;
+}
+
   </script>
 
 </body>
