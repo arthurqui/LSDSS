@@ -260,51 +260,52 @@
     const usersRef = ref(database, 'usersLsdss');
 
     function cadastrarUsuario(email, senha, nome, cpf, admin) {
-      verificarEmailExistente(email)
-        .then((emailExists) => {
-          if (emailExists) {
-            showMessage('danger', 'E-mail já está em uso.');
-          } else {
-            verificarCpfExistente(cpf)
-              .then((cpfExists) => {
-                if (cpfExists) {
-                  showMessage('danger', 'CPF já está em uso.');
-                } else {
-                  createUserWithEmailAndPassword(auth, email, senha)
-                    .then((userCredential) => {
-                      const user = userCredential.user;
-                      push(usersRef, {
-                        nome: nome,
-                        cpf: cpf,
-                        email: email,
-                        admin: admin,
-                      })
-                        .then(() => {
-                          showMessage('success', 'Usuário cadastrado com sucesso.');
-                          document.getElementById('registerForm').reset();
-                        })
-                        .catch((error) => {
-                          console.error('Erro ao adicionar dados ao Firebase Database:', error);
-                          showMessage('danger', 'Erro ao cadastrar usuário.');
-                        });
+  verificarEmailExistente(email)
+    .then((emailExists) => {
+      if (emailExists) {
+        showMessage('danger', 'E-mail já está em uso.');
+      } else {
+        verificarCpfExistente(cpf)
+          .then((cpfExists) => {
+            if (cpfExists) {
+              showMessage('danger', 'CPF já está em uso.');
+            } else {
+              createUserWithEmailAndPassword(auth, email, senha)
+                .then((userCredential) => {
+                  const user = userCredential.user;
+                  push(usersRef, {
+                    nome: nome,
+                    cpf: cpf,
+                    email: email,
+                    senha: senha, // Adicionando a senha aqui
+                    admin: admin,
+                  })
+                    .then(() => {
+                      showMessage('success', 'Usuário cadastrado com sucesso.');
+                      document.getElementById('registerForm').reset();
                     })
                     .catch((error) => {
-                      console.error('Erro ao criar usuário com email e senha:', error);
+                      console.error('Erro ao adicionar dados ao Firebase Database:', error);
                       showMessage('danger', 'Erro ao cadastrar usuário.');
                     });
-                }
-              })
-              .catch((error) => {
-                console.error('Erro ao verificar CPF existente:', error);
-                showMessage('danger', 'Erro ao cadastrar usuário.');
-              });
-          }
-        })
-        .catch((error) => {
-          console.error('Erro ao verificar e-mail existente:', error);
-          showMessage('danger', 'Erro ao cadastrar usuário.');
-        });
-    }
+                })
+                .catch((error) => {
+                  console.error('Erro ao criar usuário com email e senha:', error);
+                  showMessage('danger', 'Erro ao cadastrar usuário.');
+                });
+            }
+          })
+          .catch((error) => {
+            console.error('Erro ao verificar CPF existente:', error);
+            showMessage('danger', 'Erro ao cadastrar usuário.');
+          });
+      }
+    })
+    .catch((error) => {
+      console.error('Erro ao verificar e-mail existente:', error);
+      showMessage('danger', 'Erro ao cadastrar usuário.');
+    });
+}
 
     function verificarEmailExistente(email) {
       return get(usersRef)

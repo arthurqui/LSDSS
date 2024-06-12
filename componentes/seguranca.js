@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', //function () { 
+document.addEventListener('DOMContentLoaded', function () { 
     //!!descomentar o 'function ()' para aplicar medidas de segurança, comentar para desenvolver.
 
 
