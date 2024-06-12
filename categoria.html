@@ -542,6 +542,10 @@ function carregarDocumentacoes() {
                     const dataCriacao = document.createElement('p');
                     dataCriacao.textContent = new Date(documento.data).toLocaleString();
 
+                    listItem.addEventListener('click', function () {
+                redirectToDocument(documento);
+              });
+
                     // Adiciona os elementos ao item da lista
                     listItem.appendChild(capaImg);
                     listItem.appendChild(titulo);
