@@ -122,6 +122,13 @@
       display: block;
     }
 
+    /* Adicione isso ao seu arquivo CSS */
+    .video-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+    }
 
 
     /* Estilo para o botão "deletar" */
@@ -331,7 +338,7 @@
       <p><strong>Nome do Usuário:</strong> <span id="nomeUsuario"></span></p>
       <p><strong>CPF do Usuário:</strong> <span id="cpfUsuario"></span></p>
       <p><strong>Status:</strong> <span id="status"></span></p>
-      
+
       <div>
         <label for="categoria" class="field-label">Categoria:</label>
         <input type="text" id="categoria" class="editable-field" disabled>
@@ -342,23 +349,10 @@
       </div>
 
       <p><strong>Conteúdo:</strong></p>
-      <p id="conteudo"></p>
-      <!-- Tabela -->
-      <div class="tabela-container">
-        <div class="tabela-row">
-          <div class="tabela-col">
-            <!-- Conteúdo da primeira coluna -->
-          </div>
-          <div class="tabela-col">
-            <!-- Conteúdo da segunda coluna -->
-          </div>
-          <div class="tabela-col">
-            <!-- Conteúdo da terceira coluna -->
-          </div>
-        </div>
-      </div>
+      <div id="conteudo"></div>
     </div>
   </div>
+
 
   <!-- Botão flutuante de voltar -->
   <button id="backButton" class="floating-button floating-back-button" onclick="closeTab()">
@@ -502,15 +496,15 @@
     }
 
     // Função para obter parâmetros da URL
-function getParameterByName(name, url) {
-  if (!url) url = window.location.href;
-  name = name.replace(/[\[\]]/g, '\\$&');
-  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-    results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
 
     // Função para verificar se há dados de usuário salvos no localStorage
     function checkUserData() {
@@ -585,7 +579,7 @@ function getParameterByName(name, url) {
           paragrafos.forEach((paragrafo, index) => {
             // Verifica se pelo menos um dos valores não está vazio
             if (paragrafo.imagem1 || paragrafo.paragrafo || paragrafo.imagem2) {
-              // Crie um container para o parágrafo
+              // Cria um container para o parágrafo
               const container = document.createElement('div');
               container.classList.add('paragrafo-container');
               container.dataset.paragrafoId = index; // Adiciona um atributo data para identificar o parágrafo
@@ -600,9 +594,19 @@ function getParameterByName(name, url) {
 
               // Cria um elemento para o parágrafo central se não estiver vazio
               if (paragrafo.paragrafo) {
-                const paragrafoCentral = document.createElement('p');
-                paragrafoCentral.innerText = paragrafo.paragrafo;
+                const paragrafoCentral = document.createElement('div');
                 paragrafoCentral.classList.add('paragrafo-texto');
+
+                // Verifica se o parágrafo é um link de vídeo do YouTube
+                if (isYouTubeLink(paragrafo.paragrafo)) {
+                  const videoId = extractYouTubeId(paragrafo.paragrafo);
+                  paragrafoCentral.innerHTML = `
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              `;
+                } else {
+                  paragrafoCentral.innerText = paragrafo.paragrafo;
+                }
+
                 container.appendChild(paragrafoCentral);
               }
 
@@ -624,7 +628,30 @@ function getParameterByName(name, url) {
       });
     }
 
+    // Função para verificar se o link é um link de vídeo do YouTube
+    function isYouTubeLink(url) {
+      const regex = /^https:\/\/www\.youtube\.com\/watch\?v=[\w-]{11}$/;
+      return regex.test(url);
+    }
 
+    // Função para extrair o ID do vídeo do link do YouTube
+    function extractYouTubeId(url) {
+      const urlParams = new URLSearchParams(new URL(url).search);
+      return urlParams.get('v');
+    }
+
+    // Função auxiliar para capturar parâmetros da URL
+    function getParameterByName(name, url = window.location.href) {
+      name = name.replace(/[\[\]]/g, '\\$&');
+      const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // Carregar os parágrafos quando a página é carregada
+    document.addEventListener('DOMContentLoaded', loadParagraphs);
 
 
 
@@ -871,19 +898,19 @@ function getParameterByName(name, url) {
 
     // Carregar os dados do documento ao carregar a página
     function loadDocumentData() {
-  document.getElementById('imagem').src = getParameterByName('imagem');
-  document.getElementById('titulo').innerText = getParameterByName('titulo');
-  document.getElementById('data').innerText = getParameterByName('data');
-  document.getElementById('emailUsuario').innerText = getParameterByName('emailUsuario');
-  document.getElementById('nomeUsuario').innerText = getParameterByName('nomeUsuario');
-  document.getElementById('cpfUsuario').innerText = getParameterByName('cpfUsuario');
-  document.getElementById('status').innerText = getParameterByName('status');
-  document.getElementById('categoria').value = getParameterByName('categoria'); // Novo campo
-  document.getElementById('publico').value = getParameterByName('publico'); // Novo campo
+      document.getElementById('imagem').src = getParameterByName('imagem');
+      document.getElementById('titulo').innerText = getParameterByName('titulo');
+      document.getElementById('data').innerText = getParameterByName('data');
+      document.getElementById('emailUsuario').innerText = getParameterByName('emailUsuario');
+      document.getElementById('nomeUsuario').innerText = getParameterByName('nomeUsuario');
+      document.getElementById('cpfUsuario').innerText = getParameterByName('cpfUsuario');
+      document.getElementById('status').innerText = getParameterByName('status');
+      document.getElementById('categoria').value = getParameterByName('categoria'); // Novo campo
+      document.getElementById('publico').value = getParameterByName('publico'); // Novo campo
 
-  // Definir o título da página
-  document.title = getParameterByName('titulo');
-}
+      // Definir o título da página
+      document.title = getParameterByName('titulo');
+    }
 
 
 
