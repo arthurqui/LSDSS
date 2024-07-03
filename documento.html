@@ -541,92 +541,145 @@
 
 
     // Função para carregar os parágrafos do Firebase
-    function loadParagraphs() {
-      // Captura dos valores de cpfUsuario e dataDocumento da URL
-      const cpfUsuario = getParameterByName('cpfUsuario');
-      const dataDocumento = getParameterByName('data');
+function loadParagraphs() {
+  // Captura dos valores de cpfUsuario e dataDocumento da URL
+  const cpfUsuario = getParameterByName('cpfUsuario');
+  const dataDocumento = getParameterByName('data');
 
-      // Referência ao nó "paragrafos" no Firebase
-      const paragrafosRef = firebase.database().ref('paragrafos');
+  // Referência ao nó "paragrafos" no Firebase
+  const paragrafosRef = firebase.database().ref('paragrafos');
 
-      // Consulta para obter todos os parágrafos
-      paragrafosRef.once('value', snapshot => {
-        // Array para armazenar os parágrafos que correspondem ao documento
-        const paragrafos = [];
+  // Consulta para obter todos os parágrafos
+  paragrafosRef.once('value', snapshot => {
+    // Array para armazenar os parágrafos que correspondem ao documento
+    const paragrafos = [];
 
-        // Verifica se há parágrafos já carregados na tela
-        const conteudoContainer = document.getElementById('conteudo');
-        if (conteudoContainer.children.length > 0) {
-          // Limpa os parágrafos existentes
-          conteudoContainer.innerHTML = '';
-        }
+    // Verifica se há parágrafos já carregados na tela
+    const conteudoContainer = document.getElementById('conteudo');
+    if (conteudoContainer.children.length > 0) {
+      // Limpa os parágrafos existentes
+      conteudoContainer.innerHTML = '';
+    }
 
-        // Verifica se há parágrafos
-        if (snapshot.exists()) {
-          snapshot.forEach(paragrafo => {
-            // Verifica se os valores de cpfUsuario e dataDocumento correspondem aos do documento
-            if (paragrafo.val().cpfUsuario === cpfUsuario && paragrafo.val().dataDocumento === dataDocumento) {
-              paragrafos.push(paragrafo.val());
-            }
-          });
-
-          // Ordena os parágrafos pelo campo dataParagrafo do mais antigo para o mais recente
-          paragrafos.sort((a, b) => {
-            return new Date(a.dataParagrafo) - new Date(b.dataParagrafo);
-          });
-
-          // Exibe os parágrafos no HTML
-          paragrafos.forEach((paragrafo, index) => {
-            // Verifica se pelo menos um dos valores não está vazio
-            if (paragrafo.imagem1 || paragrafo.paragrafo || paragrafo.imagem2) {
-              // Cria um container para o parágrafo
-              const container = document.createElement('div');
-              container.classList.add('paragrafo-container');
-              container.dataset.paragrafoId = index; // Adiciona um atributo data para identificar o parágrafo
-
-              // Cria um elemento para a imagem1 se não estiver vazio
-              if (paragrafo.imagem1) {
-                const imagem1 = document.createElement('img');
-                imagem1.src = paragrafo.imagem1;
-                imagem1.classList.add('paragrafo-imagem');
-                container.appendChild(imagem1);
-              }
-
-              // Cria um elemento para o parágrafo central se não estiver vazio
-              if (paragrafo.paragrafo) {
-                const paragrafoCentral = document.createElement('div');
-                paragrafoCentral.classList.add('paragrafo-texto');
-
-                // Verifica se o parágrafo é um link de vídeo do YouTube
-                if (isYouTubeLink(paragrafo.paragrafo)) {
-                  const videoId = extractYouTubeId(paragrafo.paragrafo);
-                  paragrafoCentral.innerHTML = `
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              `;
-                } else {
-                  paragrafoCentral.innerText = paragrafo.paragrafo;
-                }
-
-                container.appendChild(paragrafoCentral);
-              }
-
-              // Cria um elemento para a imagem2 se não estiver vazio
-              if (paragrafo.imagem2) {
-                const imagem2 = document.createElement('img');
-                imagem2.src = paragrafo.imagem2;
-                imagem2.classList.add('paragrafo-imagem');
-                container.appendChild(imagem2);
-              }
-
-              // Adiciona o container ao conteúdo
-              conteudoContainer.appendChild(container);
-            }
-          });
-        } else {
-          console.log('Nenhum parágrafo encontrado.');
+    // Verifica se há parágrafos
+    if (snapshot.exists()) {
+      snapshot.forEach(paragrafo => {
+        // Verifica se os valores de cpfUsuario e dataDocumento correspondem aos do documento
+        if (paragrafo.val().cpfUsuario === cpfUsuario && paragrafo.val().dataDocumento === dataDocumento) {
+          paragrafos.push(paragrafo.val());
         }
       });
+
+      // Ordena os parágrafos pelo campo dataParagrafo do mais antigo para o mais recente
+      paragrafos.sort((a, b) => {
+        return new Date(a.dataParagrafo) - new Date(b.dataParagrafo);
+      });
+
+      // Exibe os parágrafos no HTML
+      paragrafos.forEach((paragrafo, index) => {
+        // Verifica se pelo menos um dos valores não está vazio
+        if (paragrafo.imagem1 || paragrafo.paragrafo || paragrafo.imagem2) {
+          // Cria um container para o parágrafo
+          const container = document.createElement('div');
+          container.classList.add('paragrafo-container');
+          container.dataset.paragrafoId = index; // Adiciona um atributo data para identificar o parágrafo
+
+          // Cria um elemento para a imagem1 se não estiver vazio
+          if (paragrafo.imagem1) {
+            const imagem1 = document.createElement('img');
+            imagem1.src = paragrafo.imagem1;
+            imagem1.classList.add('paragrafo-imagem');
+            container.appendChild(imagem1);
+          }
+
+          // Cria um elemento para o parágrafo central se não estiver vazio
+          if (paragrafo.paragrafo) {
+            const paragrafoCentral = document.createElement('div');
+            paragrafoCentral.classList.add('paragrafo-texto');
+
+            // Verifica se o parágrafo é um link de vídeo do YouTube
+            if (isYouTubeLink(paragrafo.paragrafo)) {
+              const videoId = extractYouTubeId(paragrafo.paragrafo);
+              paragrafoCentral.innerHTML = `
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              `;
+            } else {
+              // Transforma URLs em hiperlinks e preserva quebras de linha
+              paragrafoCentral.appendChild(createParagraphs(paragrafo.paragrafo));
+            }
+
+            container.appendChild(paragrafoCentral);
+          }
+
+          // Cria um elemento para a imagem2 se não estiver vazio
+          if (paragrafo.imagem2) {
+            const imagem2 = document.createElement('img');
+            imagem2.src = paragrafo.imagem2;
+            imagem2.classList.add('paragrafo-imagem');
+            container.appendChild(imagem2);
+          }
+
+          // Adiciona o container ao conteúdo
+          conteudoContainer.appendChild(container);
+        }
+      });
+    } else {
+      console.log('Nenhum parágrafo encontrado.');
     }
+  });
+}
+
+// Função auxiliar para criar elementos de parágrafo preservando quebras de linha e transformando URLs em hiperlinks
+function createParagraphs(text) {
+  const paragraphs = document.createElement('div');
+  const lines = text.split('\n');
+  lines.forEach(line => {
+    const p = document.createElement('p');
+    const words = line.split(' ');
+    words.forEach((word, index) => {
+      // Verifica se a palavra é um URL válido e não termina com ":"
+      if (isValidURL(word) && !word.endsWith(':')) {
+        const a = document.createElement('a');
+        a.href = word.startsWith('http') ? word : `http://${word}`;
+        a.target = '_blank';
+        a.textContent = word;
+        p.appendChild(a);
+      } else {
+        // Caso contrário, trata como texto normal
+        p.appendChild(document.createTextNode(word));
+      }
+      if (index < words.length - 1) {
+        p.appendChild(document.createTextNode(' ')); // Adiciona um espaço entre as palavras
+      }
+    });
+    paragraphs.appendChild(p);
+  });
+  return paragraphs;
+}
+
+// Função para verificar se uma string é um URL válido
+function isValidURL(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+
+    function convertUrlsToLinks(text) {
+  const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\//;
+
+  return text.replace(urlRegex, function(url) {
+    if (youtubeRegex.test(url)) {
+      return url; // Mantém URLs do YouTube como texto
+    }
+    return `<a href="${url}" target="_blank">${url}</a>`;
+  });
+}
+
 
     // Função para verificar se o link é um link de vídeo do YouTube
     function isYouTubeLink(url) {
