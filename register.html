@@ -255,7 +255,7 @@
     };
 
     const firebaseApp = initializeApp(firebaseConfig);
-    // const auth = getAuth(firebaseApp);
+    const auth = getAuth(firebaseApp);
     const database = getDatabase(firebaseApp);
     const usersRef = ref(database, 'usersLsdss');
 

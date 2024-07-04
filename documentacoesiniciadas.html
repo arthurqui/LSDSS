@@ -351,6 +351,7 @@
     // Inicialização do Firebase
     const firebaseApp = initializeApp(firebaseConfig);
     const database = getDatabase(firebaseApp);
+    const auth = getAuth(firebaseApp);
     const documentosRef = ref(database, 'documentacao');
 
     // Função para obter a data atual no formato YYYY-MM-DD HH:MM:SS
